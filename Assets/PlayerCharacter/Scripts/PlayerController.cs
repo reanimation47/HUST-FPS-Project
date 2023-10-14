@@ -25,7 +25,7 @@ namespace Player
         void Start()
         {
             controller = GetComponent<CharacterController>();
-            PlayerLookAround.AssignCamera(_cam);
+            AssignComponents();
         }
 
         private void Update()
@@ -33,16 +33,26 @@ namespace Player
             isGrounded = controller.isGrounded;
         }
 
+        #region Assign Components
+        private void AssignComponents()
+        {
+            PlayerLookAround.AssignCamera(_cam);
+            PlayerLookAround.AssignPlayerTransform(transform);
+            PlayerMovement.AssignPlayerTransform(transform);
+            PlayerMovement.AssignController(controller);
+        }
+        #endregion
+
         #region All Controls
         public void ProcessMove(Vector2 input)
         {
-            PlayerMovement.ProcessMove(transform, input, controller);
+            PlayerMovement.ProcessMove(input);
             ProcessGravity();
         }
 
         public void ProcessLookAround(Vector2 input)
         {
-            PlayerLookAround.ProcessLookAround(input, transform);
+            PlayerLookAround.ProcessLookAround(input);
         }
         
         public void Jump()

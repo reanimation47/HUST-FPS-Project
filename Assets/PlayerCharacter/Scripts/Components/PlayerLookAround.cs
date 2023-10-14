@@ -5,15 +5,22 @@ namespace Player.Components
 { 
     public class PlayerLookAround
     {
-        public static Camera _camera;
         private static float xRotation = 0f;
+
+        public static Camera _camera;
+        private static Transform _player;
+
+        public static void AssignPlayerTransform(Transform _transform)
+        {
+            _player = _transform;
+        }
 
         public static void AssignCamera(Camera cam)
         {
             _camera = cam;
         }
 
-        public static void ProcessLookAround(Vector2 input, Transform _player)
+        public static void ProcessLookAround(Vector2 input)
         {
             float mouseX = input.x;
             float mouseY = input.y;

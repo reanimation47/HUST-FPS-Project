@@ -7,7 +7,20 @@ namespace Player.Components
 {
     public class PlayerMovement 
     {
-        public static void ProcessMove(Transform _player, Vector2 input, CharacterController controller)
+        private static CharacterController controller;
+        private static Transform _player;
+
+        public static void AssignPlayerTransform(Transform _transform)
+        {
+            _player = _transform;
+        }
+
+        public static void AssignController(CharacterController _con)
+        {
+            controller = _con;
+        }
+
+        public static void ProcessMove(Vector2 input)
         {
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;
