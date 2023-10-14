@@ -11,7 +11,7 @@ namespace Player
         private Vector3 playerVelocity;
         private bool isGrounded;
 
-        public static float playerSpeed { get; }
+        public static readonly float playerSpeed = 5f;
         public float gravity = -9.8f;
         public float jumpHeight = 1f;
 
