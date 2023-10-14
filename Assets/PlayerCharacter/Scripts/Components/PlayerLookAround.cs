@@ -7,18 +7,13 @@ namespace Player.Components
     {
         private static float xRotation = 0f;
 
+        #region Assign Components
         public static Camera _camera;
-        private static Transform _player;
-
-        public static void AssignPlayerTransform(Transform _transform)
-        {
-            _player = _transform;
-        }
-
         public static void AssignCamera(Camera cam)
         {
             _camera = cam;
         }
+        #endregion
 
         public static void ProcessLookAround(Vector2 input)
         {
@@ -30,7 +25,7 @@ namespace Player.Components
 
             _camera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
-            _player.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
+            PlayerController.playerTransform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
         }
     }
 }

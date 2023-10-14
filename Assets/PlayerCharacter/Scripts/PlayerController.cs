@@ -7,43 +7,49 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        private static CharacterController controller;
+        #region Initialize Variables
+        public static CharacterController controller;
+        public static Transform playerTransform;
         private Vector3 playerVelocity;
         private bool isGrounded;
 
-        public static readonly float playerSpeed = 5f;
+        public static float playerSpeed { get; private set; }
+
+        public float _playerSpeed = 5f;
+        public float _crouchSpeed = 2f;
         public float gravity = -9.8f;
         public float jumpHeight = 1f;
 
         public static readonly float xSensitivity = 30f;
         public static readonly float ySensitivity = 30f;
 
+        
 
         public Camera _cam;
-
+        #endregion
 
         void Start()
         {
             controller = GetComponent<CharacterController>();
+            playerTransform = transform;
+            playerSpeed = _playerSpeed;
             AssignComponents();
         }
 
         private void Update()
         {
             isGrounded = controller.isGrounded;
+            PlayerCrouch.ProcessCrouch();
         }
 
         #region Assign Components
         private void AssignComponents()
         {
             PlayerLookAround.AssignCamera(_cam);
-            PlayerLookAround.AssignPlayerTransform(transform);
-            PlayerMovement.AssignPlayerTransform(transform);
-            PlayerMovement.AssignController(controller);
         }
         #endregion
 
-        #region All Controls
+        #region All Controls Processes
         public void ProcessMove(Vector2 input)
         {
             PlayerMovement.ProcessMove(input);
@@ -53,6 +59,14 @@ namespace Player
         public void ProcessLookAround(Vector2 input)
         {
             PlayerLookAround.ProcessLookAround(input);
+        }
+        #endregion
+
+        #region Binded actions
+
+        public void Crouch()
+        {
+            playerSpeed = PlayerCrouch.Crouch() ? _crouchSpeed : _playerSpeed;
         }
         
         public void Jump()

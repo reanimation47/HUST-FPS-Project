@@ -19,6 +19,7 @@ namespace Player
             onFoot = playerInput.OnFoot;
             controller = GetComponent<PlayerController>();
             onFoot.Jump.performed += ctx => controller.Jump();
+            onFoot.Crouch.performed += ctx => controller.Crouch();
         }
 
         private void FixedUpdate()
