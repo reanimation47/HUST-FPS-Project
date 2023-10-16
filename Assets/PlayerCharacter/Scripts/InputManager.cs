@@ -22,6 +22,14 @@ namespace Player
             onFoot.Crouch.performed += ctx => controller.Crouch();
         }
 
+        private void Update()
+        {
+            if (playerInput.OnFoot.Interact.triggered)
+            {
+                PlayerInteract.Interact();
+            }
+        }
+
         private void FixedUpdate()
         {
             controller.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
