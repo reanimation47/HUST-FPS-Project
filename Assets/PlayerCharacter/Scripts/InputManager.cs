@@ -13,6 +13,8 @@ namespace Player
 
         private PlayerController controller;
 
+        public WeaponHandler.BaseGunController gunController;
+
         private void Awake()
         {
             playerInput = new PlayerInput();
@@ -28,6 +30,24 @@ namespace Player
             {
                 PlayerInteract.Interact();
             }
+            if (playerInput.OnFoot.LeftClick.IsPressed())
+            {
+                gunController.ShootGun();
+            }
+
+            if (playerInput.OnFoot.RightClick.IsPressed())
+            {
+                gunController.DetermineAim(true);
+            }
+            else
+            {
+                gunController.DetermineAim(false);
+            }
+
+            if (playerInput.OnFoot.Reload.triggered)
+            {
+                gunController.Reload();
+            }
         }
 
         private void FixedUpdate()
@@ -38,6 +58,7 @@ namespace Player
         private void LateUpdate()
         {
             controller.ProcessLookAround(onFoot.Look.ReadValue<Vector2>());
+            gunController.HandleRotation(onFoot.Look.ReadValue<Vector2>());
         }
 
         private void OnEnable()
