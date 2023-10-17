@@ -26,10 +26,11 @@ namespace Player.WeaponHandler
         //Aiming
         public Vector3 normalLocalPosition;
         public Vector3 aimingLocalPosition;
+        public float weaponSwayIntensity = -2f;
 
         //Recoil
-        public bool randomRecoil;
-        public Vector2 randomRecoilConstraints;
+        public bool randomRecoil = true;
+        public Vector2 randomRecoilConstraints = new Vector2(2,5);
 
 
         public float aimSmoothing = 10f;
@@ -101,26 +102,37 @@ namespace Player.WeaponHandler
         private float xRotation = 0f;
         public void HandleRotation(Vector2 input)
         {
-            Transform parent_rotation = transform.parent;
-            Quaternion cam_rotation = _cam.transform.localRotation;
+            
+            //Transform parent_rotation = transform.parent;
+            //Quaternion cam_rotation = _cam.transform.localRotation;
             ////Quaternion target_rotation = Quaternion.Euler(cam_rotation.x, parent_rotation.transform.localRotation.y, parent_rotation.transform.localRotation.z);
-            parent_rotation.localRotation = cam_rotation;
+            //parent_rotation.localRotation = cam_rotation;
+
+            transform.localPosition += (Vector3)input * weaponSwayIntensity / 1000;
 
             //Debug.Log(input);
             //float mouseX = input.x;
-            //float mouseY = input.y;
+            float mouseY = input.y;
 
-            //xRotation -= (mouseY * Time.deltaTime) * PlayerController.ySensitivity;
-            //xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+            xRotation -= (mouseY * Time.deltaTime) * PlayerController.ySensitivity;
+            xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
-            //transform.parent.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            _cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            transform.parent.localRotation = _cam.transform.localRotation;
 
             //PlayerController.playerTransform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
         }
 
         private void Recoil()
         {
-            transform.localPosition -= Vector3.forward * 0.1f;
+            transform.localPosition -= Vector3.forward * 0.1f; //Pure gun recoiling visual effect
+            float xRecoil = Random.Range(-randomRecoilConstraints.x, randomRecoilConstraints.x);
+            float yRecoil = Random.Range(-randomRecoilConstraints.y, randomRecoilConstraints.y);
+
+            Vector2 recoil = new Vector2(xRecoil, yRecoil);
+            xRotation -= Mathf.Abs(xRecoil);
+
+            //_cam.transform.localRotation = Quaternion.Euler(recoil.x, recoil.y, 0);
         }
     }
 }
