@@ -1344,5 +1344,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -71.82
       objectReference: {fileID: 0}
+    - target: {fileID: 9182981784753822721, guid: 4b7b9fc63023f42a4a5b00f66ab791fc, type: 3}
+      propertyPath: weaponSwayIntensity
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182981784753822721, guid: 4b7b9fc63023f42a4a5b00f66ab791fc, type: 3}
+      propertyPath: randomRecoilConstraints.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182981784753822721, guid: 4b7b9fc63023f42a4a5b00f66ab791fc, type: 3}
+      propertyPath: randomRecoilConstraints.y
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b7b9fc63023f42a4a5b00f66ab791fc, type: 3}
