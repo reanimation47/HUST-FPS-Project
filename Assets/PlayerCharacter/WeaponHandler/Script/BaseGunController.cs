@@ -29,7 +29,6 @@ namespace Player.WeaponHandler
         public float weaponSwayIntensity = -2f;
 
         //Recoil
-        public bool randomRecoil = true;
         public Vector2 randomRecoilConstraints = new Vector2(2,5);
 
 
@@ -132,7 +131,8 @@ namespace Player.WeaponHandler
             Vector2 recoil = new Vector2(xRecoil, yRecoil);
             xRotation -= Mathf.Abs(xRecoil);
 
-            //_cam.transform.localRotation = Quaternion.Euler(recoil.x, recoil.y, 0);
+            PlayerController.playerTransform.Rotate(Vector3.up * yRecoil);
+
         }
     }
 }
