@@ -58,6 +58,7 @@ namespace Player
         private void LateUpdate()
         {
             controller.ProcessLookAround(onFoot.Look.ReadValue<Vector2>());
+            gunController.HandleRotation(onFoot.Look.ReadValue<Vector2>());
         }
 
         private void OnEnable()

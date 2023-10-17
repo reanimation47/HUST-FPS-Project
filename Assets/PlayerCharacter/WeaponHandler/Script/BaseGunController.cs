@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 namespace Player.WeaponHandler
 {
@@ -24,6 +25,11 @@ namespace Player.WeaponHandler
         public Vector3 normalLocalPosition;
         public Vector3 aimingLocalPosition;
 
+        //Recoil
+        public bool randomRecoil;
+        public Vector2 randomRecoilConstraints;
+
+
         public float aimSmoothing = 10f;
 
         private void Start()
@@ -43,6 +49,7 @@ namespace Player.WeaponHandler
 
         IEnumerator FireBullets()
         {
+            Recoil();
             StartCoroutine(MuzzleFlash());
             yield return new WaitForSeconds(fireRate);
             _canShoot = true;
@@ -81,6 +88,16 @@ namespace Player.WeaponHandler
             }
             Vector3 transitionPos = Vector3.Lerp(transform.localPosition, target_pos, Time.deltaTime * aimSmoothing);
             transform.localPosition = transitionPos;
+        }
+
+        public void HandleRotation(Vector2 input)
+        {
+            Debug.Log(input);
+        }
+
+        private void Recoil()
+        {
+            transform.localPosition -= Vector3.forward * 0.1f;
         }
     }
 }
