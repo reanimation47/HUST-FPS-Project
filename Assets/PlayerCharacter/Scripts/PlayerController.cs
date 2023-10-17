@@ -42,6 +42,7 @@ namespace Player
 
         void Start()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             AssignStaticVariables();
             AssignComponents();
         }
