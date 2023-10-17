@@ -8,6 +8,7 @@ namespace Player.WeaponHandler
 {
     public class BaseGunController : MonoBehaviour
     {
+        public Camera _cam;
         [Header("Gun Settings")]
         public float fireRate = 0.1f;
         public int clipSize = 30;
@@ -90,9 +91,24 @@ namespace Player.WeaponHandler
             transform.localPosition = transitionPos;
         }
 
+        private float xRotation = 0f;
         public void HandleRotation(Vector2 input)
         {
-            Debug.Log(input);
+            Transform parent_rotation = transform.parent;
+            Quaternion cam_rotation = _cam.transform.localRotation;
+            ////Quaternion target_rotation = Quaternion.Euler(cam_rotation.x, parent_rotation.transform.localRotation.y, parent_rotation.transform.localRotation.z);
+            parent_rotation.localRotation = cam_rotation;
+
+            //Debug.Log(input);
+            //float mouseX = input.x;
+            //float mouseY = input.y;
+
+            //xRotation -= (mouseY * Time.deltaTime) * PlayerController.ySensitivity;
+            //xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+
+            //transform.parent.localRotation = Quaternion.Euler(xRotation, 0, 0);
+
+            //PlayerController.playerTransform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
         }
 
         private void Recoil()
