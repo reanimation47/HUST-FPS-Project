@@ -8,6 +8,7 @@ namespace Player.WeaponHandler
 {
     public class BaseGunController : MonoBehaviour
     {
+        #region Initialize Variables
         public Camera _cam;
         [Header("Gun Settings")]
         public float fireRate = 0.1f;
@@ -32,6 +33,7 @@ namespace Player.WeaponHandler
 
 
         public float aimSmoothing = 10f;
+        #endregion
 
         private void Start()
         {
