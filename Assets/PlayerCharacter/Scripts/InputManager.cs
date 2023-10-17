@@ -13,6 +13,8 @@ namespace Player
 
         private PlayerController controller;
 
+        public WeaponHandler.BaseGunController gunController;
+
         private void Awake()
         {
             playerInput = new PlayerInput();
@@ -27,6 +29,24 @@ namespace Player
             if (playerInput.OnFoot.Interact.triggered)
             {
                 PlayerInteract.Interact();
+            }
+            if (playerInput.OnFoot.LeftClick.IsPressed())
+            {
+                gunController.ShootGun();
+            }
+
+            if (playerInput.OnFoot.RightClick.IsPressed())
+            {
+                gunController.DetermineAim(true);
+            }
+            else
+            {
+                gunController.DetermineAim(false);
+            }
+
+            if (playerInput.OnFoot.Reload.triggered)
+            {
+                gunController.Reload();
             }
         }
 
