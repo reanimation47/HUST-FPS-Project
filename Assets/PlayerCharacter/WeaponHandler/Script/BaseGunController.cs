@@ -40,8 +40,10 @@ namespace Player.WeaponHandler
             _currentAmmoInClip = clipSize;
             _ammoInReserve = reservedAmmo;
             _canShoot = true;
+            muzzleFlash.color = new Color(0, 0, 0, 0);
         }
 
+        #region Gun Actions
         public void ShootGun()
         {
             if (!_canShoot || _currentAmmoInClip <= 0) { return; }
@@ -50,6 +52,25 @@ namespace Player.WeaponHandler
             StartCoroutine(FireBullets());
         }
 
+        public void Reload()
+        {
+            if (_currentAmmoInClip >= clipSize || _ammoInReserve <= 0) { return; }
+            int _ammoNeeded = clipSize - _currentAmmoInClip;
+            if (_ammoNeeded >= _ammoInReserve)
+            {
+                _currentAmmoInClip += _ammoInReserve;
+                _ammoInReserve -= _ammoNeeded;
+            }
+            else
+            {
+                _currentAmmoInClip = clipSize;
+                _ammoInReserve -= _ammoNeeded;
+            }
+        }
+        #endregion
+
+
+
         IEnumerator FireBullets()
         {
             Recoil();
@@ -57,22 +78,6 @@ namespace Player.WeaponHandler
             yield return new WaitForSeconds(fireRate);
             _canShoot = true;
         }
-
-        public void Reload()
-        {
-            if (_currentAmmoInClip >= clipSize || _ammoInReserve <= 0) { return; }
-            int _ammoNeeded = clipSize - _currentAmmoInClip;
-            if(_ammoNeeded >= _ammoInReserve)
-            {
-                _currentAmmoInClip += _ammoInReserve;
-                _ammoInReserve -= _ammoNeeded;
-            }else
-            {
-                _currentAmmoInClip = clipSize;
-                _ammoInReserve -= _ammoNeeded;
-            }
-        }
-
         IEnumerator MuzzleFlash()
         {
             muzzleFlash.sprite = muzzleSprites[Random.Range(0, muzzleSprites.Length)];
