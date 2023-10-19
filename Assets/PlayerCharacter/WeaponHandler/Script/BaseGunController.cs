@@ -133,6 +133,7 @@ namespace Player.WeaponHandler
 
             _cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
             transform.parent.localRotation = _cam.transform.localRotation;
+            Components.PlayerBodyAnimation.SyncCharacterHeadRotation(xRotation);
 
             //PlayerController.playerTransform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
         }
@@ -140,6 +141,7 @@ namespace Player.WeaponHandler
         private void Recoil()
         {
             transform.localPosition -= Vector3.forward * 0.1f; //Pure gun recoiling visual effect
+
             float xRecoil = Random.Range(-randomRecoilConstraints.x, randomRecoilConstraints.x);
             float yRecoil = Random.Range(-randomRecoilConstraints.y, randomRecoilConstraints.y);
 

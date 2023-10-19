@@ -18,6 +18,8 @@ namespace Player
         public static float interactDistance { get; private set; }
         public static LayerMask interactMask { get; private set; }
         public static TextMeshProUGUI promptMessage { get; set; }
+        public static GameObject characterHead;
+        public static Animator characterAnimator;
 
         public static readonly float xSensitivity = 30f;
         public static readonly float ySensitivity = 30f;
@@ -33,9 +35,11 @@ namespace Player
         public LayerMask _interactMask;
         public TextMeshProUGUI _promptMessage;
 
-        
+        [Header("Character body controls")]
+        public GameObject _characterHead;
+        public Animator _characterAnimator;
 
-        
+
 
         public Camera _cam;
         #endregion
@@ -63,6 +67,8 @@ namespace Player
             interactDistance = _interactDistance;
             interactMask = _interactMask;
             promptMessage = _promptMessage;
+            characterHead = _characterHead;
+            characterAnimator = _characterAnimator;
         }
 
         #endregion
