@@ -1477,7 +1477,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.17, z: 0}
 --- !u!114 &720634087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,6 +1500,7 @@ MonoBehaviour:
     m_Bits: 64
   _promptMessage: {fileID: 2018584740}
   _characterHead: {fileID: 8619338777915670875}
+  _characterAnimator: {fileID: 8619338777925038751}
   _cam: {fileID: 4378855845364622299}
 --- !u!114 &720634088
 MonoBehaviour:
@@ -2285,7 +2286,7 @@ Animator:
   m_GameObject: {fileID: 8619338777915670713}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fdfb5e1c4a1b339489c0eddebb1ab872, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 36901b496584f4b98a9cd95e4ae0c60b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
