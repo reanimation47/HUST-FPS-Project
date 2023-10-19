@@ -1871,15 +1871,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6888289436544448940}
-  m_LocalRotation: {x: -0.03732721, y: 0.017000956, z: -0.67486113, w: 0.73680407}
-  m_LocalPosition: {x: -0.0000000010430813, y: 0.015563576, z: 2.9802322e-10}
+  m_LocalRotation: {x: -0.035420526, y: 0.020681877, z: -0.59704554, w: 0.80115813}
+  m_LocalPosition: {x: -0.00223, y: 0.01481, z: 0.00172}
   m_LocalScale: {x: 1.0000004, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4248930062301047482}
   m_Father: {fileID: 2312076427145309464}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.837, y: 4.328, z: -73.458}
 --- !u!1 &7801523157743126229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,8 +2055,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 06c45de037a35499b94d8ce4b5840769, type: 3}
   normalLocalPosition: {x: 0.02, y: 0.14, z: 0.67}
   aimingLocalPosition: {x: -0.58, y: 0.25, z: 0.59}
-  randomRecoil: 0
-  randomRecoilConstraints: {x: 0, y: 0}
+  weaponSwayIntensity: -2
+  randomRecoilConstraints: {x: 2, y: 5}
+  bulletHole: {fileID: 86306253315096079, guid: 76c80d0f3357c483cadc581dec5aef2e, type: 3}
   aimSmoothing: 10
 --- !u!1 &8395197617947182949
 GameObject:
@@ -2112,7 +2113,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8454062664917594407}
-  m_LocalRotation: {x: -0.18097706, y: 0.28407696, z: -0.5059033, w: 0.7941092}
+  m_LocalRotation: {x: -0.47242656, y: 0.4567732, z: -0.35776564, w: 0.663457}
   m_LocalPosition: {x: -0.0049428823, y: -0.009885765, z: 0.004942882}
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 0.9999999}
   m_ConstrainProportionsScale: 0
@@ -2120,7 +2121,7 @@ Transform:
   - {fileID: 2312076427145309464}
   m_Father: {fileID: 270308428651007134}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -17.46, y: 81.783, z: -71.82}
 --- !u!1 &8890076975354955321
 GameObject:
   m_ObjectHideFlags: 0

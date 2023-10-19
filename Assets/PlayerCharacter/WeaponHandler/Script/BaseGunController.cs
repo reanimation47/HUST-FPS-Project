@@ -99,7 +99,7 @@ namespace Player.WeaponHandler
                 float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
                 Debug.Log(hit.normal);
 
-                Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.02f, hit.normal.y * 0.02f, hit.normal.z * 0.02f), Quaternion.LookRotation(-hit.normal));
+                Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
             }
         }
         public void DetermineAim(bool isAiming)
