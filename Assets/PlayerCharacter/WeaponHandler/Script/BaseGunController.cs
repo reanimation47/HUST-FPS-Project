@@ -31,6 +31,8 @@ namespace Player.WeaponHandler
         //Recoil
         public Vector2 randomRecoilConstraints = new Vector2(2,5);
 
+        public GameObject bulletHole;
+
 
         public float aimSmoothing = 10f;
         #endregion
@@ -73,6 +75,7 @@ namespace Player.WeaponHandler
 
         IEnumerator FireBullets()
         {
+            ShootRayCast();
             Recoil();
             StartCoroutine(MuzzleFlash());
             yield return new WaitForSeconds(fireRate);
@@ -87,6 +90,18 @@ namespace Player.WeaponHandler
             muzzleFlash.color = new Color(0, 0, 0, 0);
         }
 
+        private void ShootRayCast()
+        {
+            RaycastHit hit;
+            //Debug.DrawRay(transform.parent.position, transform.parent.forward * 100);
+            if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit))
+            {
+                float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
+                Debug.Log(hit.normal);
+
+                Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.02f, hit.normal.y * 0.02f, hit.normal.z * 0.02f), Quaternion.LookRotation(-hit.normal));
+            }
+        }
         public void DetermineAim(bool isAiming)
         {
             Vector3 target_pos = normalLocalPosition;
