@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, ICombat
 {
     [Header("Player Health Bar Settings")]
     private float HP;
