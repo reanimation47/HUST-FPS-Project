@@ -133,7 +133,7 @@ namespace Player.WeaponHandler
 
             _cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
             transform.parent.localRotation = _cam.transform.localRotation;
-            Components.PlayerBodyAnimation.SyncCharacterHeadRotation(xRotation);
+            //Components.PlayerBodyAnimation.SyncCharacterHeadRotation(xRotation);
 
             //PlayerController.playerTransform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
         }

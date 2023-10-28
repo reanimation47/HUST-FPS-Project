@@ -9,7 +9,7 @@ namespace Player.Components
     {
         public static void ProcessMove(Vector2 input)
         {
-            PlayerBodyAnimation.ProcessMovementAnimation(input);
+            //PlayerBodyAnimation.ProcessMovementAnimation(input);
 
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;

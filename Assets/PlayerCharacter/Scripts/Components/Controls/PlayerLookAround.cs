@@ -25,7 +25,7 @@ namespace Player.Components
 
             _camera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
-            PlayerBodyAnimation.SyncCharacterHeadRotation(xRotation);
+            //PlayerBodyAnimation.SyncCharacterHeadRotation(xRotation);
             PlayerController.playerTransform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
         }
 
