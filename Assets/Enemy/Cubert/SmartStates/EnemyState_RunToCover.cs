@@ -35,4 +35,7 @@ public class EnemyState_RunToCover : IState
         return Color.blue;
     }
 
+    public bool HasArrivedAtDestination() {
+        return enemyReferences.navMeshAgent.remainingDistance < 0.1f;
+    }
 }
