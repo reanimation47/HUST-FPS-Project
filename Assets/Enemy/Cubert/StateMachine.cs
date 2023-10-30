@@ -91,4 +91,11 @@ public class StateMachine
 
       return null;
    }
+
+   public Color GetGizmoColor() {
+      if (_currentState != null) {
+         return _currentState.GizmoColor();
+      }
+      return Color.grey;
+   }
 }

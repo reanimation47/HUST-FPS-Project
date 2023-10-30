@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class Smart_Brain : MonoBehaviour
 
         stateMachine = new StateMachine();
 
-        CoverArea coverArea = FindObjectOfType<CoverArea>;
+        CoverArea coverArea = FindObjectOfType<CoverArea>();
 
         //STATES
         var runToCover = new EnemyState_RunToCover(enemyReferences, coverArea);

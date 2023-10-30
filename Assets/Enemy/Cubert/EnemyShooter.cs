@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubertShooter : MonoBehaviour
+public class EnemyShooter : MonoBehaviour
 {
     
     [Header("General")]
@@ -20,8 +20,20 @@ public class CubertShooter : MonoBehaviour
     public TrailRenderer bulletTrail;
 
     private EnemyReferences enemyReferences;
+
+    public int ammo = 30;
+
+    private int currentAmmo;
     
+    void Awake() {
+        enemyReferences = GetComponent<EnemyReferences>();
+        Reload();    
+    }
+
     public void Shoot() {
+
+        if ( ShouldReload() ) return;   // for Smart one
+
         Vector3 direction = GetDirection();
         if (Physics.Raycast(shootPoint.position, direction, out RaycastHit hit, float.MaxValue, layerMask)) {
             Debug.DrawLine(shootPoint.position, shootPoint.position + direction * 10f, Color.red, 1f);
@@ -29,6 +41,7 @@ public class CubertShooter : MonoBehaviour
             //TODO: Bad Performance. Replace with Object Pooling
             TrailRenderer trail = Instantiate(bulletTrail, gunPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, hit));
+            currentAmmo -= 1;
         }
     }
     
@@ -58,4 +71,15 @@ public class CubertShooter : MonoBehaviour
 
         Destroy(trail.gameObject, trail.time);
     }
+
+    public bool ShouldReload() {
+        return currentAmmo <= 0;
+    }
+
+    public void Reload() {
+        Debug.Log("Reloaded");
+        currentAmmo = ammo;
+    }
+
+
 }

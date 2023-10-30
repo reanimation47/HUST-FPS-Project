@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyState_Shooting : IState
+public class EnemyState_Shoot : IState
 {
     private EnemyReferences enemyReferences;
     private Transform target;
 
-    public EnemyState_Shooting(EnemyReferences enemyReferences) {
+    public EnemyState_Shoot(EnemyReferences enemyReferences) {
         this.enemyReferences = enemyReferences;
     }
 

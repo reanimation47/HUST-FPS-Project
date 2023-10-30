@@ -515,7 +515,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 107362829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccc7e4c31bd6bc843baf7ad69d8a38c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 56039b1e5724ba84187e6ef205cd9817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 1269757499}
@@ -525,6 +525,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   spread: {x: 0.06, y: 0.06, z: 0.06}
   bulletTrail: {fileID: 397180686281355358, guid: 15f4e6793d4ef482fa3c8a3ba7050d7e, type: 3}
+  ammo: 30
 --- !u!114 &107362832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,6 +540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 0}
   animator: {fileID: 0}
+  shooter: {fileID: 0}
   pathUpdateDelay: 0.2
 --- !u!195 &107362833
 NavMeshAgent:
@@ -2821,6 +2823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 0}
   animator: {fileID: 0}
+  shooter: {fileID: 0}
   pathUpdateDelay: 0.2
 --- !u!114 &1287379667
 MonoBehaviour:
