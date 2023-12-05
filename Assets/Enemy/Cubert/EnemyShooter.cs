@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShooter : MonoBehaviour
+public class EnemyShooter : MonoBehaviour, ICombat
 {
     
     [Header("General")]
@@ -23,6 +23,9 @@ public class EnemyShooter : MonoBehaviour
 
     public int ammo = 30;
 
+    public float baseDamage = 20;
+    public float baseHP = 100;
+
     private int currentAmmo;
     
     void Awake() {
@@ -42,6 +45,7 @@ public class EnemyShooter : MonoBehaviour
             TrailRenderer trail = Instantiate(bulletTrail, gunPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, hit));
             currentAmmo -= 1;
+            ICommon.CheckForHits(hit, baseDamage);
         }
     }
     
@@ -80,6 +84,24 @@ public class EnemyShooter : MonoBehaviour
         Debug.Log("Reloaded");
         currentAmmo = ammo;
     }
+
+    #region Combat
+    public void TakeDamage(float dmg)
+    {
+        baseHP -= dmg;
+        if (baseHP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+        Debug.LogWarning(baseHP);
+
+    }
+
+    public void RestoreHealth(float hp)
+    {
+
+    }
+    #endregion
 
 
 }

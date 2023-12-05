@@ -11,6 +11,7 @@ namespace Player.WeaponHandler
         #region Initialize Variables
         public Camera _cam;
         [Header("Gun Settings")]
+        public float baseDamage = 30;
         public float fireRate = 0.1f;
         public int clipSize = 30;
         public int reservedAmmo = 270;
@@ -98,6 +99,8 @@ namespace Player.WeaponHandler
             {
                 float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
                 Debug.Log(hit.normal);
+                Debug.LogWarning(hit.transform.gameObject.name);
+                ICommon.CheckForHits(hit, baseDamage);
 
                 Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
             }
@@ -151,6 +154,7 @@ namespace Player.WeaponHandler
             PlayerController.playerTransform.Rotate(Vector3.up * yRecoil);
 
         }
+
     }
 }
 
