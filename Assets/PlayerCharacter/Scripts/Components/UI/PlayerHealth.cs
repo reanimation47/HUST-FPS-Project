@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class PlayerHealth : MonoBehaviour, ICombat
+public class PlayerHealth : MonoBehaviour
 {
     [Header("Player Health Bar Settings")]
     private float HP;
@@ -33,7 +33,7 @@ public class PlayerHealth : MonoBehaviour, ICombat
     {
         HP = Mathf.Clamp(HP, 0, maxHP);
         UpdateHealthUI();
-        //TestDmg();
+        TestDmg();
         if (dmgOverlay.color.a > 0)
         {
             if (HP <= lowHealthThreshold)

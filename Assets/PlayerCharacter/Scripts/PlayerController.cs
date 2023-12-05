@@ -6,7 +6,7 @@ using TMPro;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, ICombat
     {
         #region Initialize Variables
         public static CharacterController controller;
@@ -39,10 +39,19 @@ namespace Player
         public GameObject _characterHead;
         public Animator _characterAnimator;
 
+        [Header("Others")]
+        public PlayerHealth PlayerHealth;
+
+
 
 
         public Camera _cam;
         #endregion
+
+        void Awake()
+        {
+            ICommon.LoadPlayer(this.gameObject);
+        }
 
         void Start()
         {
@@ -122,6 +131,17 @@ namespace Player
         }
         #endregion
 
+        #region Combat
+        public void TakeDamage(float dmg)
+        {
+            PlayerHealth.TakeDamage(dmg);
+        }
+
+        public void RestoreHealth(float hp)
+        {
+            PlayerHealth.RestoreHealth(hp);
+        }
+        #endregion
 
 
     }
