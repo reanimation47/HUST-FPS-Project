@@ -86,12 +86,13 @@ public class EnemyShooter : MonoBehaviour, ICombat
     }
 
     #region Combat
-    public void TakeDamage(float dmg)
+    // TODO: Do something when bot takes damages
+    public void TakeDamage(float dmg) 
     {
         baseHP -= dmg;
         if (baseHP <= 0)
         {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject); // TODO: Do something when bot dies
         }
         Debug.LogWarning(baseHP);
 
