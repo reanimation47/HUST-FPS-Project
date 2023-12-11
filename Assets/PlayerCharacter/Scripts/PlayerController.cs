@@ -41,6 +41,7 @@ namespace Player
 
         [Header("Others")]
         public PlayerHealth PlayerHealth;
+        public PlayerWeapons PlayerWeapons;
 
 
 

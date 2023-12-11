@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Player;
+using Player.WeaponHandler;
 using UnityEngine;
 
 public class ICommon : MonoBehaviour
@@ -44,11 +45,51 @@ public class ICommon : MonoBehaviour
         if (_hit.transform.gameObject.TryGetComponent(out Rigidbody rb)) // if target has rigidbody
         {
             //combatable.TakeDamage(baseDamage);
-            Debug.LogWarning("hittt");
+            //Debug.LogWarning("hittt");
             
-            rb.AddForce(-_hit.normal*7000);
+            rb.AddForce(-_hit.normal*7000); //TODO: Maybe the hit force could scale with the weapon's dmg?
         }
 
+    }
+    #endregion
+
+    #region Guns system
+    public static List<BaseGunController> _gunControllers = new List<BaseGunController>();
+    public static void LoadGunController(BaseGunController controller)
+    {
+        if (controller.GunID == GunID.DEFAULT)
+        {
+            Debug.LogWarning("A non-identifiable gun just tried to load into ICommon, please check to make sure all guns has its GunID field selected.");
+        }else
+        {
+            Debug.Log("ICommon: Added " + controller.GunID);
+            _gunControllers.Add(controller);
+        }
+    }
+
+    public static void EnableGun(GunID id)
+    {
+        foreach (var controller in _gunControllers)
+        {
+            if (controller.GunID == id)
+            {
+                //DestroyImmediate(controller.transform.gameObject); //Remove un-equipped guns
+                controller.isEquipped = true;
+            }
+        }
+
+    }
+
+    public static void CleanupUnEquippedGuns()
+    {
+        foreach (var controller in _gunControllers)
+        {
+            if (controller.isEquipped == false)
+            {
+                DestroyImmediate(controller.transform.gameObject); //Remove un-equipped guns
+                //_gunControllers.Remove(controller);
+            }
+        }
     }
     #endregion
 
