@@ -9,6 +9,7 @@ public class EnemyReferences : MonoBehaviour
     [HideInInspector] public NavMeshAgent navMeshAgent;
     [HideInInspector] public Animator animator;
     [HideInInspector] public EnemyShooter shooter;
+    [HideInInspector] public Smart_Brain brain;
     
 
     [Header("Stats")]
@@ -20,6 +21,7 @@ public class EnemyReferences : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         shooter = GetComponent<EnemyShooter>();
+        brain = GetComponent<Smart_Brain>();
     }
 
 
