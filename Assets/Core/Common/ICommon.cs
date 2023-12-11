@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
-public interface ICommon 
+public class ICommon : MonoBehaviour
 {
 
 
@@ -26,11 +26,27 @@ public interface ICommon
     #endregion
 
     #region Combat
+
+    private static GameObject bulletHole;
+    public static void LoadBulletHolePrefab(GameObject hole)
+    {
+        bulletHole = hole;
+    }
     public static void CheckForHits(RaycastHit _hit, float baseDamage)
     {
-        if (_hit.transform.gameObject.TryGetComponent(out ICombat combatable)) // is this even a word
+        if (_hit.transform.gameObject.TryGetComponent(out ICombat combatable)) // If target has combat system
         {
             combatable.TakeDamage(baseDamage);
+        }else 
+        {
+            Instantiate(bulletHole, _hit.point + new Vector3(_hit.normal.x * 0.01f, _hit.normal.y * 0.01f, _hit.normal.z * 0.01f), Quaternion.LookRotation(-_hit.normal));
+        }
+        if (_hit.transform.gameObject.TryGetComponent(out Rigidbody rb)) // if target has rigidbody
+        {
+            //combatable.TakeDamage(baseDamage);
+            Debug.LogWarning("hittt");
+            
+            rb.AddForce(-_hit.normal*7000);
         }
 
     }

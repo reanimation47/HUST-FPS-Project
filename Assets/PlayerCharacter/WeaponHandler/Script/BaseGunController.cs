@@ -38,6 +38,11 @@ namespace Player.WeaponHandler
         public float aimSmoothing = 10f;
         #endregion
 
+        private void Awake()
+        {
+            ICommon.LoadBulletHolePrefab(bulletHole);
+        }
+
         private void Start()
         {
             _currentAmmoInClip = clipSize;
@@ -102,7 +107,7 @@ namespace Player.WeaponHandler
                 Debug.LogWarning(hit.transform.gameObject.name);
                 ICommon.CheckForHits(hit, baseDamage);
 
-                Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
+                //Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
             }
         }
         public void DetermineAim(bool isAiming)
