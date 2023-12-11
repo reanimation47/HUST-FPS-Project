@@ -99,7 +99,7 @@ public class EnemyShooter : MonoBehaviour, ICombat
             //Destroy(this.gameObject); // TODO: Do something when bot dies
             Dies();
         }
-        Debug.LogWarning(baseHP);
+        //Debug.LogWarning(baseHP);
 
     }
 
