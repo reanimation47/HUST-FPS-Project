@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133beacef53a90547b6f62222451ec2d, type: 3}
+  m_Name: New Gun Database
+  m_EditorClassIdentifier: 
+  gunsList:
+  - gunObject: {fileID: 6416730846052406606, guid: 4b8d6abcc484ebf4a83fa3bcfd929fe5, type: 3}
+    gunName: CLOCK
+    damage: 12
+    fireRate: 12
+    ammoCapacity: 12
+    bulletSpeed: 12
+    reloadTime: 12
+  - gunObject: {fileID: 2641351572177420201, guid: 70beeaeaec2b98d4aadce0c3a9baf04d, type: 3}
+    gunName: AK-47
+    damage: 23
+    fireRate: 23
+    ammoCapacity: 23
+    bulletSpeed: 23
+    reloadTime: 23
+  - gunObject: {fileID: 3727380808872219282, guid: 797b9157c805e5d439856811a2782ca1, type: 3}
+    gunName: SMG
+    damage: 34
+    fireRate: 34
+    ammoCapacity: 34
+    bulletSpeed: 34
+    reloadTime: 34
