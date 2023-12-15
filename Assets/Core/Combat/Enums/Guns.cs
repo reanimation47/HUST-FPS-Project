@@ -12,3 +12,8 @@ public enum GunID
     VECTOR_03,
 
 }
+
+public enum WeaponSlot
+{
+    
+}

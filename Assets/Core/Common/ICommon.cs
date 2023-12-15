@@ -91,6 +91,11 @@ public class ICommon : MonoBehaviour
             }
         }
     }
+
+    public static List<BaseGunController> GetEquippedGunControllers()
+    {
+        return _gunControllers;
+    }
     #endregion
 
     #region Templates - Unused

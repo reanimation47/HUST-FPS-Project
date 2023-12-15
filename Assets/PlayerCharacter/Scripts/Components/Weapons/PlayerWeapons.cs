@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Player.WeaponHandler;
 using UnityEngine;
-using UnityEngine.Scripting;
+using TMPro;
 
 public class PlayerWeapons : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI AmmoText;
     [SerializeField] private GameObject weaponsHolder;
+
+    [HideInInspector] public List<BaseGunController> gunControllers;
+
+    private BaseGunController currentActiveGun;
     public List<GunID> equippedGuns = new List<GunID>() // TODO: Sync this list with guns equipped from Guns Menu
     {
         GunID.AK47_01,
@@ -21,6 +26,18 @@ public class PlayerWeapons : MonoBehaviour
     {
         EnableEquippedGuns();
         ICommon.CleanupUnEquippedGuns();
+        gunControllers = ICommon.GetEquippedGunControllers();
+        EquipGun(0);
+    }
+
+    private void Update()
+    {
+        UpdateCurrentAmmo();
+    }
+
+    private void UpdateCurrentAmmo()
+    {
+        AmmoText.text = $"{currentActiveGun._currentAmmoInClip}/{currentActiveGun._ammoInReserve}";
     }
 
     private void EnableEquippedGuns()
@@ -37,5 +54,22 @@ public class PlayerWeapons : MonoBehaviour
         }
     }
 
+    private void EquipGun(int slotIndex)
+    {
+        Debug.LogWarning(gunControllers.Count);
+        for (int i = 0; i < gunControllers.Count; i++)
+        {
+            Debug.LogWarning(i == slotIndex);
+            var gun = gunControllers[i];
+            if (i == slotIndex)
+            {
+                gun.transform.gameObject.SetActive(true);
+                currentActiveGun = gun;
+            }else
+            {
+                gun.transform.gameObject.SetActive(false);
+            }
+        }
+    }
 }
 

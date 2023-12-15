@@ -13,6 +13,7 @@ namespace Player.WeaponHandler
         [Header("Gun Settings")]
         
         [HideInInspector] public bool isEquipped = false;
+        [HideInInspector] public bool isActive = false;
         public GunID GunID = GunID.DEFAULT; //To identify different guns
 
         public float baseDamage = 30;
@@ -21,8 +22,8 @@ namespace Player.WeaponHandler
         public int reservedAmmo = 270;
 
         bool _canShoot;
-        int _currentAmmoInClip;
-        int _ammoInReserve;
+        public int _currentAmmoInClip;
+        public int _ammoInReserve;
 
         //Muzzle
         public Image muzzleFlash;

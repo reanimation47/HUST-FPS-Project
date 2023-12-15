@@ -4174,26 +4174,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2949817312594533544, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_Name
-      value: Weapons
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378855845103193680, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: weaponsHolder
-      value: 
-      objectReference: {fileID: 4378855843816797894}
-    - target: {fileID: 4378855845103193680, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: equippedGuns.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378855845103193680, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: equippedGuns.Array.data[1]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6689124027560862332, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
 --- !u!1001 &3417984693620380282
@@ -4326,11 +4306,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a4df661fb1ec400c8f13b34a046ae72, type: 3}
---- !u!1 &4378855843816797894 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2949817312594533544, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-  m_PrefabInstance: {fileID: 1453265230831905390}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4378855845103193669 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2949817314417943595, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}

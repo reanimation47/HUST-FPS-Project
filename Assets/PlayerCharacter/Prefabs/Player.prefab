@@ -304,7 +304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ad6df9dfae741ff9388d1e05b18c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedGuns: 01000000
+  AmmoText: {fileID: 1453265231765545856}
+  weaponsHolder: {fileID: 2949817312594533544}
+  gunControllers: []
+  equippedGuns: 0100000004000000
 --- !u!1 &1453265231765545858
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +335,7 @@ RectTransform:
   m_GameObject: {fileID: 1453265231765545858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7247, y: 1.7247, z: 1.7247}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1453265231082848333}
@@ -570,7 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2949817312594533545}
   m_Layer: 0
-  m_Name: Weapon
+  m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
