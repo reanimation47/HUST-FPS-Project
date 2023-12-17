@@ -199,7 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cam: {fileID: 0}
-  GunID: 1
+  isEquipped: 0
+  GunID: 0
   baseDamage: 30
   fireRate: 0.1
   clipSize: 30
