@@ -9,9 +9,9 @@ public class PlayerWeapons : MonoBehaviour
     [SerializeField] private TextMeshProUGUI AmmoText;
     [SerializeField] private GameObject weaponsHolder;
 
-    [HideInInspector] public List<BaseGunController> gunControllers;
+    [HideInInspector] public List<GunScript> _guns;
 
-    private BaseGunController currentActiveGun;
+    private GunScript currentActiveGun;
     public List<GunID> equippedGuns = new List<GunID>() // TODO: Sync this list with guns equipped from Guns Menu
     {
         GunID.AK47_01,
@@ -24,9 +24,10 @@ public class PlayerWeapons : MonoBehaviour
 
     private void Start()
     {
-        EnableEquippedGuns();
-        ICommon.CleanupUnEquippedGuns();
-        gunControllers = ICommon.GetEquippedGunControllers();
+        //EnableEquippedGuns();
+        //ICommon.CleanupUnEquippedGuns();
+        //ICommon.EnableEquippedGuns(equippedGuns);
+        _guns = ICommon.GetEquippedGuns();
         EquipGun(0);
     }
 
@@ -56,13 +57,14 @@ public class PlayerWeapons : MonoBehaviour
 
     private void EquipGun(int slotIndex)
     {
-        Debug.LogWarning(gunControllers.Count);
-        for (int i = 0; i < gunControllers.Count; i++)
+        Debug.LogWarning(_guns.Count);
+        for (int i = 0; i < _guns.Count; i++)
         {
             Debug.LogWarning(i == slotIndex);
-            var gun = gunControllers[i];
+            var gun = _guns[i];
             if (i == slotIndex)
             {
+                Debug.LogWarning(gun.GunID);
                 gun.transform.gameObject.SetActive(true);
                 currentActiveGun = gun;
             }else

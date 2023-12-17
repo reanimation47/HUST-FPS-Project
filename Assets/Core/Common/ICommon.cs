@@ -53,7 +53,7 @@ public class ICommon : MonoBehaviour
     }
     #endregion
 
-    #region Guns system
+    #region Guns system - OLD
     public static List<BaseGunController> _gunControllers = new List<BaseGunController>();
     public static void LoadGunController(BaseGunController controller)
     {
@@ -96,6 +96,58 @@ public class ICommon : MonoBehaviour
     {
         return _gunControllers;
     }
+    #endregion
+
+    #region Guns System - NEW
+
+    public static List<GunScript> _guns = new List<GunScript>();
+
+    public static void LoadGun(GunScript gun)
+    {
+        if (gun.GunID == GunID.DEFAULT)
+        {
+            Debug.LogWarning("A non-identifiable gun just tried to load into ICommon, please check to make sure all guns has its GunID field selected.");
+        }else
+        {
+            _guns.Add(gun);
+        }
+    }
+
+    public static void EnableEquippedGuns(List<GunID> gunsList)
+    {
+        if (gunsList.Count > 2)
+        {
+            Debug.LogWarning("Equipped guns count is not expected to be more than 2.");
+        }
+
+        //Mark the equipped guns
+        foreach (var gunID in gunsList)
+        {
+            foreach (var gun in _guns)
+            {
+                if (gun.GunID == gunID)
+                {
+                    gun.isEquipped = true;
+                }
+            }
+        }
+
+        //Remove unnecessary guns during play time
+        foreach (var gun in _guns)
+        {
+            if (gun.isEquipped == false)
+            {
+                DestroyImmediate(gun.transform.gameObject);
+            }
+        }
+
+    }
+
+    public static List<GunScript> GetEquippedGuns()
+    {
+        return _guns;
+    }
+
     #endregion
 
     #region Templates - Unused

@@ -16,6 +16,8 @@ namespace Player.WeaponHandler
         [HideInInspector] public bool isActive = false;
         public GunID GunID = GunID.DEFAULT; //To identify different guns
 
+        public GameObject WeaponsHolder;
+
         public float baseDamage = 30;
         public float fireRate = 0.1f;
         public int clipSize = 30;
@@ -45,7 +47,7 @@ namespace Player.WeaponHandler
 
         private void Awake()
         {
-            ICommon.LoadGunController(this);
+            //ICommon.LoadGunController(this);
             ICommon.LoadBulletHolePrefab(bulletHole);
         }
 
