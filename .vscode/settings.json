@@ -52,5 +52,5 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": false,
-    "dotnet.defaultSolution": "FPS PROJECT.sln"
+    "dotnet.defaultSolution": "HUST-FPS-Project.sln"
 }
