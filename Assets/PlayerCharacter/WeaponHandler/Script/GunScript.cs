@@ -17,10 +17,10 @@ public class GunScript : MonoBehaviour
     {
         _currentAmmoInClip = clipSize;
         _ammoInReserve = reservedAmmo;
+        ICommon.LoadGun(this);
     }
 
     private void Start()
     {
-        ICommon.LoadGun(this);
     }
 }

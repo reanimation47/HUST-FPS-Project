@@ -107,6 +107,33 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""d513d074-8f91-46d3-b305-f2ff3f705f5a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FirstWeaponSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""da5d88ba-6959-4424-a534-d3ca0968141a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondWeaponSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a9b556d-c79a-4efa-8073-39edf84b78eb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -382,6 +409,39 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""088742bb-6cff-499e-a4d9-03b137b6809b"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c8f9049-b85b-467c-bced-39d40512e4e9"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirstWeaponSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a382f490-98eb-4220-9333-50c1f138f35c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondWeaponSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -917,6 +977,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_LeftClick = m_OnFoot.FindAction("LeftClick", throwIfNotFound: true);
         m_OnFoot_Reload = m_OnFoot.FindAction("Reload", throwIfNotFound: true);
         m_OnFoot_RightClick = m_OnFoot.FindAction("RightClick", throwIfNotFound: true);
+        m_OnFoot_SwapWeapon = m_OnFoot.FindAction("SwapWeapon", throwIfNotFound: true);
+        m_OnFoot_FirstWeaponSlot = m_OnFoot.FindAction("FirstWeaponSlot", throwIfNotFound: true);
+        m_OnFoot_SecondWeaponSlot = m_OnFoot.FindAction("SecondWeaponSlot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -999,6 +1062,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_LeftClick;
     private readonly InputAction m_OnFoot_Reload;
     private readonly InputAction m_OnFoot_RightClick;
+    private readonly InputAction m_OnFoot_SwapWeapon;
+    private readonly InputAction m_OnFoot_FirstWeaponSlot;
+    private readonly InputAction m_OnFoot_SecondWeaponSlot;
     public struct OnFootActions
     {
         private @PlayerInput m_Wrapper;
@@ -1012,6 +1078,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @LeftClick => m_Wrapper.m_OnFoot_LeftClick;
         public InputAction @Reload => m_Wrapper.m_OnFoot_Reload;
         public InputAction @RightClick => m_Wrapper.m_OnFoot_RightClick;
+        public InputAction @SwapWeapon => m_Wrapper.m_OnFoot_SwapWeapon;
+        public InputAction @FirstWeaponSlot => m_Wrapper.m_OnFoot_FirstWeaponSlot;
+        public InputAction @SecondWeaponSlot => m_Wrapper.m_OnFoot_SecondWeaponSlot;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1048,6 +1117,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @RightClick.started += instance.OnRightClick;
             @RightClick.performed += instance.OnRightClick;
             @RightClick.canceled += instance.OnRightClick;
+            @SwapWeapon.started += instance.OnSwapWeapon;
+            @SwapWeapon.performed += instance.OnSwapWeapon;
+            @SwapWeapon.canceled += instance.OnSwapWeapon;
+            @FirstWeaponSlot.started += instance.OnFirstWeaponSlot;
+            @FirstWeaponSlot.performed += instance.OnFirstWeaponSlot;
+            @FirstWeaponSlot.canceled += instance.OnFirstWeaponSlot;
+            @SecondWeaponSlot.started += instance.OnSecondWeaponSlot;
+            @SecondWeaponSlot.performed += instance.OnSecondWeaponSlot;
+            @SecondWeaponSlot.canceled += instance.OnSecondWeaponSlot;
         }
 
         private void UnregisterCallbacks(IOnFootActions instance)
@@ -1079,6 +1157,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @RightClick.started -= instance.OnRightClick;
             @RightClick.performed -= instance.OnRightClick;
             @RightClick.canceled -= instance.OnRightClick;
+            @SwapWeapon.started -= instance.OnSwapWeapon;
+            @SwapWeapon.performed -= instance.OnSwapWeapon;
+            @SwapWeapon.canceled -= instance.OnSwapWeapon;
+            @FirstWeaponSlot.started -= instance.OnFirstWeaponSlot;
+            @FirstWeaponSlot.performed -= instance.OnFirstWeaponSlot;
+            @FirstWeaponSlot.canceled -= instance.OnFirstWeaponSlot;
+            @SecondWeaponSlot.started -= instance.OnSecondWeaponSlot;
+            @SecondWeaponSlot.performed -= instance.OnSecondWeaponSlot;
+            @SecondWeaponSlot.canceled -= instance.OnSecondWeaponSlot;
         }
 
         public void RemoveCallbacks(IOnFootActions instance)
@@ -1225,6 +1312,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnLeftClick(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
+        void OnSwapWeapon(InputAction.CallbackContext context);
+        void OnFirstWeaponSlot(InputAction.CallbackContext context);
+        void OnSecondWeaponSlot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

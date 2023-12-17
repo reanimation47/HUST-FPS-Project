@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Player;
 using Player.WeaponHandler;
 using UnityEngine;
@@ -101,6 +102,7 @@ public class ICommon : MonoBehaviour
     #region Guns System - NEW
 
     public static List<GunScript> _guns = new List<GunScript>();
+    public static List<GunScript> equippedGuns = new List<GunScript>();
 
     public static void LoadGun(GunScript gun)
     {
@@ -138,6 +140,9 @@ public class ICommon : MonoBehaviour
             if (gun.isEquipped == false)
             {
                 DestroyImmediate(gun.transform.gameObject);
+            }else
+            {
+                equippedGuns.Add(gun);
             }
         }
 
@@ -145,7 +150,7 @@ public class ICommon : MonoBehaviour
 
     public static List<GunScript> GetEquippedGuns()
     {
-        return _guns;
+        return equippedGuns;
     }
 
     #endregion
