@@ -42,7 +42,7 @@ public class PlayerWeapons : MonoBehaviour
         //ICommon.CleanupUnEquippedGuns();
         ICommon.EnableEquippedGuns(equippedGuns);
         _guns = ICommon.GetEquippedGuns();
-        EquipGun(1);
+        EquipGun(1, true);
         gunController.ManualStart();
     }
 
@@ -70,9 +70,14 @@ public class PlayerWeapons : MonoBehaviour
         }
     }
 
-    public void EquipGun(int slotIndex)
+    public void EquipGun(int slotIndex, bool atIntro = false)
     {
-        Debug.LogWarning(_guns.Count);
+        //Debug.LogWarning(_guns.Count);
+        if (!atIntro)
+        {
+            gunController.GunSwitchAnimation();
+
+        }
         for (int i = 0; i < _guns.Count; i++)
         {
             var gun = _guns[i];

@@ -15,21 +15,12 @@ namespace Player.WeaponHandler
         [HideInInspector] public bool isEquipped = false;
         [HideInInspector] public bool isActive = false;
         public GunID GunID = GunID.DEFAULT; //To identify different guns
-
-        public GameObject WeaponsHolder;
-
-        public float baseDamage = 30;
-        public float fireRate = 0.1f;
-        public int clipSize = 30;
-        public int reservedAmmo = 270;
+        private Animator animator;
 
         bool _canShoot;
         private GunScript activeGun;
-        public int _currentAmmoInClip;
-        public int _ammoInReserve;
 
         //Muzzle
-        public Image muzzleFlash;
         public Sprite[] muzzleSprites;
 
         //Aiming
@@ -38,7 +29,6 @@ namespace Player.WeaponHandler
         public float weaponSwayIntensity = -2f;
 
         //Recoil
-        public Vector2 randomRecoilConstraints = new Vector2(2,5);
 
         public GameObject bulletHole;
 
@@ -54,6 +44,7 @@ namespace Player.WeaponHandler
 
         private void Start()
         {
+            animator = GetComponent<Animator>();
         }
 
         public void ManualStart()
@@ -182,6 +173,23 @@ namespace Player.WeaponHandler
         }
         #endregion
 
+        #region Guns Animation
+
+        public void GunSwitchAnimation()
+        {
+           StartCoroutine(CoGunSwitchAnimation());
+        }
+        IEnumerator CoGunSwitchAnimation()
+        {
+            animator.enabled = false;
+            animator.enabled = true;
+            animator.SetBool("Switching", true);
+            yield return new WaitForSeconds(0.25f);
+            animator.SetBool("Switching", false);
+            yield return new WaitForSeconds(0.05f);
+            animator.enabled = false;
+        }
+        #endregion
     }
 }
 
