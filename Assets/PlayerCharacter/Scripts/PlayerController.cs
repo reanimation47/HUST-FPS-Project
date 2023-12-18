@@ -13,7 +13,6 @@ namespace Player
         public static Transform playerTransform;
         private Vector3 playerVelocity;
         private bool isGrounded;
-
         public static float playerSpeed { get; private set; }
         public static float interactDistance { get; private set; }
         public static LayerMask interactMask { get; private set; }
@@ -56,9 +55,11 @@ namespace Player
 
         void Start()
         {
+            
             Cursor.lockState = CursorLockMode.Locked;
             AssignStaticVariables();
             AssignComponents();
+            
         }
 
         private void Update()
@@ -144,6 +145,7 @@ namespace Player
         }
         #endregion
 
+       
 
     }
 
