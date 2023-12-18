@@ -19,7 +19,7 @@ public class PlayerWeapons : MonoBehaviour
     public GunScript currentActiveGun;
     public List<GunID> equippedGuns = new List<GunID>() // TODO: Sync this list with guns equipped from Guns Menu
     {
-        GunID.AK47_01,
+        GunID.AK47_02,
         GunID.GLOCK_01,
     };
 

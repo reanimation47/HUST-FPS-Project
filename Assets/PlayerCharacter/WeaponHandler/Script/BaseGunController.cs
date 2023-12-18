@@ -24,6 +24,7 @@ namespace Player.WeaponHandler
         public int reservedAmmo = 270;
 
         bool _canShoot;
+        private GunScript activeGun;
         public int _currentAmmoInClip;
         public int _ammoInReserve;
 
@@ -57,34 +58,37 @@ namespace Player.WeaponHandler
 
         public void ManualStart()
         {
-            _currentAmmoInClip = PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip;
-            _ammoInReserve = PlayerWeapons.Instance.currentActiveGun._ammoInReserve;
+            //_currentAmmoInClip = activeGun._currentAmmoInClip;
+            //_ammoInReserve = activeGun._ammoInReserve;
             _canShoot = true;
-            muzzleFlash.color = new Color(0, 0, 0, 0);
+            GetActiveGun();
+            activeGun.muzzleFlash.color = new Color(0, 0, 0, 0);
         }
 
         #region Gun Actions
         public void ShootGun()
         {
-            if (!_canShoot || PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip <= 0) { return; }
+            GetActiveGun();
+            if (!_canShoot || activeGun._currentAmmoInClip <= 0) { return; }
             _canShoot = false;
-            PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip -= 1;
+            activeGun._currentAmmoInClip -= 1;
             StartCoroutine(FireBullets());
         }
 
         public void Reload()
         {
-            if (PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip >= PlayerWeapons.Instance.currentActiveGun.clipSize || PlayerWeapons.Instance.currentActiveGun._ammoInReserve <= 0) { return; }
-            int _ammoNeeded = PlayerWeapons.Instance.currentActiveGun.clipSize - PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip;
-            if (_ammoNeeded >= PlayerWeapons.Instance.currentActiveGun._ammoInReserve)
+            GetActiveGun();
+            if (activeGun._currentAmmoInClip >= activeGun.clipSize || activeGun._ammoInReserve <= 0) { return; }
+            int _ammoNeeded = activeGun.clipSize - activeGun._currentAmmoInClip;
+            if (_ammoNeeded >= activeGun._ammoInReserve)
             {
-                PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip += PlayerWeapons.Instance.currentActiveGun._ammoInReserve;
-                PlayerWeapons.Instance.currentActiveGun._ammoInReserve -= _ammoNeeded;
+                activeGun._currentAmmoInClip += activeGun._ammoInReserve;
+                activeGun._ammoInReserve -= _ammoNeeded;
             }
             else
             {
-                PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip = PlayerWeapons.Instance.currentActiveGun.clipSize;
-                PlayerWeapons.Instance.currentActiveGun._ammoInReserve -= _ammoNeeded;
+                activeGun._currentAmmoInClip = activeGun.clipSize;
+                activeGun._ammoInReserve -= _ammoNeeded;
             }
         }
         #endregion
@@ -96,16 +100,16 @@ namespace Player.WeaponHandler
             ShootRayCast();
             Recoil();
             StartCoroutine(MuzzleFlash());
-            yield return new WaitForSeconds(PlayerWeapons.Instance.currentActiveGun.fireRate);
+            yield return new WaitForSeconds(activeGun.fireRate);
             _canShoot = true;
         }
         IEnumerator MuzzleFlash()
         {
-            muzzleFlash.sprite = muzzleSprites[Random.Range(0, muzzleSprites.Length)];
-            muzzleFlash.color = Color.white;
+            activeGun.muzzleFlash.sprite = muzzleSprites[Random.Range(0, muzzleSprites.Length)];
+            activeGun.muzzleFlash.color = Color.white;
             yield return new WaitForSeconds(0.05f);
-            muzzleFlash.sprite = null;
-            muzzleFlash.color = new Color(0, 0, 0, 0);
+            activeGun.muzzleFlash.sprite = null;
+            activeGun.muzzleFlash.color = new Color(0, 0, 0, 0);
         }
 
         private void ShootRayCast()
@@ -117,7 +121,7 @@ namespace Player.WeaponHandler
                 float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
                 //Debug.Log(hit.normal);
                 //Debug.LogWarning(hit.transform.gameObject.name);
-                ICommon.CheckForHits(hit, PlayerWeapons.Instance.currentActiveGun.baseDamage);
+                ICommon.CheckForHits(hit, activeGun.baseDamage);
 
                 //Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
             }
@@ -162,14 +166,19 @@ namespace Player.WeaponHandler
         {
             transform.localPosition -= Vector3.forward * 0.1f; //Pure gun recoiling visual effect
 
-            float xRecoil = Random.Range(-PlayerWeapons.Instance.currentActiveGun.randomRecoilConstraints.x, PlayerWeapons.Instance.currentActiveGun.randomRecoilConstraints.x);
-            float yRecoil = Random.Range(-PlayerWeapons.Instance.currentActiveGun.randomRecoilConstraints.y, PlayerWeapons.Instance.currentActiveGun.randomRecoilConstraints.y);
+            float xRecoil = Random.Range(-activeGun.randomRecoilConstraints.x, activeGun.randomRecoilConstraints.x);
+            float yRecoil = Random.Range(-activeGun.randomRecoilConstraints.y, activeGun.randomRecoilConstraints.y);
 
             Vector2 recoil = new Vector2(xRecoil, yRecoil);
             xRotation -= Mathf.Abs(xRecoil);
 
             PlayerController.playerTransform.Rotate(Vector3.up * yRecoil);
 
+        }
+
+        private void GetActiveGun()
+        {
+            activeGun = PlayerWeapons.Instance.currentActiveGun;
         }
         #endregion
 

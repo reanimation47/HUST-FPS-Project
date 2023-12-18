@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GunScript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GunScript : MonoBehaviour
     public int clipSize = 30;
     public int reservedAmmo = 270;
     public Vector2 randomRecoilConstraints = new Vector2(2,5);
+    public Image muzzleFlash;
     [HideInInspector] public int _currentAmmoInClip;
     [HideInInspector] public int _ammoInReserve;
     private void Awake()
