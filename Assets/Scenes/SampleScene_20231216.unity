@@ -2979,6 +2979,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577016616}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1586966259 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6313864640954366151, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
+  m_PrefabInstance: {fileID: 1453265230831905390}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6483c24fd902d4a04bed19d562cb5202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1639960672
 GameObject:
   m_ObjectHideFlags: 0
@@ -4126,6 +4137,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 664220262, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
+      propertyPath: clipSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 664220262, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
+      propertyPath: baseDamage
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1485757031, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
+      propertyPath: clipSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1485757031, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
+      propertyPath: baseDamage
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -4174,6 +4201,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4378855845103193680, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
+      propertyPath: gunController
+      value: 
+      objectReference: {fileID: 1586966259}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
 --- !u!1001 &3417984693620380282

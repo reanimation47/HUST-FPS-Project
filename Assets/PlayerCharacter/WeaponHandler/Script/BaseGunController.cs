@@ -53,8 +53,12 @@ namespace Player.WeaponHandler
 
         private void Start()
         {
-            _currentAmmoInClip = clipSize;
-            _ammoInReserve = reservedAmmo;
+        }
+
+        public void ManualStart()
+        {
+            _currentAmmoInClip = PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip;
+            _ammoInReserve = PlayerWeapons.Instance.currentActiveGun._ammoInReserve;
             _canShoot = true;
             muzzleFlash.color = new Color(0, 0, 0, 0);
         }
@@ -62,25 +66,25 @@ namespace Player.WeaponHandler
         #region Gun Actions
         public void ShootGun()
         {
-            if (!_canShoot || _currentAmmoInClip <= 0) { return; }
+            if (!_canShoot || PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip <= 0) { return; }
             _canShoot = false;
-            _currentAmmoInClip -= 1;
+            PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip -= 1;
             StartCoroutine(FireBullets());
         }
 
         public void Reload()
         {
-            if (_currentAmmoInClip >= clipSize || _ammoInReserve <= 0) { return; }
-            int _ammoNeeded = clipSize - _currentAmmoInClip;
-            if (_ammoNeeded >= _ammoInReserve)
+            if (PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip >= PlayerWeapons.Instance.currentActiveGun.clipSize || PlayerWeapons.Instance.currentActiveGun._ammoInReserve <= 0) { return; }
+            int _ammoNeeded = PlayerWeapons.Instance.currentActiveGun.clipSize - PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip;
+            if (_ammoNeeded >= PlayerWeapons.Instance.currentActiveGun._ammoInReserve)
             {
-                _currentAmmoInClip += _ammoInReserve;
-                _ammoInReserve -= _ammoNeeded;
+                PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip += PlayerWeapons.Instance.currentActiveGun._ammoInReserve;
+                PlayerWeapons.Instance.currentActiveGun._ammoInReserve -= _ammoNeeded;
             }
             else
             {
-                _currentAmmoInClip = clipSize;
-                _ammoInReserve -= _ammoNeeded;
+                PlayerWeapons.Instance.currentActiveGun._currentAmmoInClip = PlayerWeapons.Instance.currentActiveGun.clipSize;
+                PlayerWeapons.Instance.currentActiveGun._ammoInReserve -= _ammoNeeded;
             }
         }
         #endregion

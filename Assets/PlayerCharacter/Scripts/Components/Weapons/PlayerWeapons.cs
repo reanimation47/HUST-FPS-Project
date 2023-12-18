@@ -6,12 +6,17 @@ using TMPro;
 
 public class PlayerWeapons : MonoBehaviour
 {
+    public static PlayerWeapons Instance;
+
+    [SerializeField] private BaseGunController gunController;
     [SerializeField] private TextMeshProUGUI AmmoText;
     [SerializeField] private GameObject weaponsHolder;
 
     [HideInInspector] public List<GunScript> _guns;
 
-    private GunScript currentActiveGun;
+    public int random = 30;
+
+    public GunScript currentActiveGun;
     public List<GunID> equippedGuns = new List<GunID>() // TODO: Sync this list with guns equipped from Guns Menu
     {
         GunID.AK47_01,
@@ -20,7 +25,16 @@ public class PlayerWeapons : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
     }
+
 
     private void Start()
     {
@@ -29,11 +43,12 @@ public class PlayerWeapons : MonoBehaviour
         ICommon.EnableEquippedGuns(equippedGuns);
         _guns = ICommon.GetEquippedGuns();
         EquipGun(1);
+        gunController.ManualStart();
     }
 
     private void Update()
     {
-        //UpdateCurrentAmmo();
+        UpdateCurrentAmmo();
     }
 
     private void UpdateCurrentAmmo()
