@@ -22,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
     public float lowHealthThreshold = 20;
 
     private float durationTimer;
+    public float playerHP;
 
     private void Start()
     {
@@ -48,6 +49,15 @@ public class PlayerHealth : MonoBehaviour
                 dmgOverlay.color = new Color(dmgOverlay.color.r, dmgOverlay.color.g, dmgOverlay.color.b, tempAlpha);
             }
         }
+    }
+
+    public bool isDeath()
+    {
+        if (HP == 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void TestDmg()
