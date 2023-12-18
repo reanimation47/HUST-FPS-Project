@@ -7,6 +7,8 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject optionsMenu;
+    [SerializeField] private GameObject mapsMenu;
+    [SerializeField] private GameObject charactersMenu;
     private void Start()
     {
         ActivateMainMenu(true);
@@ -16,6 +18,18 @@ public class MainMenuManager : MonoBehaviour
     {
         mainMenu.SetActive(state);
         optionsMenu.SetActive(!state);
+    }
+
+    public void ActivateOptionsMapsMenu(bool state)
+    {
+        optionsMenu.SetActive(state);
+        mapsMenu.SetActive(!state);
+    }
+
+    public void ActivateOptionsCharactersMenu(bool state)
+    {
+        optionsMenu.SetActive(state);
+        charactersMenu.SetActive(!state);
     }
 
     public void PLay()
