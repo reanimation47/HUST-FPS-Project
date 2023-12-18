@@ -96,7 +96,7 @@ namespace Player.WeaponHandler
             ShootRayCast();
             Recoil();
             StartCoroutine(MuzzleFlash());
-            yield return new WaitForSeconds(fireRate);
+            yield return new WaitForSeconds(PlayerWeapons.Instance.currentActiveGun.fireRate);
             _canShoot = true;
         }
         IEnumerator MuzzleFlash()
@@ -117,7 +117,7 @@ namespace Player.WeaponHandler
                 float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
                 //Debug.Log(hit.normal);
                 //Debug.LogWarning(hit.transform.gameObject.name);
-                ICommon.CheckForHits(hit, baseDamage);
+                ICommon.CheckForHits(hit, PlayerWeapons.Instance.currentActiveGun.baseDamage);
 
                 //Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
             }
@@ -162,8 +162,8 @@ namespace Player.WeaponHandler
         {
             transform.localPosition -= Vector3.forward * 0.1f; //Pure gun recoiling visual effect
 
-            float xRecoil = Random.Range(-randomRecoilConstraints.x, randomRecoilConstraints.x);
-            float yRecoil = Random.Range(-randomRecoilConstraints.y, randomRecoilConstraints.y);
+            float xRecoil = Random.Range(-PlayerWeapons.Instance.currentActiveGun.randomRecoilConstraints.x, PlayerWeapons.Instance.currentActiveGun.randomRecoilConstraints.x);
+            float yRecoil = Random.Range(-PlayerWeapons.Instance.currentActiveGun.randomRecoilConstraints.y, PlayerWeapons.Instance.currentActiveGun.randomRecoilConstraints.y);
 
             Vector2 recoil = new Vector2(xRecoil, yRecoil);
             xRotation -= Mathf.Abs(xRecoil);
