@@ -94,4 +94,24 @@ public class Launcher : MonoBehaviourPunCallbacks
         closeMenus();
         menuButtons.SetActive(true);
     }
+
+    public void CloseScreen()
+    {   
+        closeMenus();
+        menuButtons.SetActive(true);
+    }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+        closeMenus();
+        loadingText.text = "Leaving Room...";
+        loadingScreen.SetActive(true);
+    }
+
+    public override void OnLeftRoom()
+    {
+        closeMenus();
+        menuButtons.SetActive(true);
+    }
 }
