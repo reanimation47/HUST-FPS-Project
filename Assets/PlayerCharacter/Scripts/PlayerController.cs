@@ -13,11 +13,13 @@ namespace Player
         public static Transform playerTransform;
         private Vector3 playerVelocity;
         private bool isGrounded;
+
         public static float playerSpeed { get; private set; }
         public static float interactDistance { get; private set; }
         public static LayerMask interactMask { get; private set; }
         public static TextMeshProUGUI promptMessage { get; set; }
         public static GameObject characterHead;
+        public static GameObject bodySpine;
         public static Animator characterAnimator;
 
         public static readonly float xSensitivity = 30f;
@@ -36,6 +38,7 @@ namespace Player
 
         [Header("Character body controls")]
         public GameObject _characterHead;
+        public GameObject _bodySpine;
         public Animator _characterAnimator;
 
         [Header("Others")]
@@ -55,11 +58,10 @@ namespace Player
 
         void Start()
         {
-            
             Cursor.lockState = CursorLockMode.Locked;
             AssignStaticVariables();
             AssignComponents();
-            
+            //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
         }
 
         private void Update()
@@ -79,6 +81,7 @@ namespace Player
             interactMask = _interactMask;
             promptMessage = _promptMessage;
             characterHead = _characterHead;
+            bodySpine = _bodySpine;
             characterAnimator = _characterAnimator;
         }
 
@@ -145,7 +148,6 @@ namespace Player
         }
         #endregion
 
-       
 
     }
 
