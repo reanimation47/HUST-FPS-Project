@@ -29,6 +29,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public GameObject roomBrowserScreen;
     public RoomButton buttonRoomBrowser;
     private List<RoomButton> allRoomButtons = new List<RoomButton>();
+    private Dictionary<string, RoomInfo> cachedRoomsList = new Dictionary<string, RoomInfo>();
 
     // Start is called before the first frame update
     void Start()
@@ -136,24 +137,45 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach (RoomButton rb in allRoomButtons) 
-        {
-            Destroy(rb.gameObject);
-        }
-        allRoomButtons.Clear();
+        UpdateCacheRoomList(roomList);
+    }
 
-        for(int i = 0; i < roomList.Count; i++)
+    public void UpdateCacheRoomList(List<RoomInfo> roomList)
+    {
+        for (int i = 0; i < roomList.Count; i++)
         {
-            if (roomList[i].PlayerCount != roomList[i].MaxPlayers 
-                && !roomList[i].RemovedFromList)
+            RoomInfo info = roomList[i];
+            if (info.RemovedFromList)
             {
-                RoomButton newButton = Instantiate(buttonRoomBrowser, buttonRoomBrowser.transform.parent);
-                newButton.SetButtonDetails(roomList[i]);
-                newButton.gameObject.SetActive(true);
-
-                allRoomButtons.Add(newButton);
+                cachedRoomsList.Remove(info.Name);
+            }
+            else
+            {
+                cachedRoomsList[info.Name] = info;
             }
         }
+        RoomListButtonUpdate(cachedRoomsList);
+    }
+
+    void RoomListButtonUpdate(Dictionary<string, RoomInfo> cachedRoomList)
+    {
+        buttonRoomBrowser.gameObject.SetActive(false);
+
+        foreach (KeyValuePair<string, RoomInfo> roomInfo in cachedRoomList)
+        {
+            RoomButton newButton = Instantiate(buttonRoomBrowser, buttonRoomBrowser.transform.parent);
+            newButton.SetButtonDetails(roomInfo.Value);
+            newButton.gameObject.SetActive(true);
+            allRoomButtons.Add(newButton);
+        }
+    }
+
+    public void JoinRoom(RoomInfo inputInfor)
+    {
+        PhotonNetwork.JoinRoom(inputInfor.Name);
+        closeMenus();
+        loadingText.text = "Joining Room..";
+        loadingScreen.SetActive(true);
     }
 
 }
