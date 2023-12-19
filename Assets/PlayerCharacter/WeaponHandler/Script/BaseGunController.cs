@@ -146,7 +146,10 @@ namespace Player.WeaponHandler
             ////Quaternion target_rotation = Quaternion.Euler(cam_rotation.x, parent_rotation.transform.localRotation.y, parent_rotation.transform.localRotation.z);
             //parent_rotation.localRotation = cam_rotation;
 
-            transform.localPosition += (Vector3)input * weaponSwayIntensity / 1000;
+            if(!_isReloading)
+            {
+                transform.localPosition += (Vector3)input * weaponSwayIntensity / 1000;
+            }
 
             //Debug.Log(input);
             //float mouseX = input.x;
@@ -208,6 +211,7 @@ namespace Player.WeaponHandler
         IEnumerator CoReloadGun()
         {
             animator.enabled = false;
+            yield return new WaitForSeconds(0.02f);
             animator.enabled = true;
             animator.SetBool("Reloading", true);
             yield return new WaitForSeconds(activeGun.reloadTime-0.25f);
