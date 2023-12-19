@@ -10,6 +10,7 @@ namespace Player.WeaponHandler
     {
         #region Initialize Variables
         public Camera _cam;
+        public GameObject bodySpine;
         [Header("Gun Settings")]
         
         [HideInInspector] public bool isEquipped = false;
@@ -146,8 +147,8 @@ namespace Player.WeaponHandler
             xRotation -= (mouseY * Time.deltaTime) * PlayerController.ySensitivity;
             xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
-            _cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-            transform.parent.localRotation = _cam.transform.localRotation;
+            //_cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            transform.parent.localRotation = Quaternion.Euler(xRotation, 0, 0);
             Components.PlayerBodyAnimation.SyncCharacterHeadRotation(xRotation);
 
             //PlayerController.playerTransform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
