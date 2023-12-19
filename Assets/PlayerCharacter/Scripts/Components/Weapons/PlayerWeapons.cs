@@ -72,6 +72,7 @@ public class PlayerWeapons : MonoBehaviour
 
     public void EquipGun(int slotIndex, bool atIntro = false)
     {
+        if (gunController._isReloading) {return;} //TODO: able to switch gun to stop/skip reloading
         //Debug.LogWarning(_guns.Count);
         if (!atIntro)
         {

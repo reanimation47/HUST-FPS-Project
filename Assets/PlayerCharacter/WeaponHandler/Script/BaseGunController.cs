@@ -19,6 +19,7 @@ namespace Player.WeaponHandler
         private Animator animator;
 
         bool _canShoot;
+        public bool _isReloading; //Yes
         private GunScript activeGun;
 
         //Muzzle
@@ -61,7 +62,7 @@ namespace Player.WeaponHandler
         public void ShootGun()
         {
             GetActiveGun();
-            if (!_canShoot || activeGun._currentAmmoInClip <= 0) { return; }
+            if ( _isReloading || !_canShoot || activeGun._currentAmmoInClip <= 0) { return; }
             _canShoot = false;
             activeGun._currentAmmoInClip -= 1;
             StartCoroutine(FireBullets());
@@ -69,8 +70,14 @@ namespace Player.WeaponHandler
 
         public void Reload()
         {
+            if (_isReloading || activeGun._currentAmmoInClip >= activeGun.clipSize || activeGun._ammoInReserve <= 0) { return; }
+            _isReloading = true;
             GetActiveGun();
-            if (activeGun._currentAmmoInClip >= activeGun.clipSize || activeGun._ammoInReserve <= 0) { return; }
+            GunReloadAnimation();
+        }
+
+        private void ReloadComplete()
+        {
             int _ammoNeeded = activeGun.clipSize - activeGun._currentAmmoInClip;
             if (_ammoNeeded >= activeGun._ammoInReserve)
             {
@@ -82,6 +89,7 @@ namespace Player.WeaponHandler
                 activeGun._currentAmmoInClip = activeGun.clipSize;
                 activeGun._ammoInReserve -= _ammoNeeded;
             }
+            _isReloading = false;
         }
         #endregion
 
@@ -174,7 +182,7 @@ namespace Player.WeaponHandler
         }
         #endregion
 
-        #region Guns Animation
+        #region Gun Animations
 
         public void GunSwitchAnimation()
         {
@@ -182,12 +190,30 @@ namespace Player.WeaponHandler
         }
         IEnumerator CoGunSwitchAnimation()
         {
+            animator.SetBool("Reloading", false);
             animator.enabled = false;
             animator.enabled = true;
             animator.SetBool("Switching", true);
             yield return new WaitForSeconds(0.25f);
             animator.SetBool("Switching", false);
             yield return new WaitForSeconds(0.05f);
+            animator.enabled = false;
+        }
+
+        public void GunReloadAnimation()
+        {
+            StartCoroutine(CoReloadGun());
+        }
+
+        IEnumerator CoReloadGun()
+        {
+            animator.enabled = false;
+            animator.enabled = true;
+            animator.SetBool("Reloading", true);
+            yield return new WaitForSeconds(activeGun.reloadTime-0.25f);
+            animator.SetBool("Reloading", false);
+            ReloadComplete();
+            yield return new WaitForSeconds(0.25f);
             animator.enabled = false;
         }
         #endregion
