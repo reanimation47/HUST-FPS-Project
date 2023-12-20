@@ -70,8 +70,12 @@ public class PlayerWeapons : MonoBehaviour
         }
     }
 
+    int prevEquippedIndex;
     public void EquipGun(int slotIndex, bool atIntro = false)
     {
+        if (prevEquippedIndex == slotIndex) {return;}
+        prevEquippedIndex = slotIndex;
+        if (gunController._isReloading) {return;} //TODO: able to switch gun to stop/skip reloading
         //Debug.LogWarning(_guns.Count);
         if (!atIntro)
         {

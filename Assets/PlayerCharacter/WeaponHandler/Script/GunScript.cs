@@ -12,6 +12,7 @@ public class GunScript : MonoBehaviour
     public float fireRate = 0.1f;
     public int clipSize = 30;
     public int reservedAmmo = 270;
+    public float reloadTime = 2f;
     public Vector2 randomRecoilConstraints = new Vector2(2,5);
     public Image muzzleFlash;
     [HideInInspector] public int _currentAmmoInClip;
