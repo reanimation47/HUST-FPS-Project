@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69ab54f9f4b9e394392044e2954cba68, type: 3}
-  m_Name: New User Database
+  m_Script: {fileID: 11500000, guid: 2f9c9e2c47112ad4c86f0d6d71cecb3d, type: 3}
+  m_Name: New Gun Skin Database
   m_EditorClassIdentifier: 
-  UserInformation:
-    skinOwned: []
-    coinOwned: 0
+  gunSkinList:
+  - skinName: Pistol
+    price: 1200
+    type: 0
+  - skinName: Pistol
+    price: 1300
+    type: 1

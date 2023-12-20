@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunsList:
   - gunObject: {fileID: 6416730846052406606, guid: 4b8d6abcc484ebf4a83fa3bcfd929fe5, type: 3}
+    gunSkin:
+    - {fileID: 1445806607409438397, guid: c0fcb572a14aaee4496a1de332c7ce8b, type: 3}
+    - {fileID: 5578824780393106969, guid: a335e5e5b4a142143a097701468047ad, type: 3}
+    - {fileID: 5376073617572520400, guid: e53666782e6641749a4140bb0ed8864f, type: 3}
     gunName: CLOCK
     damage: 12
     fireRate: 12
@@ -21,6 +25,10 @@ MonoBehaviour:
     bulletSpeed: 12
     reloadTime: 12
   - gunObject: {fileID: 2641351572177420201, guid: 70beeaeaec2b98d4aadce0c3a9baf04d, type: 3}
+    gunSkin:
+    - {fileID: 1769861114648495817, guid: 7afb58f9df3800741a1621f3f5f7e8bb, type: 3}
+    - {fileID: 10951614823897998, guid: 6174898040a966042bd60d0ca29db44b, type: 3}
+    - {fileID: 4699488514998923214, guid: 0dbbbbbb7e9eac646bf99eb68e3ae439, type: 3}
     gunName: AK-47
     damage: 23
     fireRate: 23
@@ -28,6 +36,10 @@ MonoBehaviour:
     bulletSpeed: 23
     reloadTime: 23
   - gunObject: {fileID: 3727380808872219282, guid: 797b9157c805e5d439856811a2782ca1, type: 3}
+    gunSkin:
+    - {fileID: 8610551493926425070, guid: 459653790a13d1544ad07e3f5759d7d6, type: 3}
+    - {fileID: 6159262183059356311, guid: 858c6fc4c0a0fe84596b5199f10d42c4, type: 3}
+    - {fileID: 1374469572329755822, guid: 7f4cbd28ca8cce743997fdfac6b9ea2f, type: 3}
     gunName: SMG
     damage: 34
     fireRate: 34

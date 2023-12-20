@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class GunSkin
 {
-    public GameObject skinObject;
     public string skinName;
     public int price;
+    public int type;
 }
