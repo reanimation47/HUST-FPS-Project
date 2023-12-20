@@ -36,6 +36,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     public TMP_InputField nameInput;
     public static bool hasSetNick;
 
+
+    public string levelToPlay;
+   // public GameObject startButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +64,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         
         PhotonNetwork.JoinLobby();
-
+        PhotonNetwork.AutomaticallySyncScene = true;
         loadingText.text = "Joining Lobby..";
     }
 
@@ -258,6 +262,13 @@ public class Launcher : MonoBehaviourPunCallbacks
 
             hasSetNick = true;
         }
+    }
+
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel(levelToPlay);
+
+        //PhotonNetwork.LoadLevel(allMaps[Random.Range(0, allMaps.Length)]);
     }
 
     public void Quit() 
