@@ -280,7 +280,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         //PhotonNetwork.LoadLevel(allMaps[Random.Range(0, allMaps.Length)]);
     }
 
-    public override void OnMasterClientSwitched(Player newMasterClient)
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
     {
         if (PhotonNetwork.IsMasterClient)
         {
