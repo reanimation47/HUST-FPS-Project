@@ -10,17 +10,18 @@ namespace Player.WeaponHandler
     {
         #region Initialize Variables
         public Camera _cam;
+        public GameObject bodySpine;
         [Header("Gun Settings")]
-        public float fireRate = 0.1f;
-        public int clipSize = 30;
-        public int reservedAmmo = 270;
+        
+        [HideInInspector] public bool isEquipped = false;
+        [HideInInspector] public bool isActive = false;
+        public GunID GunID = GunID.DEFAULT; //To identify different guns
+        private Animator animator;
 
         bool _canShoot;
-        int _currentAmmoInClip;
-        int _ammoInReserve;
+        private GunScript activeGun;
 
         //Muzzle
-        public Image muzzleFlash;
         public Sprite[] muzzleSprites;
 
         //Aiming
@@ -29,7 +30,6 @@ namespace Player.WeaponHandler
         public float weaponSwayIntensity = -2f;
 
         //Recoil
-        public Vector2 randomRecoilConstraints = new Vector2(2,5);
 
         public GameObject bulletHole;
 
@@ -37,57 +37,71 @@ namespace Player.WeaponHandler
         public float aimSmoothing = 10f;
         #endregion
 
+        private void Awake()
+        {
+            //ICommon.LoadGunController(this);
+            ICommon.LoadBulletHolePrefab(bulletHole);
+        }
+
         private void Start()
         {
-            _currentAmmoInClip = clipSize;
-            _ammoInReserve = reservedAmmo;
+            animator = GetComponent<Animator>();
+        }
+
+        public void ManualStart()
+        {
+            //_currentAmmoInClip = activeGun._currentAmmoInClip;
+            //_ammoInReserve = activeGun._ammoInReserve;
             _canShoot = true;
-            muzzleFlash.color = new Color(0, 0, 0, 0);
+            GetActiveGun();
+            activeGun.muzzleFlash.color = new Color(0, 0, 0, 0);
         }
 
         #region Gun Actions
         public void ShootGun()
         {
-            if (!_canShoot || _currentAmmoInClip <= 0) { return; }
+            GetActiveGun();
+            if (!_canShoot || activeGun._currentAmmoInClip <= 0) { return; }
             _canShoot = false;
-            _currentAmmoInClip -= 1;
+            activeGun._currentAmmoInClip -= 1;
             StartCoroutine(FireBullets());
         }
 
         public void Reload()
         {
-            if (_currentAmmoInClip >= clipSize || _ammoInReserve <= 0) { return; }
-            int _ammoNeeded = clipSize - _currentAmmoInClip;
-            if (_ammoNeeded >= _ammoInReserve)
+            GetActiveGun();
+            if (activeGun._currentAmmoInClip >= activeGun.clipSize || activeGun._ammoInReserve <= 0) { return; }
+            int _ammoNeeded = activeGun.clipSize - activeGun._currentAmmoInClip;
+            if (_ammoNeeded >= activeGun._ammoInReserve)
             {
-                _currentAmmoInClip += _ammoInReserve;
-                _ammoInReserve -= _ammoNeeded;
+                activeGun._currentAmmoInClip += activeGun._ammoInReserve;
+                activeGun._ammoInReserve -= _ammoNeeded;
             }
             else
             {
-                _currentAmmoInClip = clipSize;
-                _ammoInReserve -= _ammoNeeded;
+                activeGun._currentAmmoInClip = activeGun.clipSize;
+                activeGun._ammoInReserve -= _ammoNeeded;
             }
         }
         #endregion
 
-
+        #region  Gun Sub Actions
 
         IEnumerator FireBullets()
         {
             ShootRayCast();
             Recoil();
             StartCoroutine(MuzzleFlash());
-            yield return new WaitForSeconds(fireRate);
+            yield return new WaitForSeconds(activeGun.fireRate);
             _canShoot = true;
         }
         IEnumerator MuzzleFlash()
         {
-            muzzleFlash.sprite = muzzleSprites[Random.Range(0, muzzleSprites.Length)];
-            muzzleFlash.color = Color.white;
+            activeGun.muzzleFlash.sprite = muzzleSprites[Random.Range(0, muzzleSprites.Length)];
+            activeGun.muzzleFlash.color = Color.white;
             yield return new WaitForSeconds(0.05f);
-            muzzleFlash.sprite = null;
-            muzzleFlash.color = new Color(0, 0, 0, 0);
+            activeGun.muzzleFlash.sprite = null;
+            activeGun.muzzleFlash.color = new Color(0, 0, 0, 0);
         }
 
         private void ShootRayCast()
@@ -97,9 +111,11 @@ namespace Player.WeaponHandler
             if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit))
             {
                 float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
-                Debug.Log(hit.normal);
+                //Debug.Log(hit.normal);
+                //Debug.LogWarning(hit.transform.gameObject.name);
+                ICommon.CheckForHits(hit, activeGun.baseDamage);
 
-                Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
+                //Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
             }
         }
         public void DetermineAim(bool isAiming)
@@ -131,8 +147,8 @@ namespace Player.WeaponHandler
             xRotation -= (mouseY * Time.deltaTime) * PlayerController.ySensitivity;
             xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
-            _cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-            transform.parent.localRotation = _cam.transform.localRotation;
+            //_cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            transform.parent.localRotation = Quaternion.Euler(xRotation, 0, 0);
             Components.PlayerBodyAnimation.SyncCharacterHeadRotation(xRotation);
 
             //PlayerController.playerTransform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * PlayerController.xSensitivity);
@@ -142,8 +158,8 @@ namespace Player.WeaponHandler
         {
             transform.localPosition -= Vector3.forward * 0.1f; //Pure gun recoiling visual effect
 
-            float xRecoil = Random.Range(-randomRecoilConstraints.x, randomRecoilConstraints.x);
-            float yRecoil = Random.Range(-randomRecoilConstraints.y, randomRecoilConstraints.y);
+            float xRecoil = Random.Range(-activeGun.randomRecoilConstraints.x, activeGun.randomRecoilConstraints.x);
+            float yRecoil = Random.Range(-activeGun.randomRecoilConstraints.y, activeGun.randomRecoilConstraints.y);
 
             Vector2 recoil = new Vector2(xRecoil, yRecoil);
             xRotation -= Mathf.Abs(xRecoil);
@@ -151,6 +167,30 @@ namespace Player.WeaponHandler
             PlayerController.playerTransform.Rotate(Vector3.up * yRecoil);
 
         }
+
+        private void GetActiveGun()
+        {
+            activeGun = PlayerWeapons.Instance.currentActiveGun;
+        }
+        #endregion
+
+        #region Guns Animation
+
+        public void GunSwitchAnimation()
+        {
+           StartCoroutine(CoGunSwitchAnimation());
+        }
+        IEnumerator CoGunSwitchAnimation()
+        {
+            animator.enabled = false;
+            animator.enabled = true;
+            animator.SetBool("Switching", true);
+            yield return new WaitForSeconds(0.25f);
+            animator.SetBool("Switching", false);
+            yield return new WaitForSeconds(0.05f);
+            animator.enabled = false;
+        }
+        #endregion
     }
 }
 

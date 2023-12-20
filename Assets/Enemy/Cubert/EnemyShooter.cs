@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+
+//using System;
 using UnityEngine;
 
-public class EnemyShooter : MonoBehaviour
+public class EnemyShooter : MonoBehaviour, ICombat
 {
     
     [Header("General")]
@@ -23,6 +27,9 @@ public class EnemyShooter : MonoBehaviour
 
     public int ammo = 30;
 
+    public float baseDamage = 20;
+    public float baseHP = 100;
+
     private int currentAmmo;
     
     void Awake() {
@@ -42,15 +49,16 @@ public class EnemyShooter : MonoBehaviour
             TrailRenderer trail = Instantiate(bulletTrail, gunPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, hit));
             currentAmmo -= 1;
+            ICommon.CheckForHits(hit, baseDamage);
         }
     }
     
     private Vector3 GetDirection() {
         Vector3 direction = transform.forward;
         direction += new Vector3(
-            Random.Range(-spread.x, spread.x),
-            Random.Range(-spread.y, spread.y),
-            Random.Range(-spread.z, spread.z)
+            UnityEngine.Random.Range(-spread.x, spread.x),
+            UnityEngine.Random.Range(-spread.y, spread.y),
+            UnityEngine.Random.Range(-spread.z, spread.z)
         );
         direction.Normalize();
         return direction;
@@ -80,6 +88,52 @@ public class EnemyShooter : MonoBehaviour
         Debug.Log("Reloaded");
         currentAmmo = ammo;
     }
+
+    #region Combat
+    // TODO: Do something when bot takes damages
+    public void TakeDamage(float dmg) 
+    {
+        baseHP -= dmg;
+        if (baseHP <= 0)
+        {
+            //Destroy(this.gameObject); // TODO: Do something when bot dies
+            Dies();
+        }
+        //Debug.LogWarning(baseHP);
+
+    }
+
+    public void RestoreHealth(float hp)
+    {
+
+    }
+    #endregion
+
+    #region Combat Others
+    private void Dies()
+    {
+        try
+        {
+            CharacterJoint anyJoint = GetComponentInChildren<CharacterJoint>();
+            if (anyJoint)
+            {
+                enemyReferences.navMeshAgent.enabled = false;
+                enemyReferences.animator.enabled = false;
+                enemyReferences.shooter.enabled = false;
+                enemyReferences.brain.enabled = false;
+
+            }else // Just destroy the object if ragdoll is not implemented
+            {
+                Debug.LogWarning("Ragdoll is not implemented");
+                Destroy(gameObject);
+            }
+        }
+        catch(Exception err)
+        {
+            Debug.LogWarning(err + " - Ragdoll is not implemented");
+        }
+    }
+    #endregion
 
 
 }

@@ -6,7 +6,7 @@ using TMPro;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, ICombat
     {
         #region Initialize Variables
         public static CharacterController controller;
@@ -19,6 +19,7 @@ namespace Player
         public static LayerMask interactMask { get; private set; }
         public static TextMeshProUGUI promptMessage { get; set; }
         public static GameObject characterHead;
+        public static GameObject bodySpine;
         public static Animator characterAnimator;
 
         public static readonly float xSensitivity = 30f;
@@ -37,18 +38,30 @@ namespace Player
 
         [Header("Character body controls")]
         public GameObject _characterHead;
+        public GameObject _bodySpine;
         public Animator _characterAnimator;
+
+        [Header("Others")]
+        public PlayerHealth PlayerHealth;
+        public PlayerWeapons PlayerWeapons;
+
 
 
 
         public Camera _cam;
         #endregion
 
+        void Awake()
+        {
+            ICommon.LoadPlayer(this.gameObject);
+        }
+
         void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             AssignStaticVariables();
             AssignComponents();
+            //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
         }
 
         private void Update()
@@ -68,6 +81,7 @@ namespace Player
             interactMask = _interactMask;
             promptMessage = _promptMessage;
             characterHead = _characterHead;
+            bodySpine = _bodySpine;
             characterAnimator = _characterAnimator;
         }
 
@@ -122,6 +136,17 @@ namespace Player
         }
         #endregion
 
+        #region Combat
+        public void TakeDamage(float dmg)
+        {
+            PlayerHealth.TakeDamage(dmg);
+        }
+
+        public void RestoreHealth(float hp)
+        {
+            PlayerHealth.RestoreHealth(hp);
+        }
+        #endregion
 
 
     }
