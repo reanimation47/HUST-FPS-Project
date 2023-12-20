@@ -142,6 +142,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void UpdateCacheRoomList(List<RoomInfo> roomList)
     {
+        
         for (int i = 0; i < roomList.Count; i++)
         {
             RoomInfo info = roomList[i];
@@ -159,6 +160,11 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     void RoomListButtonUpdate(Dictionary<string, RoomInfo> cachedRoomList)
     {
+        foreach(RoomButton rb in allRoomButtons)
+        {
+            Destroy(rb.gameObject);
+        }
+        allRoomButtons.Clear();
         buttonRoomBrowser.gameObject.SetActive(false);
 
         foreach (KeyValuePair<string, RoomInfo> roomInfo in cachedRoomList)
