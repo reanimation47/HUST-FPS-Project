@@ -6,6 +6,7 @@ using UnityEngine;
 public class GunAttribute
 {
     public GameObject gunObject;
+    public GameObject [] gunSkin;
     public string gunName;
     public int damage;
     public float fireRate;
