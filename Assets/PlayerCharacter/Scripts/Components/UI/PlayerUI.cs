@@ -11,6 +11,17 @@ namespace Player.Components
         {
             PlayerController.promptMessage.text = promptMessage;
         }
+
+        public static void UpdateObjective()
+        {
+            if (GameManager.Instance.ObjectiveItemRetrieved)
+            {
+                PlayerController.objectiveMessage.text = "Item retrieved! Now return to safety";
+            }else
+            {
+                PlayerController.objectiveMessage.text = "Objective: Find and retrieve the ITEM";
+            }
+        }
     }
 }
 
