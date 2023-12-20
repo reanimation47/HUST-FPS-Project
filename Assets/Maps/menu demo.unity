@@ -6868,6 +6868,7 @@ MonoBehaviour:
   nameInputScreen: {fileID: 149782916}
   nameInput: {fileID: 1757819490}
   levelToPlay: map1
+  startButton: {fileID: 1078607484}
 --- !u!114 &1948650000
 MonoBehaviour:
   m_ObjectHideFlags: 0

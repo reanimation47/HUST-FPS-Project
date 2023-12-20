@@ -38,7 +38,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 
     public string levelToPlay;
-   // public GameObject startButton;
+    public GameObject startButton;
 
     // Start is called before the first frame update
     void Start()
@@ -116,6 +116,15 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
         ListAllPlayers();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startButton.SetActive(true);
+        }
+        else
+        {
+            startButton.SetActive(false);
+        }
     }
 
     private void ListAllPlayers()
@@ -269,6 +278,18 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel(levelToPlay);
 
         //PhotonNetwork.LoadLevel(allMaps[Random.Range(0, allMaps.Length)]);
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startButton.SetActive(true);
+        }
+        else
+        {
+            startButton.SetActive(false);
+        }
     }
 
     public void Quit() 
