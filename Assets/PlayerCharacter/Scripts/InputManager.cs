@@ -14,6 +14,7 @@ namespace Player
         private PlayerController controller;
 
         public WeaponHandler.BaseGunController gunController;
+        public PlayerWeapons weaponController;
 
         private void Awake()
         {
@@ -47,6 +48,16 @@ namespace Player
             if (playerInput.OnFoot.Reload.triggered)
             {
                 gunController.Reload();
+            }
+
+            if (playerInput.OnFoot.FirstWeaponSlot.triggered)
+            {
+                weaponController.EquipGun(0);
+            }
+
+            if (playerInput.OnFoot.SecondWeaponSlot.triggered)
+            {
+                weaponController.EquipGun(1);
             }
         }
 
