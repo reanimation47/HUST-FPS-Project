@@ -11,6 +11,10 @@ public class EnemyShooter : MonoBehaviour, ICombat
     
     [Header("General")]
 
+    public float ClipLength = 1f;
+    
+    public GameObject AudioClip;
+
     public Transform shootPoint;    // Where the raycast starts from
 
     public Transform gunPoint;      // Where the visual trail starts from
@@ -32,6 +36,10 @@ public class EnemyShooter : MonoBehaviour, ICombat
 
     private int currentAmmo;
     
+    void Start() {
+        AudioClip.SetActive(false);
+    }
+    
     void Awake() {
         enemyReferences = GetComponent<EnemyReferences>();
         Reload();    
@@ -50,7 +58,19 @@ public class EnemyShooter : MonoBehaviour, ICombat
             StartCoroutine(SpawnTrail(trail, hit));
             currentAmmo -= 1;
             ICommon.CheckForHits(hit, baseDamage);
+
+            //Sound FX
+            StartCoroutine(PlayAudioForDuration());
+
+
         }
+    }
+
+    private IEnumerator PlayAudioForDuration() {
+        AudioClip.SetActive(true);
+        yield return new WaitForSeconds(0.1);
+        AudioClip.SetActive(false);
+
     }
     
     private Vector3 GetDirection() {
