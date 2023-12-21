@@ -18,6 +18,7 @@ namespace Player
         public static float interactDistance { get; private set; }
         public static LayerMask interactMask { get; private set; }
         public static TextMeshProUGUI promptMessage { get; set; }
+        public static TextMeshProUGUI objectiveMessage { get; set; }
         public static GameObject characterHead;
         public static GameObject bodySpine;
         public static Animator characterAnimator;
@@ -35,6 +36,7 @@ namespace Player
         public float _interactDistance = 3f;
         public LayerMask _interactMask;
         public TextMeshProUGUI _promptMessage;
+        public TextMeshProUGUI _objectiveMessage;
 
         [Header("Character body controls")]
         public GameObject _characterHead;
@@ -61,6 +63,7 @@ namespace Player
             Cursor.lockState = CursorLockMode.Locked;
             AssignStaticVariables();
             AssignComponents();
+            PlayerUI.UpdateObjective();
             //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
         }
 
@@ -80,6 +83,7 @@ namespace Player
             interactDistance = _interactDistance;
             interactMask = _interactMask;
             promptMessage = _promptMessage;
+            objectiveMessage = _objectiveMessage;
             characterHead = _characterHead;
             bodySpine = _bodySpine;
             characterAnimator = _characterAnimator;
@@ -148,6 +152,17 @@ namespace Player
         }
         #endregion
 
+        #region GamePlay
+        public void RetrieveItem(GameObject item)
+        {
+            GameManager.Instance.GoalItemRetrieved(item);
+        }
+
+        public void UpdateObjective()
+        {
+            PlayerUI.UpdateObjective();
+        }
+        #endregion
 
     }
 
