@@ -96,7 +96,7 @@ public class PlayerHealth : MonoBehaviour
 
     public float TakeDamage(float dmg)
     {
-        HP = Mathf.Clamp(HP - dmg, 0, 100);
+        HP = Mathf.Clamp(HP - dmg, 0, maxHP);
         lerpTimer = 0f;
         durationTimer = 0;
         dmgOverlay.color = new Color(dmgOverlay.color.r, dmgOverlay.color.g, dmgOverlay.color.b, maxOverlayOpacity);
