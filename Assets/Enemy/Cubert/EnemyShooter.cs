@@ -68,7 +68,7 @@ public class EnemyShooter : MonoBehaviour, ICombat
 
     private IEnumerator PlayAudioForDuration() {
         AudioClip.SetActive(true);
-        yield return new WaitForSeconds(0.1);
+        yield return new WaitForSeconds(0.4f);
         AudioClip.SetActive(false);
 
     }
@@ -141,6 +141,8 @@ public class EnemyShooter : MonoBehaviour, ICombat
                 enemyReferences.animator.enabled = false;
                 enemyReferences.shooter.enabled = false;
                 enemyReferences.brain.enabled = false;
+                CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
+                capsuleCollider.enabled = false;
 
             }else // Just destroy the object if ragdoll is not implemented
             {
