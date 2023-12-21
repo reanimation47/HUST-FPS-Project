@@ -40,13 +40,22 @@ public class Launcher : MonoBehaviourPunCallbacks
     public string levelToPlay;
     public GameObject startButton;
 
+    public GameObject roomTestButton;
+
     // Start is called before the first frame update
     void Start()
     {
         closeMenus();
         loadingScreen.SetActive(true);
         loadingText.text = "Connecting to Network...";
-        PhotonNetwork.ConnectUsingSettings(); 
+        PhotonNetwork.ConnectUsingSettings();
+
+#if UNITY_EDITOR
+        roomTestButton.SetActive(true);
+#endif
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     void closeMenus()
@@ -290,6 +299,16 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             startButton.SetActive(false);
         }
+    }
+    public void QuickJoin()
+    {
+        RoomOptions options = new RoomOptions();
+        options.MaxPlayers = 8;
+
+        PhotonNetwork.CreateRoom("Test", options);
+        closeMenus();
+        loadingText.text = "Creating Room...";
+        loadingScreen.SetActive(true);
     }
 
     public void Quit() 
