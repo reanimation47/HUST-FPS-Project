@@ -479,7 +479,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 65
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -650,7 +650,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.17, z: 0}
+  m_Center: {x: 0.33, y: 0.17, z: -0.14}
 --- !u!114 &2949817314417943585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a338842dbab48f4b9fd15a5757affa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 9999999
+  maxHP: 100
   chipSpeed: 2
   HP_Value: {fileID: 2949817312768073740}
   frontHealthBar: {fileID: 2949817312837238105}
