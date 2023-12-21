@@ -46,7 +46,7 @@ public class PlayerWeapons : MonoBehaviour
         //ICommon.EnableEquippedGuns(equippedGuns);
         GetEquippedGun();
         _guns = ICommon.GetActiveGunHolders();
-        EquipGun(1, true);
+        EquipGun(0, true);
         gunController.ManualStart();
     }
 
@@ -78,14 +78,13 @@ public class PlayerWeapons : MonoBehaviour
     #endregion
 
     #region Actions
-    int prevEquippedIndex;
+    int prevEquippedIndex = -1;
     public void EquipGun(int slotIndex, bool atIntro = false)
     {
         if (!hasPrimaryGun && !atIntro) {return;}
         if (prevEquippedIndex == slotIndex) {return;}
         prevEquippedIndex = slotIndex;
         if (gunController._isReloading) {return;} //TODO: able to switch gun to stop/skip reloading
-        Debug.LogWarning("Guns count:"+_guns.Count);
         if (!atIntro)
         {
             gunController.GunSwitchAnimation();
@@ -93,10 +92,11 @@ public class PlayerWeapons : MonoBehaviour
         }
         for (int i = 0; i < _guns.Count; i++)
         {
+            Debug.LogError("Counttt: "+_guns.Count);
             var gun = _guns[i];
             if (i == slotIndex)
             {
-                Debug.LogWarning(gun.GunID);
+                Debug.LogError(gun.GunID);
                 gun.transform.gameObject.SetActive(true);
                 currentActiveGun = gun;
             }else
@@ -119,7 +119,6 @@ public class PlayerWeapons : MonoBehaviour
             for(int i =0; i< gunDB.gunCount; i++)
             {
                 Debug.LogWarning(gunDB.GetGunAttribute(i).gunName);
-                Debug.LogWarning(gunName);
                 if (gunDB.GetGunAttribute(i).gunName == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
                 {
                     Debug.LogWarning(i);
@@ -141,6 +140,7 @@ public class PlayerWeapons : MonoBehaviour
                 {
                     ICommon.ActiveGunHolder(gunsHolder[i]);
                     gunsHolder[i].SpawnGun(gunDB.GetGunAttribute(gunIndexInDB).gunObject);
+                    gunsHolder[i].LoadGunStats(gunDB.GetGunAttribute(gunIndexInDB));
                 }
             }
         }else
