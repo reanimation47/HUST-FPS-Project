@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -408,6 +408,7 @@ MonoBehaviour:
   fireRate: 0.1
   clipSize: 30
   reservedAmmo: 270
+  reloadTime: 3
   randomRecoilConstraints: {x: 2, y: 5}
   muzzleFlash: {fileID: 693963548}
   _currentAmmoInClip: 0
@@ -438,7 +439,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453265230984398623}
   m_LocalRotation: {x: -0.000000089406946, y: 0.000000089406946, z: -0.000000029802315, w: 1}
-  m_LocalPosition: {x: -0.267, y: 0.624, z: -0.064}
+  m_LocalPosition: {x: -0.267, y: 0.624, z: -0.162}
   m_LocalScale: {x: 1.298381, y: 1.298381, z: 1.298381}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2869,15 +2870,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2293395173737647869, guid: 6e66295f5958148a6bcbef5654516a27, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.924
+      value: 10.948911
       objectReference: {fileID: 0}
     - target: {fileID: 2293395173737647869, guid: 6e66295f5958148a6bcbef5654516a27, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 1.4
+      value: 1.3979149
       objectReference: {fileID: 0}
     - target: {fileID: 2293395173737647869, guid: 6e66295f5958148a6bcbef5654516a27, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0.464
+      value: -7.2544317
       objectReference: {fileID: 0}
     - target: {fileID: 2406152304165545931, guid: 6e66295f5958148a6bcbef5654516a27, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2993,6 +2994,7 @@ MonoBehaviour:
   fireRate: 0.1
   clipSize: 40
   reservedAmmo: 270
+  reloadTime: 2
   randomRecoilConstraints: {x: 2, y: 5}
   muzzleFlash: {fileID: 0}
   _currentAmmoInClip: 0
@@ -3021,6 +3023,7 @@ MonoBehaviour:
   fireRate: 0.15
   clipSize: 15
   reservedAmmo: 270
+  reloadTime: 2
   randomRecoilConstraints: {x: 0.5, y: 2}
   muzzleFlash: {fileID: 1123931337}
   _currentAmmoInClip: 0
