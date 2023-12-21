@@ -34,8 +34,8 @@ MonoBehaviour:
     gunName: UZI
     gunType: 1
     damage: 25
-    fireRate: 34
-    ammoCapacity: 34
+    fireRate: 0.05
+    ammoCapacity: 35
     bulletSpeed: 34
     recoil: 0.5
-    reloadTime: 34
+    reloadTime: 1.5
