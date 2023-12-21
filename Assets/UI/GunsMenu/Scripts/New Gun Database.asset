@@ -39,3 +39,16 @@ MonoBehaviour:
     bulletSpeed: 34
     recoil: 0.5
     reloadTime: 1.5
+  - gunObject: {fileID: 4568834173259529912, guid: 537352da98b9d3b40950a2757225200b, type: 3}
+    gunSkin:
+    - {fileID: 8610551493926425070, guid: 459653790a13d1544ad07e3f5759d7d6, type: 3}
+    - {fileID: 6159262183059356311, guid: 858c6fc4c0a0fe84596b5199f10d42c4, type: 3}
+    - {fileID: 1374469572329755822, guid: 7f4cbd28ca8cce743997fdfac6b9ea2f, type: 3}
+    gunName: M3
+    gunType: 3
+    damage: 7
+    fireRate: 1
+    ammoCapacity: 7
+    bulletSpeed: 34
+    recoil: 10
+    reloadTime: 2
