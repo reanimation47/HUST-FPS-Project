@@ -16,6 +16,7 @@ namespace Player.WeaponHandler
         [HideInInspector] public bool isEquipped = false;
         [HideInInspector] public bool isActive = false;
         public GunID GunID = GunID.DEFAULT; //To identify different guns
+        public GunDatabase gunDB;
         private Animator animator;
 
         bool _canShoot;
@@ -116,7 +117,7 @@ namespace Player.WeaponHandler
         {
             RaycastHit hit;
             //Debug.DrawRay(transform.parent.position, transform.parent.forward * 100);
-            if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit))
+            if (Physics.Raycast(_cam.transform.position + _cam.transform.forward*1, _cam.transform.forward, out hit))
             {
                 float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
                 //Debug.Log(hit.normal);
