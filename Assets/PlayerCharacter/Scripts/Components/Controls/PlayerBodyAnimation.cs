@@ -8,7 +8,8 @@ namespace Player.Components
     {
         public static void SyncCharacterHeadRotation(float _rotation)
         {
-            PlayerController.characterHead.transform.localRotation = Quaternion.Euler(0, 0, -_rotation);
+            //PlayerController.characterHead.transform.localRotation = Quaternion.Euler(0, 0, -_rotation);
+            PlayerController.bodySpine.transform.localRotation = Quaternion.Euler(0, 0, -_rotation);
         }
 
         public static void ProcessMovementAnimation(Vector2 input)
