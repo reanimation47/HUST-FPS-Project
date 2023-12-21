@@ -109,4 +109,15 @@ public class GunSelectionController : MonoBehaviour
         }
     }
 
+    public void selectedGun()
+    {
+        GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
+        string gunName = gun.gunObject.ToString();
+
+        string gunSelectedKey = "GunSelected";
+        PlayerPrefs.SetString(gunSelectedKey, gunName);
+        string gunSelected = PlayerPrefs.GetString(gunSelectedKey);
+        UnityEngine.Debug.Log(gunSelected);
+    }
+
 }
