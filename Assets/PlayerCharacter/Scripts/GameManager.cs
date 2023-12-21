@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public Transform Goal;
     public Transform Spawn;
+    public bool respawnEnabled = true;
     public bool ObjectiveItemRetrieved = false;
     private void Awake()
     {
