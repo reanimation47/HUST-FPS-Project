@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Player.Components;
 using UnityEngine;
 using TMPro;
@@ -18,6 +16,7 @@ namespace Player
         public static float interactDistance { get; private set; }
         public static LayerMask interactMask { get; private set; }
         public static TextMeshProUGUI promptMessage { get; set; }
+        public static TextMeshProUGUI objectiveMessage { get; set; }
         public static GameObject characterHead;
         public static GameObject bodySpine;
         public static Animator characterAnimator;
@@ -35,6 +34,7 @@ namespace Player
         public float _interactDistance = 3f;
         public LayerMask _interactMask;
         public TextMeshProUGUI _promptMessage;
+        public TextMeshProUGUI _objectiveMessage;
 
         [Header("Character body controls")]
         public GameObject _characterHead;
@@ -53,14 +53,17 @@ namespace Player
 
         void Awake()
         {
+            Screen.SetResolution(1920, 1080, true);
             ICommon.LoadPlayer(this.gameObject);
         }
 
         void Start()
         {
+            Spawn();
             Cursor.lockState = CursorLockMode.Locked;
             AssignStaticVariables();
             AssignComponents();
+            PlayerUI.UpdateObjective();
             //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
         }
 
@@ -69,6 +72,7 @@ namespace Player
             isGrounded = controller.isGrounded;
             PlayerInteract.CheckInteraction();
             PlayerCrouch.ProcessCrouch();
+            TestDmg();
         }
 
         #region Assign static variables
@@ -80,6 +84,7 @@ namespace Player
             interactDistance = _interactDistance;
             interactMask = _interactMask;
             promptMessage = _promptMessage;
+            objectiveMessage = _objectiveMessage;
             characterHead = _characterHead;
             bodySpine = _bodySpine;
             characterAnimator = _characterAnimator;
@@ -139,7 +144,10 @@ namespace Player
         #region Combat
         public void TakeDamage(float dmg)
         {
-            PlayerHealth.TakeDamage(dmg);
+            if(PlayerHealth.TakeDamage(dmg) <= 0)
+            {
+                PlayerDies();
+            }
         }
 
         public void RestoreHealth(float hp)
@@ -148,6 +156,60 @@ namespace Player
         }
         #endregion
 
+        #region GamePlay
+        private void Spawn()
+        {
+            PlayerHealth.RestoreFullHealth();
+            if(SpawnManager.instance)
+            {
+                SpawnManager.instance.RespawnSelf(this.gameObject);
+            }else
+            {
+                Debug.LogWarning("SpawnManager not found, player won't respawn");
+            }
+        }
+        public void RetrieveItem(GameObject item)
+        {
+            GameManager.Instance.GoalItemRetrieved(item);
+        }
+
+        public void UpdateObjective()
+        {
+            PlayerUI.UpdateObjective();
+        }
+        private void PlayerDies()
+        {
+            if (GameManager.Instance)
+            {
+                if (GameManager.Instance.respawnEnabled)
+                {
+                    Spawn();
+                }else
+                {
+                    //No respawn logic
+                }
+            }else
+            {
+                Spawn();
+            }
+
+        }
+        private void TestDmg()
+        {
+            if(true)
+            {
+                if (Input.GetKeyDown(KeyCode.X))
+                {
+                    TakeDamage(Random.Range(5, 20));
+                } 
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    RestoreHealth(Random.Range(5, 20));
+                }
+            }
+        }
+
+        #endregion
 
     }
 
