@@ -13,19 +13,6 @@ MonoBehaviour:
   m_Name: New Gun Database
   m_EditorClassIdentifier: 
   gunsList:
-  - gunObject: {fileID: 6416730846052406606, guid: 4b8d6abcc484ebf4a83fa3bcfd929fe5, type: 3}
-    gunSkin:
-    - {fileID: 1445806607409438397, guid: c0fcb572a14aaee4496a1de332c7ce8b, type: 3}
-    - {fileID: 5578824780393106969, guid: a335e5e5b4a142143a097701468047ad, type: 3}
-    - {fileID: 5376073617572520400, guid: e53666782e6641749a4140bb0ed8864f, type: 3}
-    gunName: GLOCK
-    gunType: 0
-    damage: 15
-    fireRate: 0.15
-    ammoCapacity: 12
-    bulletSpeed: 12
-    recoil: 1
-    reloadTime: 2
   - gunObject: {fileID: 2641351572177420201, guid: 70beeaeaec2b98d4aadce0c3a9baf04d, type: 3}
     gunSkin:
     - {fileID: 1769861114648495817, guid: 7afb58f9df3800741a1621f3f5f7e8bb, type: 3}
