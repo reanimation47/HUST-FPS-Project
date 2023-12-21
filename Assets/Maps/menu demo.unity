@@ -7137,7 +7137,7 @@ MonoBehaviour:
   buttonRoomBrowser: {fileID: 1321165403}
   nameInputScreen: {fileID: 149782916}
   nameInput: {fileID: 1757819490}
-  levelToPlay: map1
+  levelToPlay: map2
   startButton: {fileID: 1078607484}
   roomTestButton: {fileID: 1235239674}
 --- !u!114 &1948650000
