@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+
+//using System;
 using UnityEngine;
 
 public class EnemyShooter : MonoBehaviour, ICombat
@@ -52,9 +56,9 @@ public class EnemyShooter : MonoBehaviour, ICombat
     private Vector3 GetDirection() {
         Vector3 direction = transform.forward;
         direction += new Vector3(
-            Random.Range(-spread.x, spread.x),
-            Random.Range(-spread.y, spread.y),
-            Random.Range(-spread.z, spread.z)
+            UnityEngine.Random.Range(-spread.x, spread.x),
+            UnityEngine.Random.Range(-spread.y, spread.y),
+            UnityEngine.Random.Range(-spread.z, spread.z)
         );
         direction.Normalize();
         return direction;
@@ -92,15 +96,42 @@ public class EnemyShooter : MonoBehaviour, ICombat
         baseHP -= dmg;
         if (baseHP <= 0)
         {
-            Destroy(this.gameObject); // TODO: Do something when bot dies
+            //Destroy(this.gameObject); // TODO: Do something when bot dies
+            Dies();
         }
-        Debug.LogWarning(baseHP);
+        //Debug.LogWarning(baseHP);
 
     }
 
     public void RestoreHealth(float hp)
     {
 
+    }
+    #endregion
+
+    #region Combat Others
+    private void Dies()
+    {
+        try
+        {
+            CharacterJoint anyJoint = GetComponentInChildren<CharacterJoint>();
+            if (anyJoint)
+            {
+                enemyReferences.navMeshAgent.enabled = false;
+                enemyReferences.animator.enabled = false;
+                enemyReferences.shooter.enabled = false;
+                enemyReferences.brain.enabled = false;
+
+            }else // Just destroy the object if ragdoll is not implemented
+            {
+                Debug.LogWarning("Ragdoll is not implemented");
+                Destroy(gameObject);
+            }
+        }
+        catch(Exception err)
+        {
+            Debug.LogWarning(err + " - Ragdoll is not implemented");
+        }
     }
     #endregion
 
