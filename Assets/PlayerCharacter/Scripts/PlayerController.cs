@@ -182,9 +182,10 @@ namespace Player
             {
                 if (GameManager.Instance.respawnEnabled)
                 {
+                    Spawn();
                 }else
                 {
-                    Spawn();
+                    //No respawn logic
                 }
             }else
             {
