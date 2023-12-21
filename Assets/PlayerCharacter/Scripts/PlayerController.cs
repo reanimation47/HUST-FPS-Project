@@ -65,9 +65,7 @@ namespace Player
             AssignComponents();
             PlayerUI.UpdateObjective();
             //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
-            Transform newTrans = SpawnManager.instance.GetSpawnPoint();
-            playerTransform.position = newTrans.position;
-            playerTransform.rotation = newTrans.rotation;
+            
         }
 
         private void Update()
