@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 public class GunSelectionController : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class GunSelectionController : MonoBehaviour
     public Transform[] skinHolder;
     public TextMeshProUGUI price;
 
+    [Header("Gun Selected")]
+    public TextMeshProUGUI gunSelectedText;
+
 
     void Start()
     {
@@ -47,7 +51,18 @@ public class GunSelectionController : MonoBehaviour
     private void UpdateGun(int selectedOption)
     {
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
+        string gunNameSelected = gun.gunObject.ToString();
 
+        string gunSelectedKey = "GunSelected";
+        string gunSelected = PlayerPrefs.GetString(gunSelectedKey);
+        if (gunSelected == gunNameSelected)
+        {
+            gunSelectedText.text = "EQUIPPED";
+        }
+        else
+        {
+            gunSelectedText.text = "NOT-EQUIPPED";
+        }
         // Update Gun
         if (gunHolder.childCount > 0)
         {
@@ -109,14 +124,23 @@ public class GunSelectionController : MonoBehaviour
         }
     }
 
+
     public void selectedGun()
     {
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
-        string gunName = gun.gunObject.ToString();
+        string gunNameSelected = gun.gunObject.ToString();
 
         string gunSelectedKey = "GunSelected";
-        PlayerPrefs.SetString(gunSelectedKey, gunName);
+        PlayerPrefs.SetString(gunSelectedKey, gunNameSelected);
         string gunSelected = PlayerPrefs.GetString(gunSelectedKey);
+        if (gunSelected == gunNameSelected)
+        {
+            gunSelectedText.text = "EQUIPPED";
+        }
+        else
+        {
+            gunSelectedText.text = "NOT-EQUIPPED";
+        }
         UnityEngine.Debug.Log(gunSelected);
     }
 
