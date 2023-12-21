@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18308422, g: 0.22875828, b: 0.30667248, a: 1}
+  m_IndirectSpecularColor: {r: 0.18308415, g: 0.2287583, b: 0.3066726, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -625,6 +625,90 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131788347}
   m_Mesh: {fileID: -3675045607575320352, guid: 61cde697b650c3048bc07a4a3d01c430, type: 3}
+--- !u!1 &145860087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 145860090}
+  - component: {fileID: 145860089}
+  - component: {fileID: 145860088}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!81 &145860088
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145860087}
+  m_Enabled: 1
+--- !u!20 &145860089
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145860087}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &145860090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145860087}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.7, y: 5.2, z: -0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &148290161
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,11 +873,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 4
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 15
   fireRate: 0.15
   clipSize: 15
   reservedAmmo: 270
   reloadTime: 2
+  recoil: 1
   randomRecoilConstraints: {x: 0.5, y: 2}
   muzzleFlash: {fileID: 1828557969}
   _currentAmmoInClip: 0
@@ -1180,6 +1267,7 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 1
+  gunDB: {fileID: 0}
   _isReloading: 0
   muzzleSprites:
   - {fileID: 21300000, guid: fd835650eae304e33bc9c4b5687a0e2a, type: 3}
@@ -2746,11 +2834,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 2
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 30
   fireRate: 0.1
   clipSize: 30
   reservedAmmo: 270
   reloadTime: 3
+  recoil: 1
   randomRecoilConstraints: {x: 2, y: 5}
   muzzleFlash: {fileID: 908892388}
   _currentAmmoInClip: 0
@@ -5469,11 +5560,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 4
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 15
   fireRate: 0.15
   clipSize: 15
   reservedAmmo: 270
   reloadTime: 2
+  recoil: 1
   randomRecoilConstraints: {x: 0.5, y: 2}
   muzzleFlash: {fileID: 674127400}
   _currentAmmoInClip: 0
@@ -6428,11 +6522,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 1
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 40
   fireRate: 0.1
   clipSize: 40
   reservedAmmo: 270
   reloadTime: 2
+  recoil: 1
   randomRecoilConstraints: {x: 2, y: 5}
   muzzleFlash: {fileID: 0}
   _currentAmmoInClip: 0
@@ -6675,6 +6772,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563418433}
   m_Mesh: {fileID: -3043239644324090073, guid: f4222b77ce59347b2b976257526031bc, type: 3}
+--- !u!1 &1577966062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1577966064}
+  - component: {fileID: 1577966063}
+  m_Layer: 0
+  m_Name: Player Spawn Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1577966063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577966062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ae728dc6eaa2a489795a2d54976a0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 1453265231279909516, guid: 300f662d80a6535429e1ecd3e6e241fb, type: 3}
+  spawnPoint: {fileID: 450703387}
+--- !u!4 &1577966064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577966062}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 31.547327, y: 7.851347, z: -26.058472}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1584160784
 GameObject:
   m_ObjectHideFlags: 0
@@ -6710,67 +6853,6 @@ Transform:
   m_Father: {fileID: 1957934928}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 85.516, z: 0}
---- !u!1001 &1587794919
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 66
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909512, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1453265231279909516, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2949817312873796434, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 838f1c79e9cf44340affc59ae6ff92f2, type: 3}
 --- !u!1 &1595554302
 GameObject:
   m_ObjectHideFlags: 0
@@ -7019,6 +7101,7 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 1
+  gunDB: {fileID: 0}
   _isReloading: 0
   muzzleSprites:
   - {fileID: 21300000, guid: fd835650eae304e33bc9c4b5687a0e2a, type: 3}
@@ -8418,11 +8501,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 2
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 30
   fireRate: 0.1
   clipSize: 30
   reservedAmmo: 270
   reloadTime: 3
+  recoil: 1
   randomRecoilConstraints: {x: 2, y: 5}
   muzzleFlash: {fileID: 1455887192}
   _currentAmmoInClip: 0
@@ -8939,11 +9025,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 1
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 40
   fireRate: 0.1
   clipSize: 40
   reservedAmmo: 270
   reloadTime: 2
+  recoil: 1
   randomRecoilConstraints: {x: 2, y: 5}
   muzzleFlash: {fileID: 0}
   _currentAmmoInClip: 0
@@ -9741,11 +9830,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 2
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 30
   fireRate: 0.1
   clipSize: 30
   reservedAmmo: 270
   reloadTime: 3
+  recoil: 1
   randomRecoilConstraints: {x: 2, y: 5}
   muzzleFlash: {fileID: 1855411126259685518}
   _currentAmmoInClip: 0
@@ -9862,11 +9954,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 4
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 15
   fireRate: 0.15
   clipSize: 15
   reservedAmmo: 270
   reloadTime: 2
+  recoil: 1
   randomRecoilConstraints: {x: 0.5, y: 2}
   muzzleFlash: {fileID: 1855411125884340059}
   _currentAmmoInClip: 0
@@ -9962,11 +10057,14 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 1
+  GunType: 0
+  GunSpawn: {fileID: 0}
   baseDamage: 40
   fireRate: 0.1
   clipSize: 40
   reservedAmmo: 270
   reloadTime: 2
+  recoil: 1
   randomRecoilConstraints: {x: 2, y: 5}
   muzzleFlash: {fileID: 0}
   _currentAmmoInClip: 0
@@ -11799,6 +11897,7 @@ MonoBehaviour:
   isEquipped: 0
   isActive: 0
   GunID: 1
+  gunDB: {fileID: 0}
   _isReloading: 0
   muzzleSprites:
   - {fileID: 21300000, guid: fd835650eae304e33bc9c4b5687a0e2a, type: 3}

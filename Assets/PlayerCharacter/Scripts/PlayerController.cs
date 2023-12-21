@@ -1,10 +1,11 @@
 using Player.Components;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour, ICombat
+    public class PlayerController : MonoBehaviourPunCallbacks, ICombat  
     {
         #region Initialize Variables
         public static CharacterController controller;
@@ -59,20 +60,29 @@ namespace Player
 
         void Start()
         {
-            Spawn();
-            Cursor.lockState = CursorLockMode.Locked;
-            AssignStaticVariables();
-            AssignComponents();
-            PlayerUI.UpdateObjective();
-            //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
+            if (photonView.IsMine)
+            {
+                Spawn();
+                Cursor.lockState = CursorLockMode.Locked;
+                AssignStaticVariables();
+                AssignComponents();
+                PlayerUI.UpdateObjective();
+                //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
+
+            }
+
         }
 
         private void Update()
         {
-            isGrounded = controller.isGrounded;
-            PlayerInteract.CheckInteraction();
-            PlayerCrouch.ProcessCrouch();
-            TestDmg();
+            if(photonView.IsMine)
+            {
+                isGrounded = controller.isGrounded;
+                PlayerInteract.CheckInteraction();
+                PlayerCrouch.ProcessCrouch();
+                TestDmg();
+            }
+            
         }
 
         #region Assign static variables
@@ -160,13 +170,15 @@ namespace Player
         private void Spawn()
         {
             PlayerHealth.RestoreFullHealth();
-            if(SpawnManager.instance)
+            /*if(SpawnManager.instance)
             {
                 SpawnManager.instance.RespawnSelf(this.gameObject);
+                
+
             }else
             {
                 Debug.LogWarning("SpawnManager not found, player won't respawn");
-            }
+            }*/
         }
         public void RetrieveItem(GameObject item)
         {
