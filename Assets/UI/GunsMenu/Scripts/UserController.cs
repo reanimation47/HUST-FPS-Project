@@ -11,6 +11,7 @@ public class UserController : MonoBehaviour
 
     [Header("User Infor")]
     public TextMeshProUGUI coinOwned;
+
     // Start is called before the first frame update
     void Start()
     {
