@@ -8,9 +8,11 @@ public class GunAttribute
     public GameObject gunObject;
     public GameObject [] gunSkin;
     public string gunName;
+    public GunType gunType;
     public int damage;
     public float fireRate;
     public int ammoCapacity;
-    public float bulletSpeed;
+    public float bulletSpeed;//Not gonna use this in game// consider remove & replace with recoil in gun shop
+    public float recoil;
     public float reloadTime;
 }
