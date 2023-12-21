@@ -65,9 +65,7 @@ namespace Player
             AssignComponents();
             PlayerUI.UpdateObjective();
             //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
-            Transform newTrans = SpawnManager.instance.GetSpawnPoint();
-            playerTransform.position = newTrans.position;
-            playerTransform.rotation = newTrans.rotation;
+            
         }
 
         private void Update()
@@ -81,8 +79,8 @@ namespace Player
         private void AssignStaticVariables()
         {
             controller = GetComponent<CharacterController>();
-            playerTransform = transform;
-            //Spawn();
+            //playerTransform = transform;
+            Spawn();
             playerSpeed = _playerSpeed;
             interactDistance = _interactDistance;
             interactMask = _interactMask;
@@ -172,8 +170,8 @@ namespace Player
         public void Spawn()
         {
             Transform newTrans = SpawnManager.instance.GetSpawnPoint();
-            playerTransform.position = newTrans.position;
-            playerTransform.rotation = newTrans.rotation;
+            transform.position = newTrans.position;
+            transform.rotation = newTrans.rotation;
         }
         #endregion
     }

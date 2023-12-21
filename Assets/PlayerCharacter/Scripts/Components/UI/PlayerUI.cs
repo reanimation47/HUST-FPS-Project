@@ -5,8 +5,14 @@ using TMPro;
 
 namespace Player.Components
 {
-    public class PlayerUI
+    public class PlayerUI : MonoBehaviour
     {
+        public static PlayerUI instance;
+
+        private void Awake()
+        {
+           instance = this;
+        }
         public static void UpdateText(string promptMessage)
         {
             PlayerController.promptMessage.text = promptMessage;
