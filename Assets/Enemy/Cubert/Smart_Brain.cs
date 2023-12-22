@@ -29,6 +29,8 @@ public class Smart_Brain : MonoBehaviour
         At(patrol, runToCover, () => patrol.HasDetectedPlayer());
         At(runToCover, delayAfterRun, () => runToCover.HasArrivedAtDestination());
         At(delayAfterRun, cover, () => delayAfterRun.IsDone());
+        At(cover, patrol, () => cover.IsPlayerOutOfRange());
+
 
 
         // START STATE

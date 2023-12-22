@@ -25,24 +25,15 @@ public class EnemyState_Shoot : IState
 
     public void Tick() {
         if (target != null) {
-            // Calculate the distance to the target
-            float distanceToTarget = Vector3.Distance(enemyReferences.transform.position, target.position);
-            if (distanceToTarget <= enemyReferences.detectPlayerRange) {
-                // Aim at the target
-                Vector3 lookPos = target.position - enemyReferences.transform.position;
-                // lookPos.y = 0;
-                Quaternion rotation = Quaternion.LookRotation(lookPos);
-                enemyReferences.transform.rotation = Quaternion.Slerp(enemyReferences.transform.rotation, rotation, 0.2f);
-                // Decide to shoot or hide. For now, shoot first.
-                enemyReferences.animator.SetBool("shooting", true);
-            } else {
-                // Player is too far, stop aiming and shooting
-                enemyReferences.animator.SetBool("shooting", false);
-            }
-            
-        }
-
-        
+            // Aim at the target
+            Vector3 lookPos = target.position - enemyReferences.transform.position;
+            // lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            enemyReferences.transform.rotation = Quaternion.Slerp(enemyReferences.transform.rotation, rotation, 0.2f);
+            // Decide to shoot or hide. For now, shoot first.
+            enemyReferences.animator.SetBool("shooting", true);
+        } else 
+            enemyReferences.animator.SetBool("shooting", false);
     }
 
     public Color GizmoColor() {
