@@ -20,12 +20,13 @@ public class EnemyState_Patrol : IState
 
     public void OnExit()
     {
-        enemyReferences.animator.SetFloat("speed", 0f);
+
     }
 
     public void Tick()
     {
         //Patrol Cycle
+        enemyReferences.animator.SetFloat("speed", enemyReferences.navMeshAgent.desiredVelocity.sqrMagnitude);
         if (enemyReferences.Agent.remainingDistance < 0.2f)
         {
             if (waypointIndex < enemyReferences.brain.path.waypoints.Count - 1) {
@@ -33,7 +34,7 @@ public class EnemyState_Patrol : IState
             }
             else waypointIndex = 0;
             enemyReferences.Agent.SetDestination(enemyReferences.brain.path.waypoints[waypointIndex].position);
-            enemyReferences.animator.SetFloat("speed", enemyReferences.navMeshAgent.desiredVelocity.sqrMagnitude);
+            // enemyReferences.animator.SetFloat("speed", enemyReferences.navMeshAgent.desiredVelocity.sqrMagnitude);
         }
     }
 
