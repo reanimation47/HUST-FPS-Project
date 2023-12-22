@@ -10,11 +10,11 @@ public class PausedMenuManager : MonoBehaviour
     
     private void Start()
     {
-        ActivatePausedMenu(true);
+        ActivatePausedMenu(false);
 
     }
 
-    private void update()
+    private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape) && !isPaused)
              ActivatePausedMenu(true);
