@@ -54,8 +54,13 @@ namespace Player
 
         void Awake()
         {
-            Screen.SetResolution(1920, 1080, true);
+            //Screen.SetResolution(1920, 1080, false);
             ICommon.LoadPlayer(this.gameObject);
+            // if (!photonView.IsMine)
+            // {
+            //     Debug.LogError("Destroying player scripts");
+            //     Destroy(this.gameObject);
+            // }
         }
 
         void Start()
@@ -66,9 +71,9 @@ namespace Player
                 Cursor.lockState = CursorLockMode.Locked;
                 AssignStaticVariables();
                 AssignComponents();
-                PlayerUI.UpdateObjective();
+                //PlayerUI.UpdateObjective();
                 //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
-
+                //_cam.transform.gameObject.SetActive(true);
             }
 
         }
@@ -156,6 +161,7 @@ namespace Player
         {
             if(PlayerHealth.TakeDamage(dmg) <= 0)
             {
+                Debug.LogError(dmg);
                 PlayerSpawner.instance.Die();
             }
         }
@@ -219,6 +225,11 @@ namespace Player
                     RestoreHealth(Random.Range(5, 20));
                 }
             }
+        }
+
+        public void EnableCamera()
+        {
+            _cam.transform.gameObject.SetActive(true);
         }
 
         #endregion

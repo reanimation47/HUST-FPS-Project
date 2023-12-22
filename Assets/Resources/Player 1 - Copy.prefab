@@ -438,7 +438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1453265230984398618
 Transform:
   m_ObjectHideFlags: 0
@@ -560,6 +560,7 @@ GameObject:
   - component: {fileID: 4378855845103193680}
   - component: {fileID: -1781374503712056907}
   - component: {fileID: -8753315522257205477}
+  - component: {fileID: 3439881572286108520}
   m_Layer: 0
   m_Name: Player 1 - Copy
   m_TagString: Player
@@ -660,7 +661,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453265231279909516}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dd4793fef2524e17badb5460b68ebbf, type: 3}
   m_Name: 
@@ -688,7 +689,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453265231279909516}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90ae9a933c2e74714a4e6d12318eb3ad, type: 3}
   m_Name: 
@@ -702,7 +703,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453265231279909516}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69a338842dbab48f4b9fd15a5757affa, type: 3}
   m_Name: 
@@ -717,6 +718,7 @@ MonoBehaviour:
   fadeSpeed: 1.5
   maxOverlayOpacity: 0.7
   lowHealthThreshold: 20
+  HUD: {fileID: 2949817312397945420}
 --- !u!114 &4378855845103193680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,7 +726,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453265231279909516}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42ad6df9dfae741ff9388d1e05b18c84, type: 3}
   m_Name: 
@@ -775,6 +777,22 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &3439881572286108520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453265231279909516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db3db898fce3d418abdf3c6ceb82c49f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  inputManager: {fileID: 0}
+  playerHealth: {fileID: 0}
+  playerWeapons: {fileID: 0}
 --- !u!1 &1453265231765545858
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,9 +859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Ammo
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1024,7 +1040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2949817312397945421
 RectTransform:
   m_ObjectHideFlags: 0

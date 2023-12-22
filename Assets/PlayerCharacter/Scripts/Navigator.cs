@@ -13,15 +13,15 @@ public class Navigator : MonoBehaviour
         Goal = GameManager.Instance.Goal;
         Spawn = GameManager.Instance.Spawn;
     }
-    void Update()
-    {
-        if(GameManager.Instance.ObjectiveItemRetrieved)
-        {
-            transform.LookAt(Spawn);
+    // void Update()
+    // {
+    //     if(GameManager.Instance.ObjectiveItemRetrieved)
+    //     {
+    //         transform.LookAt(Spawn);
 
-        }else
-        {
-            transform.LookAt(Goal);
-        }
-    }
+    //     }else
+    //     {
+    //         transform.LookAt(Goal);
+    //     }
+    // }
 }

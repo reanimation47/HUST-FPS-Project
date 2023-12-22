@@ -33,6 +33,7 @@ public class PlayerSpawner : MonoBehaviour
         Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
 
         player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+        player.GetComponent<MultiplayerSetup>().SetupForLocal();
     }
     public void Die()
     {
@@ -40,7 +41,7 @@ public class PlayerSpawner : MonoBehaviour
 
         //UIdeath.instance.deathText.text = "You were killed by " + damager;
 
-        PhotonNetwork.Destroy(player);
+        //PhotonNetwork.Destroy(player);
 
         SpawnPlayer();
 

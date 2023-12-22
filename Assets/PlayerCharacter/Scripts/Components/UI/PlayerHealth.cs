@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
     public float lowHealthThreshold = 20;
 
     private float durationTimer;
+    public GameObject HUD;
 
     private void Start()
     {
@@ -94,6 +95,8 @@ public class PlayerHealth : MonoBehaviour
         RestoreHealth(maxHP);
     }
 
+    
+    [Photon.Pun.PunRPC]
     public float TakeDamage(float dmg)
     {
         HP = Mathf.Clamp(HP - dmg, 0, maxHP);
