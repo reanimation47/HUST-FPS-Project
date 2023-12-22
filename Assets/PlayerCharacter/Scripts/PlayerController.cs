@@ -62,7 +62,7 @@ namespace Player
         {
             if (photonView.IsMine)
             {
-                Spawn();
+                //Spawn();
                 Cursor.lockState = CursorLockMode.Locked;
                 AssignStaticVariables();
                 AssignComponents();
@@ -156,7 +156,7 @@ namespace Player
         {
             if(PlayerHealth.TakeDamage(dmg) <= 0)
             {
-                PlayerDies();
+                PlayerSpawner.instance.Die();
             }
         }
 
@@ -189,7 +189,7 @@ namespace Player
         {
             PlayerUI.UpdateObjective();
         }
-        private void PlayerDies()
+/*        private void PlayerDies()
         {
             if (GameManager.Instance)
             {
@@ -205,7 +205,7 @@ namespace Player
                 Spawn();
             }
 
-        }
+        }*/
         private void TestDmg()
         {
             if(true)
