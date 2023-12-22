@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Hoa-Main menu.unity
+    path: Assets/Scenes/Old main menu/Hoa-Main menu.unity
     guid: 3d3c3e28e19dd334fa37ed51ca1948d2
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
