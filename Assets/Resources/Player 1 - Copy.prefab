@@ -666,6 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd4793fef2524e17badb5460b68ebbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMode: 1
   _playerSpeed: 5
   _crouchSpeed: 2
   gravity: -9.8

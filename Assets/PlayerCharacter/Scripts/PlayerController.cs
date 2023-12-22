@@ -8,6 +8,7 @@ namespace Player
     public class PlayerController : MonoBehaviourPunCallbacks, ICombat  
     {
         #region Initialize Variables
+        public GameMode gameMode = GameMode.Multiplayer;
         public static CharacterController controller;
         public static Transform playerTransform;
         private Vector3 playerVelocity;
@@ -52,42 +53,45 @@ namespace Player
         public Camera _cam;
         #endregion
 
+        public static PlayerController Instance;
         void Awake()
         {
+            // if (Instance != null && Instance != this) 
+            // { 
+            //     Destroy(this); 
+            // } 
+            // else 
+            // { 
+            //     Instance = this; 
+            // } 
             //Screen.SetResolution(1920, 1080, false);
             ICommon.LoadPlayer(this.gameObject);
-            // if (!photonView.IsMine)
-            // {
-            //     Debug.LogError("Destroying player scripts");
-            //     Destroy(this.gameObject);
-            // }
+            if (gameMode == GameMode.SinglePlayer)
+            {
+                GetComponent<MultiplayerSetup>().SetupForLocal();
+                EnableCamera();
+            }
         }
 
         void Start()
         {
-            if (photonView.IsMine)
-            {
-                //Spawn();
-                Cursor.lockState = CursorLockMode.Locked;
-                AssignStaticVariables();
-                AssignComponents();
-                //PlayerUI.UpdateObjective();
-                //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
-                //_cam.transform.gameObject.SetActive(true);
-            }
+            Spawn();
+            Cursor.lockState = CursorLockMode.Locked;
+            AssignStaticVariables();
+            AssignComponents();
+            //PlayerUI.UpdateObjective();
+            //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
+            //_cam.transform.gameObject.SetActive(true);
 
         }
 
         private void Update()
         {
-            if(photonView.IsMine)
-            {
-                isGrounded = controller.isGrounded;
-                PlayerInteract.CheckInteraction();
-                PlayerCrouch.ProcessCrouch();
-                TestDmg();
-            }
-            
+            isGrounded = controller.isGrounded;
+            PlayerInteract.CheckInteraction();
+            PlayerCrouch.ProcessCrouch();
+            TestDmg();
+        
         }
 
         #region Assign static variables
@@ -176,8 +180,9 @@ namespace Player
         #region GamePlay
         private void Spawn()
         {
+            if (gameMode == GameMode.Multiplayer){return;}
             PlayerHealth.RestoreFullHealth();
-            /*if(SpawnManager.instance)
+            if(SpawnManager.instance)
             {
                 SpawnManager.instance.RespawnSelf(this.gameObject);
                 
@@ -185,7 +190,7 @@ namespace Player
             }else
             {
                 Debug.LogWarning("SpawnManager not found, player won't respawn");
-            }*/
+            }
         }
         public void RetrieveItem(GameObject item)
         {
@@ -196,7 +201,7 @@ namespace Player
         {
             PlayerUI.UpdateObjective();
         }
-/*        private void PlayerDies()
+        private void PlayerDies()
         {
             if (GameManager.Instance)
             {
@@ -212,7 +217,7 @@ namespace Player
                 Spawn();
             }
 
-        }*/
+        }
         private void TestDmg()
         {
             if(true)

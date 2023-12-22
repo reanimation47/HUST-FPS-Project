@@ -39,9 +39,17 @@ public class ICommon : MonoBehaviour
     {
         if (_hit.transform.gameObject.TryGetComponent(out ICombat combatable)) // If target has combat system
         {
-            PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
-            _hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
-            //combatable.TakeDamage(baseDamage);
+            // PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
+            // _hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
+            if(_player.GetComponent<PlayerController>().gameMode == GameMode.Multiplayer)
+            {
+                PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
+                _hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
+
+            }else
+            {
+                combatable.TakeDamage(baseDamage);
+            }
         }else 
         {
             Debug.LogError(_hit.transform.gameObject.name);
