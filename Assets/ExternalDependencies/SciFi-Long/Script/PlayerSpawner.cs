@@ -16,9 +16,8 @@ public class PlayerSpawner : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject player;
 
-   // public GameObject deathEffect;
 
-   // public float respawnTime = 5f;
+    public float respawnTime = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +38,7 @@ public class PlayerSpawner : MonoBehaviour
     {
 
 
-        //UIController.instance.deathText.text = "You were killed by " + damager;
+        //UIdeath.instance.deathText.text = "You were killed by " + damager;
 
         PhotonNetwork.Destroy(player);
 
@@ -47,29 +46,30 @@ public class PlayerSpawner : MonoBehaviour
 
         //MatchManager.instance.UpdateStatsSend(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
 
-       /* if (player != null)
+       if (player != null)
         {
             StartCoroutine(DieCo());
-        }*/
+        }
     }
 
-    /*
+    
         public IEnumerator DieCo()
         {
-            PhotonNetwork.Instantiate(deathEffect.name, player.transform.position, Quaternion.identity);
+
 
             PhotonNetwork.Destroy(player);
             player = null;
-           // UIController.instance.deathScreen.SetActive(true);
+            //UIdeath.instance.deathScreen.SetActive(true);
 
             yield return new WaitForSeconds(respawnTime);
 
-            //UIController.instance.deathScreen.SetActive(false);
+            //UIdeath.instance.deathScreen.SetActive(false);
 
-            *//*if (MatchManager.instance.state == MatchManager.GameState.Playing && player == null)
-            {
-                SpawnPlayer();
-            }*//*
-        }
-    */
+            SpawnPlayer();
+        /*if (MatchManager.instance.state == MatchManager.GameState.Playing && player == null)
+        {
+            SpawnPlayer();
+        }*/
+    }
+
 }
