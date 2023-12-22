@@ -159,10 +159,11 @@ namespace Player
         #region Combat
         public void TakeDamage(float dmg)
         {
+            Debug.LogWarning("con ");
             if(PlayerHealth.TakeDamage(dmg) <= 0)
             {
                 Debug.LogError(dmg);
-                PlayerSpawner.instance.Die();
+                //PlayerSpawner.Instance.Die();
             }
         }
 

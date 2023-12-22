@@ -8,11 +8,11 @@ public class Navigator : MonoBehaviour
     // Update is called once per frame
     Transform Goal;
     Transform Spawn;
-    void Start()
-    {
-        Goal = GameManager.Instance.Goal;
-        Spawn = GameManager.Instance.Spawn;
-    }
+    // void Start()
+    // {
+    //     Goal = GameManager.Instance.Goal;
+    //     Spawn = GameManager.Instance.Spawn;
+    // }
     // void Update()
     // {
     //     if(GameManager.Instance.ObjectiveItemRetrieved)

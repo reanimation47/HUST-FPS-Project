@@ -7,11 +7,18 @@ using UnityEngine.InputSystem.XR;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    public static PlayerSpawner instance;
+    public static PlayerSpawner Instance;
 
     private void Awake()
     {
-        instance = this;
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
     }
     public GameObject playerPrefab;
     private GameObject player;
@@ -35,13 +42,14 @@ public class PlayerSpawner : MonoBehaviour
         player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         player.GetComponent<MultiplayerSetup>().SetupForLocal();
     }
+
     public void Die()
     {
 
 
         //UIdeath.instance.deathText.text = "You were killed by " + damager;
 
-        //PhotonNetwork.Destroy(player);
+        PhotonNetwork.Destroy(player);
 
         SpawnPlayer();
 
