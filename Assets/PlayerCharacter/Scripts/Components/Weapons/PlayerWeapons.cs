@@ -59,7 +59,10 @@ public class PlayerWeapons : MonoBehaviour
     #region Others
     private void UpdateCurrentAmmo()
     {
-        AmmoText.text = $"{currentActiveGun._currentAmmoInClip}/{currentActiveGun._ammoInReserve}";
+        if (AmmoText != null && currentActiveGun != null)
+        {
+            AmmoText.text = $"{currentActiveGun._currentAmmoInClip}/{currentActiveGun._ammoInReserve}";
+        }
     }
 
     // private void EnableEquippedGuns()
@@ -80,31 +83,42 @@ public class PlayerWeapons : MonoBehaviour
     #region Actions
     int prevEquippedIndex = -1;
     public void EquipGun(int slotIndex, bool atIntro = false)
+{
+    if (!hasPrimaryGun && !atIntro) { return; }
+    if (prevEquippedIndex == slotIndex) { return; }
+    prevEquippedIndex = slotIndex;
+    if (gunController._isReloading) { return; } // TODO: able to switch gun to stop/skip reloading
+    if (!atIntro)
     {
-        if (!hasPrimaryGun && !atIntro) {return;}
-        if (prevEquippedIndex == slotIndex) {return;}
-        prevEquippedIndex = slotIndex;
-        if (gunController._isReloading) {return;} //TODO: able to switch gun to stop/skip reloading
-        if (!atIntro)
+        gunController.GunSwitchAnimation();
+    }
+    for (int i = 0; i < _guns.Count; i++)
+    {
+        Debug.LogError("Counttt: " + _guns.Count);
+        var gun = _guns[i];
+        if (i == slotIndex)
         {
-            gunController.GunSwitchAnimation();
-
+            Debug.LogError(gun.GunID);
+            gun.transform.gameObject.SetActive(true);
+            currentActiveGun = gun;
         }
-        for (int i = 0; i < _guns.Count; i++)
+        else
         {
-            Debug.LogError("Counttt: "+_guns.Count);
-            var gun = _guns[i];
-            if (i == slotIndex)
-            {
-                Debug.LogError(gun.GunID);
-                gun.transform.gameObject.SetActive(true);
-                currentActiveGun = gun;
-            }else
+            if (gun != null && gun.transform != null) // Check if the gun reference and transform are not null
             {
                 gun.transform.gameObject.SetActive(false);
             }
+            else
+            {
+                // Handle the case where the gun reference or transform is null
+                // For example, you could remove the gun from the list
+                Debug.LogError("Gun reference or transform is null at index: " + i);
+                _guns.RemoveAt(i);
+                i--; // Adjust the index to account for the removed element
+            }
         }
     }
+}
     #endregion
 
     #region Get Equipped Gun
