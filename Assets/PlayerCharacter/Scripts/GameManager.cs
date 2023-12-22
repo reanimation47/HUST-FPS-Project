@@ -35,6 +35,12 @@ public class GameManager : MonoBehaviour
         item.SetActive(false);
     }
 
+    public void MissionCompleted()
+    {
+        Debug.LogWarning("MISSION COMPLETE");
+
+    }
+
     private void NextWave()
     {
         if (WaveIndex >0)

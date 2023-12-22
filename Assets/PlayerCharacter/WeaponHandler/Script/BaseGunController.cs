@@ -16,6 +16,7 @@ namespace Player.WeaponHandler
         [HideInInspector] public bool isEquipped = false;
         [HideInInspector] public bool isActive = false;
         public GunID GunID = GunID.DEFAULT; //To identify different guns
+        public GunDatabase gunDB;
         private Animator animator;
 
         bool _canShoot;
@@ -114,9 +115,20 @@ namespace Player.WeaponHandler
 
         private void ShootRayCast()
         {
+            if (activeGun.GunType == GunType.SHOTGUN)
+            {
+                ShootMultipleRayCasts();
+            }else
+            {
+                ShootSingleRayCast();
+            }
+        }
+
+        private void ShootSingleRayCast()
+        {
             RaycastHit hit;
             //Debug.DrawRay(transform.parent.position, transform.parent.forward * 100);
-            if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit))
+            if (Physics.Raycast(_cam.transform.position + _cam.transform.forward*1, _cam.transform.forward, out hit))
             {
                 float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
                 //Debug.Log(hit.normal);
@@ -125,7 +137,30 @@ namespace Player.WeaponHandler
 
                 //Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
             }
+
         }
+
+        private void ShootMultipleRayCasts()
+        {
+            int spread = Random.Range(5,8);
+            for (int i = 0; i< spread; i++)
+            {
+                Vector3 rand = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f));
+                Vector3 random_direction = Quaternion.Euler(rand) * _cam.transform.forward;
+                RaycastHit hit;
+                if (Physics.Raycast(_cam.transform.position + _cam.transform.forward*1, random_direction, out hit))
+                {
+                    float dirSign = Mathf.Sign(Vector3.Dot(_cam.transform.position, hit.point));
+                    //Debug.Log(hit.normal);
+                    //Debug.LogWarning(hit.transform.gameObject.name);
+                    ICommon.CheckForHits(hit, activeGun.baseDamage);
+
+                    //Instantiate(bulletHole, hit.point + new Vector3(hit.normal.x * 0.01f, hit.normal.y * 0.01f, hit.normal.z * 0.01f), Quaternion.LookRotation(-hit.normal));
+                }
+            }
+
+        }
+
         public void DetermineAim(bool isAiming)
         {
             Vector3 target_pos = normalLocalPosition;
@@ -167,7 +202,7 @@ namespace Player.WeaponHandler
 
         private void Recoil()
         {
-            transform.localPosition -= Vector3.forward * 0.1f; //Pure gun recoiling visual effect
+            transform.localPosition -= Vector3.forward * activeGun.recoil/10f; //Pure gun recoiling visual effect
 
             float xRecoil = Random.Range(-activeGun.randomRecoilConstraints.x, activeGun.randomRecoilConstraints.x);
             float yRecoil = Random.Range(-activeGun.randomRecoilConstraints.y, activeGun.randomRecoilConstraints.y);
