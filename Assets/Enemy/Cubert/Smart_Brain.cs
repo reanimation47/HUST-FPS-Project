@@ -8,7 +8,7 @@ public class Smart_Brain : MonoBehaviour
     
     private EnemyReferences enemyReferences;
     private StateMachine stateMachine;
-    
+    public Path path;
     
     // Start is called before the first frame update
     void Start()
@@ -23,14 +23,16 @@ public class Smart_Brain : MonoBehaviour
         var runToCover = new EnemyState_RunToCover(enemyReferences, coverArea);
         var delayAfterRun = new EnemyState_Delay(2f);
         var cover = new EnemyState_Cover(enemyReferences);
+        var patrol = new EnemyState_Patrol(enemyReferences);
 
         //TRANSITIONS
+        At(patrol, runToCover, () => patrol.HasDetectedPlayer());
         At(runToCover, delayAfterRun, () => runToCover.HasArrivedAtDestination());
         At(delayAfterRun, cover, () => delayAfterRun.IsDone());
 
 
         // START STATE
-        stateMachine.SetState(runToCover);
+        stateMachine.SetState(patrol);
 
         //FUNCTIONS & CONDITIONS
         void At(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
