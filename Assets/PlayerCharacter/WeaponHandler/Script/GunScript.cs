@@ -15,6 +15,7 @@ public class GunScript : MonoBehaviour
     public int clipSize = 12;
     public int reservedAmmo = 12*10;
     public float reloadTime = 2f;
+    public float recoil = 1f;
     public Vector2 randomRecoilConstraints = new Vector2(2,5);
     public Image muzzleFlash;
     [HideInInspector] public int _currentAmmoInClip;
@@ -45,6 +46,7 @@ public class GunScript : MonoBehaviour
     public void LoadGunStats(GunAttribute stats)
     {
         baseDamage = stats.damage;
+        recoil = stats.recoil;
         fireRate = stats.fireRate;
         reloadTime = stats.reloadTime;
         randomRecoilConstraints = new Vector2(stats.recoil, stats.recoil);
