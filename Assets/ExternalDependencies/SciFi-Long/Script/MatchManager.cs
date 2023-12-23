@@ -42,6 +42,18 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (!PhotonNetwork.IsConnected)
         {
             SceneManager.LoadScene(0);
+        } else
+        {
+            NewPlayerSend(PhotonNetwork.NickName);
+
+            state = GameState.Playing;
+
+           // SetupTimer();
+
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                //UIController.instance.timerText.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -50,6 +62,48 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         
 
+    }
+    public void OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code < 200)
+        {
+            EventCodes theEvent = (EventCodes)photonEvent.Code;
+            object[] data = (object[])photonEvent.CustomData;
+
+            //Debug.Log("Received event " + theEvent);
+            switch (theEvent)
+            {
+                case EventCodes.NewPlayer:
+
+                    NewPlayerReceive(data);
+
+                    break;
+
+                case EventCodes.ListPlayers:
+
+                    ListPlayersReceive(data);
+
+                    break;
+
+                case EventCodes.UpdateStat:
+
+                    UpdateStatsReceive(data);
+
+                    break;
+
+                case EventCodes.NextMatch:
+
+                    // NextMatchReceive();
+
+                    break;
+
+                case EventCodes.TimerSync:
+
+                    //TimerReceive(data);
+
+                    break;
+            }
+        }
     }
     public void NewPlayerSend(string username)
     {
@@ -70,7 +124,11 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void NewPlayerReceive(object[] dataReceived)
     {
-        PlayerInfo player = new PlayerInfo((string)dataReceived[0], (int)dataReceived[1], (int)dataReceived[2], (int)dataReceived[3]);
+        PlayerInfo player = new PlayerInfo(
+            (string)dataReceived[0], 
+            (int)dataReceived[1], 
+            (int)dataReceived[2], 
+            (int)dataReceived[3]);
 
         allPlayers.Add(player);
 
@@ -183,46 +241,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         StateCheck();
     }
-    public void OnEvent(EventData photonEvent)
-    {
-        if(photonEvent.Code < 200)
-        {
-            EventCodes theEvent = (EventCodes)photonEvent.Code;
-            object[] data = (object[])photonEvent.CustomData;
-            switch (theEvent)
-            {
-                case EventCodes.NewPlayer:
-
-                    NewPlayerReceive(data);
-
-                    break;
-
-                case EventCodes.ListPlayers:
-
-                    ListPlayersReceive(data);
-
-                    break;
-
-                case EventCodes.UpdateStat:
-
-                    UpdateStatsReceive(data);
-
-                    break;
-
-                case EventCodes.NextMatch:
-
-                   // NextMatchReceive();
-
-                    break;
-
-                case EventCodes.TimerSync:
-
-                    //TimerReceive(data);
-
-                    break;
-            }
-        }
-    }
+   
     public override void OnEnable()
     {
         PhotonNetwork.AddCallbackTarget(this);
