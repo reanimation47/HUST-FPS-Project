@@ -49,11 +49,15 @@ public class ICommon : MonoBehaviour
 
                 float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[hitview.Owner.NickName];
                 targetHP -= baseDamage;
+                if(targetHP <= 0)
+                {
+                    Debug.LogWarning("Killed " +hitview.Owner.NickName);
+                }
                 Hashtable hash = new Hashtable();
                 hash.Add(hitview.Owner.NickName, targetHP);
                 PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
                 //_hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
-                CheckForTargetHP(hitview.Owner.NickName);
+                //CheckForTargetHP(hitview.Owner.NickName);
             }else
             {
                 combatable.TakeDamage(baseDamage);
@@ -192,6 +196,14 @@ public class ICommon : MonoBehaviour
     #endregion
 
     #region Others
+
+    public static void UpdatePlayerCoinsBalance(int amount)
+    {
+        int _ = PlayerPrefs.GetInt("CoinOwned", 0);
+
+        _ += amount;
+        PlayerPrefs.SetInt("CoinOwned", _);
+    }
     public static void RemoveObjectFromAnimator(GameObject gameObject, Animator animator)
     {
         Transform parentTransform = gameObject.transform.parent;

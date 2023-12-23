@@ -108,8 +108,8 @@ public class PlayerSpawner : MonoBehaviour
                 string playerName = p.GetComponent<PhotonView>().Owner.NickName;
                 //Debug.LogWarning(playerName);
                 float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[playerName];
-                Debug.LogWarning(playerName + ": " + targetHP);
-                Debug.LogWarning(p.GetComponent<PhotonView>().IsMine);
+                //Debug.LogWarning(playerName + ": " + targetHP);
+                //Debug.LogWarning(p.GetComponent<PhotonView>().IsMine);
                 if(targetHP <= 0)
                 {
                     StartCoroutine(RespawnDeadEnemy(p));
