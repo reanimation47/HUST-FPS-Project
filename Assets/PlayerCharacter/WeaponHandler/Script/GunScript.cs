@@ -18,6 +18,9 @@ public class GunScript : MonoBehaviour
     public float recoil = 1f;
     public Vector2 randomRecoilConstraints = new Vector2(2,5);
     public Image muzzleFlash;
+
+    public GunAttribute gunStats;
+    
     [HideInInspector] public int _currentAmmoInClip;
     [HideInInspector] public int _ammoInReserve;
     private void Awake()
@@ -45,6 +48,15 @@ public class GunScript : MonoBehaviour
 
     public void LoadGunStats(GunAttribute stats)
     {
+        if(stats != null)
+        {
+            gunStats = stats;
+        }
+        InjectGunStats(gunStats);
+    }
+
+    public void InjectGunStats(GunAttribute stats)
+    {
         baseDamage = stats.damage;
         recoil = stats.recoil;
         fireRate = stats.fireRate;
@@ -55,5 +67,12 @@ public class GunScript : MonoBehaviour
 
         _currentAmmoInClip = clipSize;
         _ammoInReserve = reservedAmmo;
+
+    }
+
+    public void ResetGun()
+    {
+        _currentAmmoInClip = clipSize;
+        _ammoInReserve = clipSize*7;
     }
 }
