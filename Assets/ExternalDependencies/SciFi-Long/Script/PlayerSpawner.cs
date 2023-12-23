@@ -49,7 +49,6 @@ public class PlayerSpawner : MonoBehaviour
         {
             player.transform.position = spawnPoint.position;
             player.SetActive(true);
-            player.GetComponent<PlayerController>().ResetStats();
         }else
         {
             player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
@@ -85,6 +84,7 @@ public class PlayerSpawner : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
 
             player.SetActive(false);
+            player.GetComponent<PlayerController>().ResetStats();
             player.transform.position = new Vector3(1000,-100,1000);//quick fix because after deactivation the player object still visible for player on another player, 
             deathCam.SetActive(true);
             //player = null;
