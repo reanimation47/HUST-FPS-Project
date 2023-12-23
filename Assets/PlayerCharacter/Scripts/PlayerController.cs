@@ -1,12 +1,14 @@
 using Player.Components;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour, ICombat
+    public class PlayerController : MonoBehaviourPunCallbacks, ICombat  
     {
         #region Initialize Variables
+        public GameMode gameMode = GameMode.Multiplayer;
         public static CharacterController controller;
         public static Transform playerTransform;
         private Vector3 playerVelocity;
@@ -51,10 +53,24 @@ namespace Player
         public Camera _cam;
         #endregion
 
+        public static PlayerController Instance;
         void Awake()
         {
-            Screen.SetResolution(1920, 1080, true);
+            // if (Instance != null && Instance != this) 
+            // { 
+            //     Destroy(this); 
+            // } 
+            // else 
+            // { 
+            //     Instance = this; 
+            // } 
+            //Screen.SetResolution(1920, 1080, false);
             ICommon.LoadPlayer(this.gameObject);
+            if (gameMode == GameMode.SinglePlayer)
+            {
+                GetComponent<MultiplayerSetup>().SetupForLocal();
+                EnableCamera();
+            }
         }
 
         void Start()
@@ -63,8 +79,10 @@ namespace Player
             Cursor.lockState = CursorLockMode.Locked;
             AssignStaticVariables();
             AssignComponents();
-            PlayerUI.UpdateObjective();
+            //PlayerUI.UpdateObjective();
             //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
+            //_cam.transform.gameObject.SetActive(true);
+
         }
 
         private void Update()
@@ -73,6 +91,7 @@ namespace Player
             PlayerInteract.CheckInteraction();
             PlayerCrouch.ProcessCrouch();
             TestDmg();
+        
         }
 
         #region Assign static variables
@@ -144,9 +163,11 @@ namespace Player
         #region Combat
         public void TakeDamage(float dmg)
         {
+            Debug.LogWarning("con ");
             if(PlayerHealth.TakeDamage(dmg) <= 0)
             {
-                PlayerDies();
+                Debug.LogError(dmg);
+                //PlayerSpawner.Instance.Die();
             }
         }
 
@@ -159,10 +180,13 @@ namespace Player
         #region GamePlay
         private void Spawn()
         {
+            if (gameMode == GameMode.Multiplayer){return;}
             PlayerHealth.RestoreFullHealth();
             if(SpawnManager.instance)
             {
                 SpawnManager.instance.RespawnSelf(this.gameObject);
+                
+
             }else
             {
                 Debug.LogWarning("SpawnManager not found, player won't respawn");
@@ -207,6 +231,11 @@ namespace Player
                     RestoreHealth(Random.Range(5, 20));
                 }
             }
+        }
+
+        public void EnableCamera()
+        {
+            _cam.transform.gameObject.SetActive(true);
         }
 
         #endregion

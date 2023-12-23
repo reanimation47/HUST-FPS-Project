@@ -7,18 +7,24 @@ using UnityEngine.InputSystem.XR;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    public static PlayerSpawner instance;
+    public static PlayerSpawner Instance;
 
     private void Awake()
     {
-        instance = this;
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
     }
     public GameObject playerPrefab;
     private GameObject player;
 
-   // public GameObject deathEffect;
 
-   // public float respawnTime = 5f;
+    public float respawnTime = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,12 +40,14 @@ public class PlayerSpawner : MonoBehaviour
         Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
 
         player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+        player.GetComponent<MultiplayerSetup>().SetupForLocal();
     }
-   /* public void Die(string damager)
+
+    public void Die()
     {
 
 
-        //UIController.instance.deathText.text = "You were killed by " + damager;
+        UIdeath.instance.deathText.text = "You were killed";
 
         PhotonNetwork.Destroy(player);
 
@@ -47,28 +55,30 @@ public class PlayerSpawner : MonoBehaviour
 
         //MatchManager.instance.UpdateStatsSend(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
 
-        if (player != null)
+       if (player != null)
         {
             StartCoroutine(DieCo());
         }
     }
 
-    public IEnumerator DieCo()
-    {
-        PhotonNetwork.Instantiate(deathEffect.name, player.transform.position, Quaternion.identity);
+    
+        public IEnumerator DieCo()
+        {
 
-        PhotonNetwork.Destroy(player);
-        player = null;
-       // UIController.instance.deathScreen.SetActive(true);
 
-        yield return new WaitForSeconds(respawnTime);
+            PhotonNetwork.Destroy(player);
+            player = null;
+            UIdeath.instance.deathScreen.SetActive(true);
 
-        //UIController.instance.deathScreen.SetActive(false);
+            yield return new WaitForSeconds(respawnTime);
 
-        *//*if (MatchManager.instance.state == MatchManager.GameState.Playing && player == null)
+            UIdeath.instance.deathScreen.SetActive(false);
+
+            SpawnPlayer();
+        /*if (MatchManager.instance.state == MatchManager.GameState.Playing && player == null)
         {
             SpawnPlayer();
-        }*//*
+        }*/
     }
-*/
+
 }

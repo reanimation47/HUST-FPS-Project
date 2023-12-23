@@ -28,9 +28,9 @@ namespace Player {
 
     public void RespawnSelf(GameObject target)
     {
-        target.SetActive(false);
-        target.transform.position = GetSpawnPoint().position;
-        target.SetActive(true);
+       target.SetActive(false);
+       target.transform.position = GetSpawnPoint().position;
+       target.SetActive(true);
     }
 }
  }
