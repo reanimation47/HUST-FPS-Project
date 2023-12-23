@@ -101,7 +101,6 @@ public class PlayerSpawner : MonoBehaviour
     private void CheckForDiedPlayers()
     {
         GameObject[] AllPlayers = GameObject.FindGameObjectsWithTag("Player");
-        Debug.LogWarning(AllPlayers.Length);
         foreach(var p in AllPlayers)
         {
             if(!p.GetComponent<PhotonView>().IsMine)
