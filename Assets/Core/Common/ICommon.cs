@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
+using Photon.Realtime;
 using Player;
 using Player.WeaponHandler;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine;
 
 public class ICommon : MonoBehaviour
@@ -44,8 +46,14 @@ public class ICommon : MonoBehaviour
             if(_player.GetComponent<PlayerController>().gameMode == GameMode.Multiplayer)
             {
                 PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
-                _hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
 
+                float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[hitview.Owner.NickName];
+                targetHP -= baseDamage;
+                Hashtable hash = new Hashtable();
+                hash.Add(hitview.Owner.NickName, targetHP);
+                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+                //_hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
+                CheckForTargetHP(hitview.Owner.NickName);
             }else
             {
                 combatable.TakeDamage(baseDamage);
@@ -62,6 +70,22 @@ public class ICommon : MonoBehaviour
             
             rb.AddForce(-_hit.normal*7000); //TODO: Maybe the hit force could scale with the weapon's dmg?
         }
+
+    }
+    
+    private static void CheckForTargetHP(string targetName)
+    {
+        Debug.LogWarning(targetName);
+        float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[targetName];
+        Debug.LogWarning(targetHP);
+
+    }
+
+    IEnumerator DeactiveObjec(GameObject o, float duration)
+    {
+        o.SetActive(false);
+        yield return new WaitForSeconds(duration);
+        o.SetActive(true);
 
     }
     #endregion

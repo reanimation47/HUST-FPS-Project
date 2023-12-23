@@ -36,6 +36,11 @@ public class PlayerSpawner : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        CheckForDiedPlayers();
+    }
+
     public void SpawnPlayer(bool isRespawn = false)
     {
         Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
@@ -48,6 +53,7 @@ public class PlayerSpawner : MonoBehaviour
         }else
         {
             player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            player.gameObject.name = PhotonNetwork.LocalPlayer.NickName;
         }
         player.GetComponent<MultiplayerSetup>().SetupForLocal();
     }
@@ -76,8 +82,9 @@ public class PlayerSpawner : MonoBehaviour
         {
 
             //PhotonNetwork.Destroy(player);
+            yield return new WaitForSeconds(0.1f);
+
             player.SetActive(false);
-            yield return new WaitForSeconds(0.01f);
             player.transform.position = new Vector3(1000,-100,1000);//quick fix because after deactivation the player object still visible for player on another player, 
             deathCam.SetActive(true);
             //player = null;
@@ -89,6 +96,35 @@ public class PlayerSpawner : MonoBehaviour
             deathCam.SetActive(false);
 
             SpawnPlayer(true);
+    }
+
+    private void CheckForDiedPlayers()
+    {
+        GameObject[] AllPlayers = GameObject.FindGameObjectsWithTag("Player");
+        Debug.LogWarning(AllPlayers.Length);
+        foreach(var p in AllPlayers)
+        {
+            //if(p.GetComponent<PhotonView>().IsMine){return;}
+            string playerName = p.GetComponent<PhotonView>().Owner.NickName;
+            //Debug.LogWarning(playerName);
+            float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[playerName];
+            Debug.LogWarning(playerName + ": " + targetHP);
+            Debug.LogWarning(p.GetComponent<PhotonView>().IsMine);
+            if(targetHP <= 0)
+            {
+                StartCoroutine(RespawnDeadEnemy(p));
+            }
+
+        }
+
+    }
+
+    IEnumerator RespawnDeadEnemy(GameObject e)
+    {
+        e.SetActive(false);
+        yield return new WaitForSeconds(respawnTime);
+        e.SetActive(true);
+
     }
 
 }

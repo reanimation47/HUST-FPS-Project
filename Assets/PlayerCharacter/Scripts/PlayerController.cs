@@ -65,7 +65,11 @@ namespace Player
             //     Instance = this; 
             // } 
             //Screen.SetResolution(1920, 1080, false);
-            ICommon.LoadPlayer(this.gameObject);
+            PhotonView view = GetComponent<PhotonView>();
+            if(view.IsMine || gameMode == GameMode.SinglePlayer)
+            {
+                ICommon.LoadPlayer(this.gameObject);
+            }
             if (gameMode == GameMode.SinglePlayer)
             {
                 GetComponent<MultiplayerSetup>().SetupForLocal();

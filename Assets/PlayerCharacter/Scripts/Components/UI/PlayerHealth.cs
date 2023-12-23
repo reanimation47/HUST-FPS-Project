@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Player Health Bar Settings")]
-    private float HP;
+    public float HP;
     private float lerpTimer;
     public float maxHP = 100f;
     public float chipSpeed = 2f;
@@ -26,10 +28,14 @@ public class PlayerHealth : MonoBehaviour
     {
         HP = maxHP;
         dmgOverlay.color = new Color(dmgOverlay.color.r, dmgOverlay.color.g, dmgOverlay.color.b, 0);
+        Hashtable hash = new Hashtable();
+        hash.Add(this.gameObject.name, HP);
+        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
     private void Update()
     {
+        UpdateHPForServer();
         HP = Mathf.Clamp(HP, 0, maxHP);
         UpdateHealthUI();
         //TestDmg();
@@ -92,7 +98,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void RestoreFullHealth()
     {
-        RestoreHealth(maxHP);
+        if(ICommon.GetPlayerController().gameMode == GameMode.Multiplayer)
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add(ICommon.GetPlayerGameObject().name, maxHP);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);   
+        }else
+        {
+            RestoreHealth(maxHP);
+
+        }
     }
 
     
@@ -102,7 +117,11 @@ public class PlayerHealth : MonoBehaviour
         HP = Mathf.Clamp(HP - dmg, 0, maxHP);
         if(HP == 0)
         {
-            PlayerSpawner.Instance.Die();
+            if(ICommon.GetPlayerController().gameMode == GameMode.Multiplayer)
+            {
+                PlayerSpawner.Instance.Die();
+                //this.gameObject.SetActive(false);
+            }
         }
         lerpTimer = 0f;
         durationTimer = 0;
@@ -114,6 +133,26 @@ public class PlayerHealth : MonoBehaviour
     {
         HP = Mathf.Clamp(HP + amount, 0, maxHP);
         lerpTimer = 0f;
+    }
+
+    public void UpdateHPForServer()
+    {
+        if(ICommon.GetPlayerController().gameMode == GameMode.SinglePlayer){return;}
+
+
+        float HPfromServer = (float)PhotonNetwork.CurrentRoom.CustomProperties[ICommon.GetPlayerGameObject().name];
+        if (HPfromServer > HP)
+        {
+            RestoreHealth(HPfromServer - HP);
+        }else if(HPfromServer < HP)
+        {
+            TakeDamage(HP-HPfromServer);
+        }
+        //HP = HPfromServer;
+        
+        // Hashtable hash = new Hashtable();
+        // hash.Add(this.gameObject.name, HP);
+        // PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
 }
