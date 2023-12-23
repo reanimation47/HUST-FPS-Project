@@ -49,11 +49,15 @@ public class ICommon : MonoBehaviour
 
                 float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[hitview.Owner.NickName];
                 targetHP -= baseDamage;
+                if(targetHP <= 0)
+                {
+                    Debug.LogWarning("Killed " +hitview.Owner.NickName);
+                }
                 Hashtable hash = new Hashtable();
                 hash.Add(hitview.Owner.NickName, targetHP);
                 PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
                 //_hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
-                CheckForTargetHP(hitview.Owner.NickName);
+                //CheckForTargetHP(hitview.Owner.NickName);
             }else
             {
                 combatable.TakeDamage(baseDamage);
