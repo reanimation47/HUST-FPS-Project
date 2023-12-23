@@ -5,7 +5,7 @@ using Photon.Pun;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviourPunCallbacks, ICombat  
+    public class PlayerController : MonoBehaviourPunCallbacks, ICombat
     {
         #region Initialize Variables
         public GameMode gameMode = GameMode.Multiplayer;
@@ -166,12 +166,13 @@ namespace Player
         #endregion
 
         #region Combat
-        public void TakeDamage(float dmg)
+        public void TakeDamage(float dmg, int actor)
         {
             if(PlayerHealth.TakeDamage(dmg) <= 0)
             {
                 Debug.LogError(dmg);
-                //PlayerSpawner.Instance.Die();
+                PlayerSpawner.Instance.Die();
+                MatchManager.instance.UpdateStatsSend(actor, 0, 1);
             }
         }
 
@@ -231,7 +232,7 @@ namespace Player
             {
                 if (Input.GetKeyDown(KeyCode.X))
                 {
-                    TakeDamage(Random.Range(5, 20));
+                    //TakeDamage(Random.Range(5, 20));
                 } 
                 if (Input.GetKeyDown(KeyCode.C))
                 {
@@ -249,6 +250,11 @@ namespace Player
         {
             PlayerHealth.RestoreFullHealth();
             PlayerWeapons.ResetGuns();
+        }
+
+        public void TakeDamage(float dmg)
+        {
+            ((ICombat)Instance).TakeDamage(dmg);
         }
 
         #endregion

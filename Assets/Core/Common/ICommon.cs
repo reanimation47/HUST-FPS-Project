@@ -7,6 +7,7 @@ using Player;
 using Player.WeaponHandler;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 
 public class ICommon : MonoBehaviour
 {
@@ -48,6 +49,14 @@ public class ICommon : MonoBehaviour
                 PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
 
                 float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[hitview.Owner.NickName];
+                /*if (_hit.collider.gameObject.tag == "Player")
+                {
+                    Debug.Log("Hit " + _hit.collider.gameObject.GetPhotonView().Owner.NickName);
+
+                    PhotonNetwork.Instantiate(_player.name, _hit.point, Quaternion.identity);
+
+                    _hit.collider.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, hitview.Owner.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
+                }*/
                 targetHP -= baseDamage;
                 if(targetHP <= 0)
                 {
