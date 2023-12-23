@@ -5,13 +5,14 @@ using UnityEngine.UI;
 using TMPro;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
+using System.ComponentModel.Design;
 
 public class GunSelectionController : MonoBehaviour
 {
     public GunDatabase gunDB;
     public GunSkinDatabase gunSkinDB;
     public CheckSkinOwned skinOwnedChecker;
-    public UserController userController;
+    public BuyGunSkin skinGunController;
 
     [Header("Gun Info")]
     public TextMeshProUGUI gunName;
@@ -27,6 +28,7 @@ public class GunSelectionController : MonoBehaviour
 
     [Header("Gun Skins")]
     public Transform[] skinHolder;
+    public TextMeshProUGUI skinLocked;
     public TextMeshProUGUI price;
 
     [Header("Gun Selected")]
@@ -39,16 +41,19 @@ public class GunSelectionController : MonoBehaviour
         UpdateGun(selectedOption);
     }
 
+
     public void NextOption()
     {
         selectedOption = (selectedOption + 1) % gunDB.gunCount;
         UpdateGun(selectedOption);
+        selectedIndexSkin = -1;
     }
 
     public void BackOption()
     {
         selectedOption = (selectedOption - 1 + gunDB.gunCount) % gunDB.gunCount;
         UpdateGun(selectedOption);
+        selectedIndexSkin = -1;
     }
 
     private void UpdateGun(int selectedOption)
@@ -109,7 +114,9 @@ public class GunSelectionController : MonoBehaviour
     {
         UnityEngine.Debug.Log(selectIndex);
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
-       
+        string gunSelectedKey = "GunSelected";
+        string gunSelected = PlayerPrefs.GetString(gunSelectedKey);
+
         if (selectIndex >= 0 && selectIndex < gun.gunSkin.Length)
         {
             selectedIndexSkin = selectIndex;
@@ -120,6 +127,20 @@ public class GunSelectionController : MonoBehaviour
 
             GameObject newGunSkinObject = Instantiate(gun.gunSkin[selectIndex]);
             newGunSkinObject.transform.SetParent(gunHolder, false);
+            if(gunSelected == gun.gunSkin[selectIndex].ToString())
+            {
+                gunSelectedText.text = "EQUIPPED";
+            } else
+            {
+                gunSelectedText.text = "NOT-EQUIPPED";
+            }
+            if (!skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].ToString()))
+            {
+                skinLocked.text = "NOT OWNED";
+            } else
+            {
+                skinLocked.text = "SELECT";
+            }
         }
         else
         {
@@ -133,11 +154,31 @@ public class GunSelectionController : MonoBehaviour
     {
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
         string gunNameSelected = gun.gunObject.ToString();
-
+        string gunSkinEq = gunNameSelected;
         string gunSelectedKey = "GunSelected";
-        PlayerPrefs.SetString(gunSelectedKey, gunNameSelected);
+
+        if (selectedIndexSkin != -1 && selectedIndexSkin < gun.gunSkin.Length)
+        {
+            string gunSkinSelected = gun.gunSkin[selectedIndexSkin].ToString();
+            
+            if (skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectedIndexSkin].ToString()))
+            {
+                PlayerPrefs.SetString(gunSelectedKey, gunSkinSelected);
+                gunSkinEq = gunSkinSelected;
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Skin not owned");
+            }
+        }
+        else
+        {   
+            PlayerPrefs.SetString(gunSelectedKey, gunNameSelected);
+        }
+
         string gunSelected = PlayerPrefs.GetString(gunSelectedKey);
-        if (gunSelected == gunNameSelected)
+
+        if (gunSelected == gunSkinEq)
         {
             gunSelectedText.text = "EQUIPPED";
         }
@@ -150,34 +191,25 @@ public class GunSelectionController : MonoBehaviour
 
     public void buyGunSkin()
     {
-        UnityEngine.Debug.Log(selectedIndexSkin);
-
+        string listSkinOwned = PlayerPrefs.GetString("UserOwnedGunSkin");
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
-
-        UnityEngine.Debug.Log(gun);
 
         if (gun != null && gun.gunSkin != null && selectedIndexSkin >= 0 && selectedIndexSkin < gun.gunSkin.Length)
         {
-            UnityEngine.Debug.Log(gun.gunSkin[selectedIndexSkin].ToString());
-
-            // Make sure skinOwnedChecker is not null before calling its method
-            if (skinOwnedChecker != null)
+            
+            if (skinOwnedChecker != null && !listSkinOwned.Contains(gun.gunSkin[selectedIndexSkin].ToString()))
             {
                 skinOwnedChecker.SaveOwnedGunSkin(gun.gunSkin[selectedIndexSkin].ToString());
-            }
-            else
+                skinGunController.BuySkin(2500);
+            } else
             {
-                UnityEngine.Debug.LogError("skinOwnedChecker is null!");
+                UnityEngine.Debug.Log("skinOwnedChecker is null!");
             }
-
-            // Assuming userController is also a valid reference
-            userController.UpdateCoinAfterBuying();
         }
         else
         {
             UnityEngine.Debug.LogError("Invalid index or gun attributes!");
         }
     }
-
 
 }
