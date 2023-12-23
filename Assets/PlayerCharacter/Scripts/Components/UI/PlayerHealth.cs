@@ -121,6 +121,9 @@ public class PlayerHealth : MonoBehaviour
             {
                 PlayerSpawner.Instance.Die();
                 //this.gameObject.SetActive(false);
+            }else
+            {
+                //TO DO: for singleplayer mode, switch to Extraction Unsuccessful screen
             }
         }
         lerpTimer = 0f;

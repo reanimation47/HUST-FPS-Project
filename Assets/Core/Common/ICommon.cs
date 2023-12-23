@@ -192,6 +192,14 @@ public class ICommon : MonoBehaviour
     #endregion
 
     #region Others
+
+    public static void UpdatePlayerCoinsBalance(int amount)
+    {
+        int _ = PlayerPrefs.GetInt("CoinOwned", 0);
+
+        _ += amount;
+        PlayerPrefs.SetInt("CoinOwned", _);
+    }
     public static void RemoveObjectFromAnimator(GameObject gameObject, Animator animator)
     {
         Transform parentTransform = gameObject.transform.parent;
