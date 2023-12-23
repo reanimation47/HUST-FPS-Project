@@ -104,15 +104,17 @@ public class PlayerSpawner : MonoBehaviour
         Debug.LogWarning(AllPlayers.Length);
         foreach(var p in AllPlayers)
         {
-            //if(p.GetComponent<PhotonView>().IsMine){return;}
-            string playerName = p.GetComponent<PhotonView>().Owner.NickName;
-            //Debug.LogWarning(playerName);
-            float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[playerName];
-            Debug.LogWarning(playerName + ": " + targetHP);
-            Debug.LogWarning(p.GetComponent<PhotonView>().IsMine);
-            if(targetHP <= 0)
+            if(!p.GetComponent<PhotonView>().IsMine)
             {
-                StartCoroutine(RespawnDeadEnemy(p));
+                string playerName = p.GetComponent<PhotonView>().Owner.NickName;
+                //Debug.LogWarning(playerName);
+                float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[playerName];
+                Debug.LogWarning(playerName + ": " + targetHP);
+                Debug.LogWarning(p.GetComponent<PhotonView>().IsMine);
+                if(targetHP <= 0)
+                {
+                    StartCoroutine(RespawnDeadEnemy(p));
+                }
             }
 
         }
