@@ -7,6 +7,7 @@ using UnityEngine.InputSystem.XR;
 
 public class PlayerSpawner : MonoBehaviour
 {
+    public GameObject deathCam;
     public static PlayerSpawner Instance;
 
     private void Awake()
@@ -35,11 +36,19 @@ public class PlayerSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnPlayer()
+    public void SpawnPlayer(bool isRespawn = false)
     {
         Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
 
-        player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+        if(isRespawn)
+        {
+            player.transform.position = spawnPoint.position;
+            player.SetActive(true);
+            player.GetComponent<PlayerController>().ResetStats();
+        }else
+        {
+            player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+        }
         player.GetComponent<MultiplayerSetup>().SetupForLocal();
     }
 
@@ -49,9 +58,10 @@ public class PlayerSpawner : MonoBehaviour
 
         UIdeath.instance.deathText.text = "You were killed";
 
-        PhotonNetwork.Destroy(player);
+        //PhotonNetwork.Destroy(player);
+        // player.SetActive(false);
 
-        SpawnPlayer();
+        // SpawnPlayer();
 
         //MatchManager.instance.UpdateStatsSend(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
 
@@ -65,20 +75,20 @@ public class PlayerSpawner : MonoBehaviour
         public IEnumerator DieCo()
         {
 
-
-            PhotonNetwork.Destroy(player);
-            player = null;
+            //PhotonNetwork.Destroy(player);
+            player.SetActive(false);
+            yield return new WaitForSeconds(0.01f);
+            player.transform.position = new Vector3(1000,-100,1000);//quick fix because after deactivation the player object still visible for player on another player, 
+            deathCam.SetActive(true);
+            //player = null;
             UIdeath.instance.deathScreen.SetActive(true);
 
             yield return new WaitForSeconds(respawnTime);
 
             UIdeath.instance.deathScreen.SetActive(false);
+            deathCam.SetActive(false);
 
-            SpawnPlayer();
-        /*if (MatchManager.instance.state == MatchManager.GameState.Playing && player == null)
-        {
-            SpawnPlayer();
-        }*/
+            SpawnPlayer(true);
     }
 
 }

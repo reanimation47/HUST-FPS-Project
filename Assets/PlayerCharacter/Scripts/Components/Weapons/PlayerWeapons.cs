@@ -162,6 +162,21 @@ public class PlayerWeapons : MonoBehaviour
             hasPrimaryGun = false;
             Debug.LogError("equipped gun not found in DB(should NOT happen) or Player haven't equipped any gun");
         }
+
+
+    }
+
+    public void ResetGuns()
+    {
+        List<GunScript> gunsHolder = ICommon.GetLoadedGunHolders();
+        if(gunsHolder.Count > 0)
+        {
+            GunDatabase gunDB = gunController.gunDB;
+            for(int i = 0; i < gunsHolder.Count; i++)
+            {
+                gunsHolder[i].ResetGun();
+            }
+        }
     }
     #endregion
 }
