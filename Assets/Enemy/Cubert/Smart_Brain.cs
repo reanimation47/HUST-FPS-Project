@@ -8,7 +8,7 @@ public class Smart_Brain : MonoBehaviour
     
     private EnemyReferences enemyReferences;
     private StateMachine stateMachine;
-    public Path path;
+    public EnemyPath path;
     
     // Start is called before the first frame update
     void Start()

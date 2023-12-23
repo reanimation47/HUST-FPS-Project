@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-public class Path : MonoBehaviour
+public class EnemyPath : MonoBehaviour
 {
 
     public List<Transform> waypoints;
