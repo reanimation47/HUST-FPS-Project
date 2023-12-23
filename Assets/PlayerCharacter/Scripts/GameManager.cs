@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public Transform Goal;
     public Transform Spawn;
+    public GameObject[] Waves;
+    private int WaveIndex = 0;
+    public bool respawnEnabled = true;
     public bool ObjectiveItemRetrieved = false;
     private void Awake()
     {
@@ -19,12 +22,33 @@ public class GameManager : MonoBehaviour
             Instance = this; 
         } 
     }
+    void Start()
+    {
+        NextWave();
+    }
 
     public void GoalItemRetrieved(GameObject item)
     {
         ObjectiveItemRetrieved = true;
         ICommon.GetPlayerController().UpdateObjective(); 
-        Destroy(item);
+        NextWave();
+        item.SetActive(false);
+    }
+
+    public void MissionCompleted()
+    {
+        Debug.LogWarning("MISSION COMPLETE");
+
+    }
+
+    private void NextWave()
+    {
+        if (WaveIndex >0)
+        {
+            Waves[WaveIndex-1].SetActive(false);
+        }
+        Waves[WaveIndex].SetActive(true);
+        WaveIndex++;
     }
 
 }
