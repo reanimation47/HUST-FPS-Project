@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -20,7 +22,6 @@ public class PlayerHealth : MonoBehaviour
     public float lowHealthThreshold = 20;
 
     private float durationTimer;
-    public GameObject HUD;
 
     private void Start()
     {
@@ -32,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
     {
         HP = Mathf.Clamp(HP, 0, maxHP);
         UpdateHealthUI();
-        //TestDmg();
+        TestDmg();
         if (dmgOverlay.color.a > 0)
         {
             if (HP <= lowHealthThreshold)
@@ -90,30 +91,17 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void RestoreFullHealth()
+    public void TakeDamage(float dmg)
     {
-        RestoreHealth(maxHP);
-    }
-
-    
-    [Photon.Pun.PunRPC]
-    public float TakeDamage(float dmg)
-    {
-        HP = Mathf.Clamp(HP - dmg, 0, maxHP);
-        if(HP == 0)
-        {
-            PlayerSpawner.Instance.Die();
-        }
+        HP -= dmg;
         lerpTimer = 0f;
         durationTimer = 0;
         dmgOverlay.color = new Color(dmgOverlay.color.r, dmgOverlay.color.g, dmgOverlay.color.b, maxOverlayOpacity);
-        return HP;
     }
 
     public void RestoreHealth(float amount)
     {
-        HP = Mathf.Clamp(HP + amount, 0, maxHP);
+        HP += amount;
         lerpTimer = 0f;
     }
-
 }

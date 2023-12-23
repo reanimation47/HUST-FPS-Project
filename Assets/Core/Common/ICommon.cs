@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Photon.Pun;
 using Player;
 using Player.WeaponHandler;
 using UnityEngine;
@@ -39,20 +38,9 @@ public class ICommon : MonoBehaviour
     {
         if (_hit.transform.gameObject.TryGetComponent(out ICombat combatable)) // If target has combat system
         {
-            // PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
-            // _hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
-            if(_player.GetComponent<PlayerController>().gameMode == GameMode.Multiplayer)
-            {
-                PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
-                _hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
-
-            }else
-            {
-                combatable.TakeDamage(baseDamage);
-            }
+            combatable.TakeDamage(baseDamage);
         }else 
         {
-            Debug.LogError(_hit.transform.gameObject.name);
             Instantiate(bulletHole, _hit.point + new Vector3(_hit.normal.x * 0.01f, _hit.normal.y * 0.01f, _hit.normal.z * 0.01f), Quaternion.LookRotation(-_hit.normal));
         }
         if (_hit.transform.gameObject.TryGetComponent(out Rigidbody rb)) // if target has rigidbody
@@ -113,31 +101,53 @@ public class ICommon : MonoBehaviour
 
     #region Guns System - NEW
 
-    public static List<GunScript> _gunHolders = new List<GunScript>();
-    public static List<GunScript> _gunHoldersActive = new List<GunScript>();
-
+    public static List<GunScript> _guns = new List<GunScript>();
     public static List<GunScript> equippedGuns = new List<GunScript>();
 
-    public static void LoadGunHolder(GunScript holder)
+    public static void LoadGun(GunScript gun)
     {
-        _gunHolders.Add(holder);
+        if (gun.GunID == GunID.DEFAULT)
+        {
+            Debug.LogWarning("A non-identifiable gun just tried to load into ICommon, please check to make sure all guns has its GunID field selected.");
+        }else
+        {
+            _guns.Add(gun);
+        }
     }
 
-    public static List<GunScript> GetLoadedGunHolders()
+    public static void EnableEquippedGuns(List<GunID> gunsList)
     {
-        return _gunHolders;
+        if (gunsList.Count > 2)
+        {
+            Debug.LogWarning("Equipped guns count is not expected to be more than 2.");
+        }
+
+        //Mark the equipped guns
+        foreach (var gunID in gunsList)
+        {
+            foreach (var gun in _guns)
+            {
+                if (gun.GunID == gunID)
+                {
+                    gun.isEquipped = true;
+                }
+            }
+        }
+
+        //Remove unnecessary guns during play time
+        foreach (var gun in _guns)
+        {
+            if (gun.isEquipped == false)
+            {
+                DestroyImmediate(gun.transform.gameObject);
+            }else
+            {
+                equippedGuns.Add(gun);
+            }
+        }
+
     }
 
-
-    public static void ActiveGunHolder(GunScript holder)
-    {
-        _gunHoldersActive.Add(holder);
-    }
-
-    public static List<GunScript> GetActiveGunHolders()
-    {
-        return _gunHoldersActive;
-    }
     public static List<GunScript> GetEquippedGuns()
     {
         return equippedGuns;

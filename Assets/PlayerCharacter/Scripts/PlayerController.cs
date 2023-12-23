@@ -1,14 +1,14 @@
+using System.Collections;
+using System.Collections.Generic;
 using Player.Components;
 using UnityEngine;
 using TMPro;
-using Photon.Pun;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviourPunCallbacks, ICombat  
+    public class PlayerController : MonoBehaviour, ICombat
     {
         #region Initialize Variables
-        public GameMode gameMode = GameMode.Multiplayer;
         public static CharacterController controller;
         public static Transform playerTransform;
         private Vector3 playerVelocity;
@@ -53,36 +53,18 @@ namespace Player
         public Camera _cam;
         #endregion
 
-        public static PlayerController Instance;
         void Awake()
         {
-            // if (Instance != null && Instance != this) 
-            // { 
-            //     Destroy(this); 
-            // } 
-            // else 
-            // { 
-            //     Instance = this; 
-            // } 
-            //Screen.SetResolution(1920, 1080, false);
             ICommon.LoadPlayer(this.gameObject);
-            if (gameMode == GameMode.SinglePlayer)
-            {
-                GetComponent<MultiplayerSetup>().SetupForLocal();
-                EnableCamera();
-            }
         }
 
         void Start()
         {
-            Spawn();
             Cursor.lockState = CursorLockMode.Locked;
             AssignStaticVariables();
             AssignComponents();
-            //PlayerUI.UpdateObjective();
+            PlayerUI.UpdateObjective();
             //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
-            //_cam.transform.gameObject.SetActive(true);
-
         }
 
         private void Update()
@@ -90,8 +72,6 @@ namespace Player
             isGrounded = controller.isGrounded;
             PlayerInteract.CheckInteraction();
             PlayerCrouch.ProcessCrouch();
-            TestDmg();
-        
         }
 
         #region Assign static variables
@@ -163,12 +143,7 @@ namespace Player
         #region Combat
         public void TakeDamage(float dmg)
         {
-            Debug.LogWarning("con ");
-            if(PlayerHealth.TakeDamage(dmg) <= 0)
-            {
-                Debug.LogError(dmg);
-                //PlayerSpawner.Instance.Die();
-            }
+            PlayerHealth.TakeDamage(dmg);
         }
 
         public void RestoreHealth(float hp)
@@ -178,20 +153,6 @@ namespace Player
         #endregion
 
         #region GamePlay
-        private void Spawn()
-        {
-            if (gameMode == GameMode.Multiplayer){return;}
-            PlayerHealth.RestoreFullHealth();
-            if(SpawnManager.instance)
-            {
-                SpawnManager.instance.RespawnSelf(this.gameObject);
-                
-
-            }else
-            {
-                Debug.LogWarning("SpawnManager not found, player won't respawn");
-            }
-        }
         public void RetrieveItem(GameObject item)
         {
             GameManager.Instance.GoalItemRetrieved(item);
@@ -201,43 +162,6 @@ namespace Player
         {
             PlayerUI.UpdateObjective();
         }
-        private void PlayerDies()
-        {
-            if (GameManager.Instance)
-            {
-                if (GameManager.Instance.respawnEnabled)
-                {
-                    Spawn();
-                }else
-                {
-                    //No respawn logic
-                }
-            }else
-            {
-                Spawn();
-            }
-
-        }
-        private void TestDmg()
-        {
-            if(true)
-            {
-                if (Input.GetKeyDown(KeyCode.X))
-                {
-                    TakeDamage(Random.Range(5, 20));
-                } 
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    RestoreHealth(Random.Range(5, 20));
-                }
-            }
-        }
-
-        public void EnableCamera()
-        {
-            _cam.transform.gameObject.SetActive(true);
-        }
-
         #endregion
 
     }

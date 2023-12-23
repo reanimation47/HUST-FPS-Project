@@ -17,20 +17,13 @@ namespace Player {
     { 
         foreach(Transform spawn in SpawnPoints)
         {
-            spawn.gameObject.SetActive(true);
+            spawn.gameObject.SetActive(false);
         }
     }
 
     public Transform GetSpawnPoint()
     {
         return SpawnPoints[Random.Range(0, SpawnPoints.Length)];
-    }
-
-    public void RespawnSelf(GameObject target)
-    {
-       target.SetActive(false);
-       target.transform.position = GetSpawnPoint().position;
-       target.SetActive(true);
     }
 }
  }
