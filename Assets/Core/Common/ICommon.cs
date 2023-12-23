@@ -191,7 +191,7 @@ public class ICommon : MonoBehaviour
     }
     #endregion
 
-    #region 
+    #region Others
     public static void RemoveObjectFromAnimator(GameObject gameObject, Animator animator)
     {
         Transform parentTransform = gameObject.transform.parent;
@@ -205,6 +205,15 @@ public class ICommon : MonoBehaviour
         animator.playbackTime = playbackTime;
 
         gameObject.transform.parent = parentTransform;
+    }
+
+    public static void SetLayerAllChildren(Transform root, int layer)
+    {
+        var children = root.GetComponentsInChildren<Transform>(includeInactive: true);
+        foreach (var child in children)
+        {
+            child.gameObject.layer = layer;
+        }
     }
     #endregion
 

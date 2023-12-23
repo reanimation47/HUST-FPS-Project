@@ -2678,6 +2678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2115775016}
   - component: {fileID: 2115775015}
+  - component: {fileID: 2115775017}
   m_Layer: 0
   m_Name: Match Manager
   m_TagString: Untagged
@@ -2697,6 +2698,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04f7b3f1c043e24fa1bcab212705045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allPlayers: []
+  state: 0
 --- !u!4 &2115775016
 Transform:
   m_ObjectHideFlags: 0
@@ -2712,6 +2715,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2115775017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115775014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ebb03a7d09047baa657c62748e9986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2138332085 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7045030354117346258, guid: 0b91dd02b4dad5e4e9c023c58f82d6a6, type: 3}
