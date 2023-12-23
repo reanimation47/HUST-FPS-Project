@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Player.WeaponHandler;
 using UnityEngine;
 using TMPro;
+using System.Diagnostics;
 
 public class PlayerWeapons : MonoBehaviour
 {
@@ -94,11 +95,11 @@ public class PlayerWeapons : MonoBehaviour
     }
     for (int i = 0; i < _guns.Count; i++)
     {
-        Debug.LogError("Counttt: " + _guns.Count);
+        UnityEngine.Debug.LogError("Counttt: " + _guns.Count);
         var gun = _guns[i];
         if (i == slotIndex)
         {
-            Debug.LogError(gun.GunID);
+            UnityEngine.Debug.LogError(gun.GunID);
             gun.transform.gameObject.SetActive(true);
             currentActiveGun = gun;
         }
@@ -112,7 +113,7 @@ public class PlayerWeapons : MonoBehaviour
             {
                 // Handle the case where the gun reference or transform is null
                 // For example, you could remove the gun from the list
-                Debug.LogError("Gun reference or transform is null at index: " + i);
+                UnityEngine.Debug.LogError("Gun reference or transform is null at index: " + i);
                 _guns.RemoveAt(i);
                 i--; // Adjust the index to account for the removed element
             }
@@ -124,18 +125,18 @@ public class PlayerWeapons : MonoBehaviour
     #region Get Equipped Gun
     private void GetEquippedGun()
     {
-        int gunIndexInDB=-1;
+        int gunIndexInDB =-1;
         GunDatabase gunDB = gunController.gunDB;
         string gunName = PlayerPrefs.GetString("GunSelected", "");
-        Debug.LogWarning(gunDB.gunCount);
+        UnityEngine.Debug.Log("Gun name check:" + gunName != "");
         if(gunName != "")
         {
             for(int i =0; i< gunDB.gunCount; i++)
             {
-                Debug.LogWarning(gunDB.GetGunAttribute(i).gunName);
-                if (gunDB.GetGunAttribute(i).gunName == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
+                UnityEngine.Debug.LogWarning("Sung trong db: " + gunDB.GetGunAttribute(i).gunObject.ToString());
+                if (gunDB.GetGunAttribute(i).gunObject.ToString() == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
                 {
-                    Debug.LogWarning(i);
+                    UnityEngine.Debug.LogWarning(i);
                     gunIndexInDB = i;    
                 }
             }
@@ -160,7 +161,7 @@ public class PlayerWeapons : MonoBehaviour
         }else
         {
             hasPrimaryGun = false;
-            Debug.LogError("equipped gun not found in DB(should NOT happen) or Player haven't equipped any gun");
+            UnityEngine.Debug.LogError("equipped gun not found in DB(should NOT happen) or Player haven't equipped any gun");
         }
     }
     #endregion
