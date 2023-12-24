@@ -139,6 +139,7 @@ public class GunSelectionController : MonoBehaviour
             {
                 gunSelectedText.text = "NOT-EQUIPPED";
             }
+
             if (!skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].ToString()))
             {
                 skinLocked.text = "NOT OWNED";
@@ -158,6 +159,7 @@ public class GunSelectionController : MonoBehaviour
         string gunNameSelected = gun.gunObject.ToString();
         string gunSkinEq = gunNameSelected;
         string gunSelectedKey = "GunSelected";
+        string gunTypeSelectedKey = "TypeSelected";
 
         if (selectedIndexSkin != -1 && selectedIndexSkin < gun.gunSkin.Length)
         {
@@ -166,6 +168,7 @@ public class GunSelectionController : MonoBehaviour
             if (skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectedIndexSkin].ToString()))
             {
                 PlayerPrefs.SetString(gunSelectedKey, gunSkinSelected);
+                PlayerPrefs.SetString(gunTypeSelectedKey, "GunSkin");
                 gunSkinEq = gunSkinSelected;
             }
             else
@@ -176,6 +179,7 @@ public class GunSelectionController : MonoBehaviour
         else
         {   
             PlayerPrefs.SetString(gunSelectedKey, gunNameSelected);
+            PlayerPrefs.SetString(gunTypeSelectedKey, "GunNoSkin");
         }
 
         string gunSelected = PlayerPrefs.GetString(gunSelectedKey);
