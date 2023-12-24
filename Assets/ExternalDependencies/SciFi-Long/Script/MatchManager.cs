@@ -10,6 +10,7 @@ using UnityEngine.InputSystem.XR;
 public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     public static MatchManager instance;
+    public float TargetKills = 10;
 
     private void Awake()
     {
@@ -281,7 +282,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
     }
 
-    void ShowLeaderboard()
+    public void ShowLeaderboard()
     {
         UIdeath.instance.leaderboard.SetActive(true);
 
