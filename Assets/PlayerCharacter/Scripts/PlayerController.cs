@@ -248,7 +248,7 @@ namespace Player
         public void ResetStats() //For multiplayer respawning
         {
             PlayerHealth.RestoreFullHealth();
-            PlayerWeapons.ResetGuns();
+            //PlayerWeapons.ResetGuns();
         }
 
         #endregion
