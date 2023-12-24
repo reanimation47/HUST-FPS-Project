@@ -16,7 +16,7 @@ public class EnemyState_RunToCover : IState
     
     public void OnEnter()
     {
-        Cover nextCover = this.coverArea.GetRandomCover(enemyReferences.transform.position);
+        Cover nextCover = this.coverArea.GetClosestCover(enemyReferences.transform.position);
         enemyReferences.navMeshAgent.SetDestination(nextCover.transform.position);
     }
 

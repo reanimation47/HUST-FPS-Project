@@ -43,6 +43,7 @@ public class UserController : MonoBehaviour
     {
         int currentCoin = PlayerPrefs.GetInt("CoinOwned");
         PlayerPrefs.SetInt("CoinOwned", currentCoin - 2500);
+
     }
 
     public void EarnCoin ()
