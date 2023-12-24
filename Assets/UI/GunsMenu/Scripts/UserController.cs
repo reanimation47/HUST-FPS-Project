@@ -39,13 +39,6 @@ public class UserController : MonoBehaviour
 
     }
 
-    public void UpdateCoinAfterBuying()
-    {
-        int currentCoin = PlayerPrefs.GetInt("CoinOwned");
-        PlayerPrefs.SetInt("CoinOwned", currentCoin - 2500);
-
-    }
-
     public void EarnCoin ()
     {
         int currentCoin = PlayerPrefs.GetInt("CoinOwned");
