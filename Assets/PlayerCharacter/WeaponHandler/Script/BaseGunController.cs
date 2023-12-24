@@ -8,6 +8,10 @@ namespace Player.WeaponHandler
 {
     public class BaseGunController : MonoBehaviour
     {
+        //Sound
+        [SerializeField] public float ClipLength = 1f;
+        [SerializeField] public GameObject AudioClip;
+
         #region Initialize Variables
         public Camera _cam;
         public GameObject bodySpine;
@@ -48,6 +52,7 @@ namespace Player.WeaponHandler
         private void Start()
         {
             animator = GetComponent<Animator>();
+            AudioClip.SetActive(false);
         }
 
         public void ManualStart()
@@ -60,9 +65,18 @@ namespace Player.WeaponHandler
         }
 
         #region Gun Actions
+        
+        private IEnumerator PlayAudioForDuration() {
+            AudioClip.SetActive(true);
+            yield return new WaitForSeconds(ClipLength);
+            AudioClip.SetActive(false);
+        }
+
+
         public void ShootGun()
         {
             GetActiveGun();
+            PlayAudioForDuration();
             if ( _isReloading || !_canShoot || activeGun._currentAmmoInClip <= 0) { return; }
             _canShoot = false;
             activeGun._currentAmmoInClip -= 1;
