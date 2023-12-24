@@ -293,13 +293,29 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         UIdeath.instance.leaderboardPlayerDisplay.gameObject.SetActive(false);
 
+        foreach (var player in allPlayers)
+        {
+            player.kills = (int)PhotonNetwork.CurrentRoom.CustomProperties[player.name+ICommon.CustomProperties_Key_KillsCount()];
+            player.deaths = (int)PhotonNetwork.CurrentRoom.CustomProperties[player.name+ICommon.CustomProperties_Key_DeathsCount()];
+
+        }
+
         List<PlayerInfo> sorted = SortPlayers(allPlayers);
 
         foreach (PlayerInfo player in sorted)
         {
             LeaderBoard newPlayerDisplay = Instantiate(UIdeath.instance.leaderboardPlayerDisplay, UIdeath.instance.leaderboardPlayerDisplay.transform.parent);
 
-            newPlayerDisplay.SetDetails(player.name, player.kills);
+            // int KillsCount = (int)PhotonNetwork.CurrentRoom.CustomProperties[player.name+ICommon.CustomProperties_Key_KillsCount()];
+            // int DeathsCount = (int)PhotonNetwork.CurrentRoom.CustomProperties[player.name+ICommon.CustomProperties_Key_DeathsCount()];
+
+            string ExtraInfo = "";
+            if (player.name == PhotonNetwork.LocalPlayer.NickName)// Indicate which one is player's
+            {
+                ExtraInfo = "(Me)";
+            }
+
+            newPlayerDisplay.SetDetails(player.name, $"{player.kills}/{player.deaths} {ExtraInfo}");
 
             newPlayerDisplay.gameObject.SetActive(true);
 

@@ -60,6 +60,20 @@ public class ICommon : MonoBehaviour
                 targetHP -= baseDamage;
                 if(targetHP <= 0)
                 {
+                    {//Update Kills count for current player
+                        string ownerName = PhotonNetwork.LocalPlayer.NickName;
+                        int KillsCount = (int)PhotonNetwork.CurrentRoom.CustomProperties[ownerName+ICommon.CustomProperties_Key_KillsCount()];
+                        Hashtable _hash = new Hashtable();
+                        _hash.Add(ownerName+ ICommon.CustomProperties_Key_KillsCount(), KillsCount+1);
+                        PhotonNetwork.CurrentRoom.SetCustomProperties(_hash);
+                    }
+                    {//Update deaths count for target
+                        string targetName = hitview.Owner.NickName;
+                        int DeathsCount = (int)PhotonNetwork.CurrentRoom.CustomProperties[targetName+ICommon.CustomProperties_Key_DeathsCount()];
+                        Hashtable _hash = new Hashtable();
+                        _hash.Add(targetName+ ICommon.CustomProperties_Key_DeathsCount(), DeathsCount+1);
+                        PhotonNetwork.CurrentRoom.SetCustomProperties(_hash);
+                    }
                     Debug.LogWarning("Killed " +hitview.Owner.NickName);
                 }
                 Hashtable hash = new Hashtable();
@@ -238,7 +252,16 @@ public class ICommon : MonoBehaviour
     }
     #endregion
 
-
+    #region Photon's CustomProperties Keys
+    public static string CustomProperties_Key_KillsCount()
+    {
+        return "KillsCount";
+    }
+    public static string CustomProperties_Key_DeathsCount()
+    {
+        return "DeathsCount";
+    }
+    #endregion
 
 
 }

@@ -12,9 +12,9 @@ public class LeaderBoard : MonoBehaviour
     {
         instance = this;
     }
-    public void SetDetails(string name, int kills)
+    public void SetDetails(string name, string KD)
     {
         playerNameText.text = name;
-        killsText.text = kills.ToString();
+        killsText.text = KD;
     }
 }
