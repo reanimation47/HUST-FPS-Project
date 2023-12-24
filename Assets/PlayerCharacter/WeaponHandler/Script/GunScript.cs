@@ -32,7 +32,7 @@ public class GunScript : MonoBehaviour
         {
             ICommon.LoadGunHolder(this);
         }
-        if(GunType == GunType.PISTOL)//Default weapon
+        if(GunType == GunType.PISTOL && GetComponent<PhotonView>().IsMine)//Default weapon
         {
             ICommon.ActiveGunHolder(this);
             _currentAmmoInClip = clipSize;
