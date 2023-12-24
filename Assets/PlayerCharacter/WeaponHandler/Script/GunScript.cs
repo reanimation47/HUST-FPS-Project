@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,10 @@ public class GunScript : MonoBehaviour
     {
         //_currentAmmoInClip = clipSize;
         //_ammoInReserve = reservedAmmo;
-        ICommon.LoadGunHolder(this);
+        if(GetComponent<PhotonView>().IsMine)
+        {
+            ICommon.LoadGunHolder(this);
+        }
         if(GunType == GunType.PISTOL)//Default weapon
         {
             ICommon.ActiveGunHolder(this);
