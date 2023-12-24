@@ -30,6 +30,9 @@ public class GunSelectionController : MonoBehaviour
     public Transform[] skinHolder;
     public TextMeshProUGUI skinLocked;
     public TextMeshProUGUI price;
+    public GameObject popupBuyGunSkin;
+    public GameObject buyButton;
+    public GameObject GetCoinPopup;
 
     [Header("Gun Selected")]
     public TextMeshProUGUI gunSelectedText;
@@ -106,6 +109,7 @@ public class GunSelectionController : MonoBehaviour
         }
 
         // Update UI Text
+        buyButton.SetActive(false);
         skinLocked.text = "SELECT";
         gunName.text = gun.gunName;
         dame.text = gun.damage.ToString();
@@ -132,7 +136,8 @@ public class GunSelectionController : MonoBehaviour
 
             GameObject newGunSkinObject = Instantiate(gun.gunSkin[selectIndex]);
             newGunSkinObject.transform.SetParent(gunHolder, false);
-            if(gunSelected == gun.gunSkin[selectIndex].ToString())
+            newGunSkinObject.transform.localScale = new Vector3(420f, 420f, 420f);
+            if (gunSelected == gun.gunSkin[selectIndex].ToString())
             {
                 gunSelectedText.text = "EQUIPPED";
             } else
@@ -140,9 +145,16 @@ public class GunSelectionController : MonoBehaviour
                 gunSelectedText.text = "NOT-EQUIPPED";
             }
 
-            if (!skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].ToString()))
+            UnityEngine.Debug.Log(skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].ToString()));
+
+            if (skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].ToString()) == false)
             {
+                buyButton.SetActive(true);
                 skinLocked.text = "NOT OWNED";
+            } else
+            {
+                buyButton.SetActive(false);
+                skinLocked.text = "SELECT";
             }
         }
         else
@@ -195,9 +207,10 @@ public class GunSelectionController : MonoBehaviour
     }
 
 
-    public void buyGunSkin()
+    public void confirmBuyGunSkin()
     {
         string listSkinOwned = PlayerPrefs.GetString("UserOwnedGunSkin");
+        int currentCoin = PlayerPrefs.GetInt("CoinOwned");
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
 
         if (gun != null && gun.gunSkin != null && selectedIndexSkin >= 0 && selectedIndexSkin < gun.gunSkin.Length)
@@ -205,8 +218,17 @@ public class GunSelectionController : MonoBehaviour
             
             if (skinOwnedChecker != null && !listSkinOwned.Contains(gun.gunSkin[selectedIndexSkin].ToString()))
             {
-                skinOwnedChecker.SaveOwnedGunSkin(gun.gunSkin[selectedIndexSkin].ToString());
-                skinGunController.BuySkin(2500);
+                if (currentCoin >= 2500)
+                {
+                    skinOwnedChecker.SaveOwnedGunSkin(gun.gunSkin[selectedIndexSkin].ToString());
+                    skinGunController.BuySkin(2500);
+                    skinLocked.text = "SELECT";
+                    buyButton.SetActive(false);
+                } else
+                {
+                    showGetCoinPopup();
+                    UnityEngine.Debug.Log("Khong du tien!");
+                }
             } else
             {
                 UnityEngine.Debug.Log("skinOwnedChecker is null!");
@@ -216,6 +238,32 @@ public class GunSelectionController : MonoBehaviour
         {
             UnityEngine.Debug.LogError("Invalid index or gun attributes!");
         }
+        popupBuyGunSkin.SetActive(false);
     }
 
+
+    public void displayPopupBuyGunSkin()
+    {
+        string listSkinOwned = PlayerPrefs.GetString("UserOwnedGunSkin");
+        GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
+        if (!listSkinOwned.Contains(gun.gunSkin[selectedIndexSkin].ToString()))
+        {
+            popupBuyGunSkin.SetActive(true);
+        }
+    }
+
+    public void closePopupBuyGunSkin()
+    {
+        popupBuyGunSkin.SetActive(false);
+    }
+
+    public void showGetCoinPopup()
+    {
+        GetCoinPopup.SetActive(true);
+    }
+
+    public void closeGetCoinPopup()
+    {
+        GetCoinPopup.SetActive(false);
+    }
 }
