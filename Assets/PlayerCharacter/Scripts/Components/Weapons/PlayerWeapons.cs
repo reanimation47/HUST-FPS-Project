@@ -132,8 +132,7 @@ public class PlayerWeapons : MonoBehaviour
         {
             for(int i =0; i< gunDB.gunCount; i++)
             {
-                Debug.LogWarning(gunDB.GetGunAttribute(i).gunName);
-                if (gunDB.GetGunAttribute(i).gunName == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
+                if (gunDB.GetGunAttribute(i).gunObject.ToString() == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
                 {
                     Debug.LogWarning(i);
                     gunIndexInDB = i;    
@@ -161,6 +160,21 @@ public class PlayerWeapons : MonoBehaviour
         {
             hasPrimaryGun = false;
             Debug.LogError("equipped gun not found in DB(should NOT happen) or Player haven't equipped any gun");
+        }
+
+
+    }
+
+    public void ResetGuns()
+    {
+        List<GunScript> gunsHolder = ICommon.GetLoadedGunHolders();
+        if(gunsHolder.Count > 0)
+        {
+            GunDatabase gunDB = gunController.gunDB;
+            for(int i = 0; i < gunsHolder.Count; i++)
+            {
+                gunsHolder[i].ResetGun();
+            }
         }
     }
     #endregion

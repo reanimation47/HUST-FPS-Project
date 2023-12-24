@@ -13,7 +13,10 @@ public class Navigator : MonoBehaviour
     void Start()
     {
         playerController = ICommon.GetPlayerController();
-        if(playerController.gameMode == GameMode.Multiplayer) {return;}
+        if(playerController.gameMode == GameMode.Multiplayer) {
+            this.gameObject.SetActive(false);
+            return;
+        }
         Goal = GameManager.Instance.Goal;
         Spawn = GameManager.Instance.Spawn;
     }

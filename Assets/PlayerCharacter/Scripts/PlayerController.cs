@@ -65,7 +65,11 @@ namespace Player
             //     Instance = this; 
             // } 
             //Screen.SetResolution(1920, 1080, false);
-            ICommon.LoadPlayer(this.gameObject);
+            PhotonView view = GetComponent<PhotonView>();
+            if(view.IsMine || gameMode == GameMode.SinglePlayer)
+            {
+                ICommon.LoadPlayer(this.gameObject);
+            }
             if (gameMode == GameMode.SinglePlayer)
             {
                 GetComponent<MultiplayerSetup>().SetupForLocal();
@@ -82,6 +86,7 @@ namespace Player
             //PlayerUI.UpdateObjective();
             //ICommon.RemoveObjectFromAnimator(_cam.transform.gameObject, characterAnimator);
             //_cam.transform.gameObject.SetActive(true);
+            UpdateObjective();
 
         }
 
@@ -163,7 +168,6 @@ namespace Player
         #region Combat
         public void TakeDamage(float dmg)
         {
-            Debug.LogWarning("con ");
             if(PlayerHealth.TakeDamage(dmg) <= 0)
             {
                 Debug.LogError(dmg);
@@ -199,7 +203,10 @@ namespace Player
 
         public void UpdateObjective()
         {
-            PlayerUI.UpdateObjective();
+            if(gameMode == GameMode.SinglePlayer)
+            {
+                PlayerUI.UpdateObjective();
+            }
         }
         private void PlayerDies()
         {
@@ -233,9 +240,15 @@ namespace Player
             }
         }
 
-        public void EnableCamera()
+        public void EnableCamera(bool toggle = true)
         {
-            _cam.transform.gameObject.SetActive(true);
+            _cam.transform.gameObject.SetActive(toggle);
+        }
+
+        public void ResetStats() //For multiplayer respawning
+        {
+            PlayerHealth.RestoreFullHealth();
+            PlayerWeapons.ResetGuns();
         }
 
         #endregion

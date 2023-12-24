@@ -13,6 +13,7 @@ public class MultiplayerSetup : MonoBehaviour
         GetComponent<PlayerHealth>().enabled = true;
         GetComponent<PlayerHealth>().HUD.SetActive(true); 
         GetComponent<PlayerWeapons>().enabled = true;
+        //GetComponent<PlayerController>().ResetStats();
 
     }
 }

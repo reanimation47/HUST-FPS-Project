@@ -10,6 +10,8 @@ public class GunSelectionController : MonoBehaviour
 {
     public GunDatabase gunDB;
     public GunSkinDatabase gunSkinDB;
+    public CheckSkinOwned skinOwnedChecker;
+    public UserController userController;
 
     [Header("Gun Info")]
     public TextMeshProUGUI gunName;
@@ -30,6 +32,7 @@ public class GunSelectionController : MonoBehaviour
     [Header("Gun Selected")]
     public TextMeshProUGUI gunSelectedText;
 
+    private int selectedIndexSkin = -1;
 
     void Start()
     {
@@ -109,6 +112,7 @@ public class GunSelectionController : MonoBehaviour
        
         if (selectIndex >= 0 && selectIndex < gun.gunSkin.Length)
         {
+            selectedIndexSkin = selectIndex;
             if (gunHolder.childCount > 0)
             {
                 Destroy(gunHolder.GetChild(0).gameObject);
@@ -141,7 +145,39 @@ public class GunSelectionController : MonoBehaviour
         {
             gunSelectedText.text = "NOT-EQUIPPED";
         }
-        UnityEngine.Debug.Log(gunSelected);
     }
+
+
+    public void buyGunSkin()
+    {
+        UnityEngine.Debug.Log(selectedIndexSkin);
+
+        GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
+
+        UnityEngine.Debug.Log(gun);
+
+        if (gun != null && gun.gunSkin != null && selectedIndexSkin >= 0 && selectedIndexSkin < gun.gunSkin.Length)
+        {
+            UnityEngine.Debug.Log(gun.gunSkin[selectedIndexSkin].ToString());
+
+            // Make sure skinOwnedChecker is not null before calling its method
+            if (skinOwnedChecker != null)
+            {
+                skinOwnedChecker.SaveOwnedGunSkin(gun.gunSkin[selectedIndexSkin].ToString());
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("skinOwnedChecker is null!");
+            }
+
+            // Assuming userController is also a valid reference
+            userController.UpdateCoinAfterBuying();
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("Invalid index or gun attributes!");
+        }
+    }
+
 
 }

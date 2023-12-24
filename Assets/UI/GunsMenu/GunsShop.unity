@@ -1119,6 +1119,7 @@ GameObject:
   - component: {fileID: 952691609}
   - component: {fileID: 952691610}
   - component: {fileID: 952691611}
+  - component: {fileID: 952691612}
   m_Layer: 0
   m_Name: MenuController
   m_TagString: Untagged
@@ -1155,6 +1156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunDB: {fileID: 11400000, guid: db37a0d89f553f246b87ed41a3c3ca58, type: 2}
   gunSkinDB: {fileID: 0}
+  skinOwnedChecker: {fileID: 0}
+  userController: {fileID: 0}
   gunName: {fileID: 7655796779283221851}
   dame: {fileID: 7655796778741591076}
   fireRate: {fileID: 7655796778027739437}
@@ -1167,6 +1170,7 @@ MonoBehaviour:
   - {fileID: 1307858081}
   - {fileID: 388463103}
   price: {fileID: 7655796779918870000}
+  gunSelectedText: {fileID: 7655796779580818573}
 --- !u!114 &952691611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1181,6 +1185,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userDB: {fileID: 11400000, guid: ec964e9d7793e3844b11ca36949741a9, type: 2}
   coinOwned: {fileID: 7655796778299658336}
+--- !u!114 &952691612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952691608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b196c41eababd49af1b7cba68c3f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1110155820
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,8 +2596,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.20246729, y: 0.90000004}
   m_AnchorMax: {x: 0.20246729, y: 0.90000004}
-  m_AnchoredPosition: {x: 32, y: -81}
-  m_SizeDelta: {x: 122.30994, y: 58}
+  m_AnchoredPosition: {x: 105.502, y: -74.047}
+  m_SizeDelta: {x: 269.312, y: 71.906}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7655796778156886317
 CanvasRenderer:
@@ -3043,9 +3059,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 952691611}
-        m_TargetAssemblyTypeName: UserController, Assembly-CSharp
-        m_MethodName: UpdateCoinAfterBuying
+      - m_Target: {fileID: 952691610}
+        m_TargetAssemblyTypeName: GunSelectionController, Assembly-CSharp
+        m_MethodName: buyGunSkin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4423,7 +4439,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
   m_sharedMaterial: {fileID: 7374927986402738804, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
@@ -11828,8 +11844,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.48, y: 0}
-  m_SizeDelta: {x: 96.55994, y: 50}
+  m_AnchoredPosition: {x: -0.0013123, y: -0.000035286}
+  m_SizeDelta: {x: 269.31, y: 71.905}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7655796779580818571
 GameObject:
@@ -11877,7 +11893,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: EPIC
+  m_text: Equipped
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
   m_sharedMaterial: {fileID: 7374927986402738804, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
@@ -11940,7 +11956,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.10989379, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     public void MissionCompleted()
     {
         Debug.LogWarning("MISSION COMPLETE");
+        ICommon.UpdatePlayerCoinsBalance(+1000);
+        //TODO: switch to Extraction Complete screen ()
 
     }
 
