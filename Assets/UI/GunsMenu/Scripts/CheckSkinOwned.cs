@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckSkinOwned : MonoBehaviour
+[System.Serializable]
+public class CheckSkinOwned
 {
     // Phương thức chuyển đổi mảng thành chuỗi
     string ArrayToString(List<string> list)
@@ -37,5 +39,19 @@ public class CheckSkinOwned : MonoBehaviour
         string retrievedString = PlayerPrefs.GetString("UserOwnedGunSkin");
         return StringToArray(retrievedString);
     }
+
+    public Boolean isOwnedSkin (string skinName)
+    {
+        List<string> gunSkinOwnedList = StringToArray(PlayerPrefs.GetString("UserOwnedGunSkin"));
+        // Add the new skin name to the list if it doesn't exist
+        if (gunSkinOwnedList.Contains(skinName))
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
 }
 
