@@ -5006,6 +5006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathCam: {fileID: 1930133068}
+  LeaderBoard: {fileID: 1959362436}
   EndGameMsg: {fileID: 622093701}
   EngGameMsg_Text: {fileID: 1565801820}
 --- !u!1 &2118932746

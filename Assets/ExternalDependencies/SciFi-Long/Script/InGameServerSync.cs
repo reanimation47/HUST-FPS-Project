@@ -8,6 +8,7 @@ using TMPro;
 public class InGameServerSync : MonoBehaviour
 {
     public GameObject DeathCam;//In this case game over cam
+    public GameObject LeaderBoard;
     public GameObject EndGameMsg;
     public TextMeshProUGUI EngGameMsg_Text;
 
@@ -48,7 +49,9 @@ public class InGameServerSync : MonoBehaviour
         {
             ICommon.GetPlayerController().EnableCamera(false);
             DeathCam.SetActive(true);
+            EndGameMsg.SetActive(true);
             EngGameMsg_Text.text = $"GAME OVER! THE WINNER IS: {view.Owner.NickName}";
+            LeaderBoard.SetActive(true);
         }
 
     }
