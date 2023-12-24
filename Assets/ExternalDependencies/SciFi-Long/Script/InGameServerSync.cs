@@ -23,10 +23,10 @@ public class InGameServerSync : MonoBehaviour
         GameObject[] AllPlayers = GameObject.FindGameObjectsWithTag("Player");
         foreach(var p in AllPlayers)
         {
+            CheckForGameOver(p);
             if(!p.GetComponent<PhotonView>().IsMine)
             {
                 RenderFullPlayerObject(p);
-                CheckForGameOver(p);
             }
 
         }
