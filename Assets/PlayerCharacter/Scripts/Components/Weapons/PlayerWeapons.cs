@@ -124,45 +124,81 @@ public class PlayerWeapons : MonoBehaviour
     #region Get Equipped Gun
     private void GetEquippedGun()
     {
-        int gunIndexInDB=-1;
+        int gunIndexInDB = -1;
+        int gunSkinIndexInDB = -1;
         GunDatabase gunDB = gunController.gunDB;
         string gunName = PlayerPrefs.GetString("GunSelected", "");
-        Debug.LogWarning(gunDB.gunCount);
-        if(gunName != "")
+        string gunTypeSelected = PlayerPrefs.GetString("TypeSelected");
+        UnityEngine.Debug.Log("Gun name check:" + gunName != "");
+        if (gunName != "")
         {
-            for(int i =0; i< gunDB.gunCount; i++)
+            if (gunTypeSelected == "GunNoSkin")
             {
-                if (gunDB.GetGunAttribute(i).gunObject.ToString() == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
+                for (int i = 0; i < gunDB.gunCount; i++)
                 {
-                    Debug.LogWarning(i);
-                    gunIndexInDB = i;    
+                    UnityEngine.Debug.LogWarning("Sung trong db: " + gunDB.GetGunAttribute(i).gunObject.ToString());
+                    if (gunDB.GetGunAttribute(i).gunObject.ToString() == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
+                    {
+                        UnityEngine.Debug.LogWarning(i);
+                        gunIndexInDB = i;
+                    }
                 }
             }
+            else
+            {
+                for (int i = 0; i < gunDB.gunCount; i++)
+                {
+                    for (int j = 0; j < gunDB.GetGunAttribute(i).gunSkin.Length; j++)
+                    {
+                        UnityEngine.Debug.LogWarning("Sung trong db: " + gunDB.GetGunAttribute(i).gunSkin[j].ToString());
+                        if (gunDB.GetGunAttribute(i).gunSkin[j].ToString() == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
+                        {
+                            gunIndexInDB = i;
+                            gunSkinIndexInDB = j;
+                        }
+                    }
+                }
+            }
+            UnityEngine.Debug.Log(gunIndexInDB + gunSkinIndexInDB);
 
-        }else
+
+        }
+        else
         {
             //Handle no gun equipped
         }
 
-        if(gunIndexInDB != -1)
+        if (gunIndexInDB != -1)
         {
             List<GunScript> gunsHolder = ICommon.GetLoadedGunHolders();
             for (int i = 0; i < gunsHolder.Count; i++)
             {
-                if(gunsHolder[i].GunType == gunDB.GetGunAttribute(gunIndexInDB).gunType)
+                if (gunTypeSelected == "GunNoSkin")
                 {
-                    ICommon.ActiveGunHolder(gunsHolder[i]);
-                    gunsHolder[i].SpawnGun(gunDB.GetGunAttribute(gunIndexInDB).gunObject);
-                    gunsHolder[i].LoadGunStats(gunDB.GetGunAttribute(gunIndexInDB));
+                    if (gunsHolder[i].GunType == gunDB.GetGunAttribute(gunIndexInDB).gunType)
+                    {
+                        ICommon.ActiveGunHolder(gunsHolder[i]);
+                        gunsHolder[i].SpawnGun(gunDB.GetGunAttribute(gunIndexInDB).gunObject);
+                        gunsHolder[i].LoadGunStats(gunDB.GetGunAttribute(gunIndexInDB));
+                    }
+                }
+                else
+                {
+                    UnityEngine.Debug.Log("GunSkinSelected: " + (gunDB.GetGunAttribute(gunIndexInDB).gunSkin[gunSkinIndexInDB].ToString()));
+                    if (gunsHolder[i].GunType == gunDB.GetGunAttribute(gunIndexInDB).gunType)
+                    {
+                        ICommon.ActiveGunHolder(gunsHolder[i]);
+                        gunsHolder[i].SpawnGun(gunDB.GetGunAttribute(gunIndexInDB).gunSkin[gunSkinIndexInDB]);
+                        gunsHolder[i].LoadGunStats(gunDB.GetGunAttribute(gunIndexInDB));
+                    }
                 }
             }
-        }else
+        }
+        else
         {
             hasPrimaryGun = false;
-            Debug.LogError("equipped gun not found in DB(should NOT happen) or Player haven't equipped any gun");
+            UnityEngine.Debug.LogError("equipped gun not found in DB(should NOT happen) or Player haven't equipped any gun");
         }
-
-
     }
 
     public void ResetGuns()
