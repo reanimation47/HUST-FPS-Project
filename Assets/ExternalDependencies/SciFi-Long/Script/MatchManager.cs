@@ -20,6 +20,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public List<PlayerInfo> allPlayers = new List<PlayerInfo>();
     private int index;
     public GameState state = GameState.Waiting;
+    public float waitAfterEnding = 5f;
 
     private List<LeaderBoard> lboardPlayers = new List<LeaderBoard>();
     public enum EventCodes : byte
@@ -348,6 +349,13 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
 
         return sorted;
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+
+        SceneManager.LoadScene(0);
     }
 
     #region PlayerInfo
