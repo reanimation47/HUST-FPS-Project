@@ -17295,7 +17295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &524997243
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24188,7 +24188,6 @@ MonoBehaviour:
   price: {fileID: 7655796779918870000}
   popupBuyGunSkin: {fileID: 1167084974}
   buyButton: {fileID: 7655796778226589694}
-  GetCoinPopup: {fileID: 0}
   gunSelectedText: {fileID: 7655796779580818573}
 --- !u!114 &952691611
 MonoBehaviour:
@@ -24205,7 +24204,6 @@ MonoBehaviour:
   userDB: {fileID: 11400000, guid: ec964e9d7793e3844b11ca36949741a9, type: 2}
   coinOwned: {fileID: 7655796778299658336}
   EarnCoinPanel: {fileID: 2000831952}
-  GetCoinPopup: {fileID: 0}
 --- !u!1 &968795015
 GameObject:
   m_ObjectHideFlags: 0
@@ -25364,7 +25362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1167084975
 RectTransform:
   m_ObjectHideFlags: 0
