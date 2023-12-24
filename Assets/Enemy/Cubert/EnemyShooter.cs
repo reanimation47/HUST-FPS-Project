@@ -154,6 +154,11 @@ public class EnemyShooter : MonoBehaviour, ICombat
             Debug.LogWarning(err + " - Ragdoll is not implemented");
         }
     }
+
+    public void TakeDamage(float dmg, int actor)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 
 

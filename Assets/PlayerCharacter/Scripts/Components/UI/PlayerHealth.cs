@@ -28,9 +28,7 @@ public class PlayerHealth : MonoBehaviour
     {
         HP = maxHP;
         dmgOverlay.color = new Color(dmgOverlay.color.r, dmgOverlay.color.g, dmgOverlay.color.b, 0);
-        Hashtable hash = new Hashtable();
-        hash.Add(this.gameObject.name, HP);
-        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        InitPlayerStatsForServer();
     }
 
     private void Update()
@@ -158,4 +156,25 @@ public class PlayerHealth : MonoBehaviour
         // PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
+
+    private void InitPlayerStatsForServer()
+    {
+        //TODO: this should moved into PlayerController
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add(this.gameObject.name, HP);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        }
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add(this.gameObject.name+ ICommon.CustomProperties_Key_KillsCount(), 0);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        }
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add(this.gameObject.name+ ICommon.CustomProperties_Key_DeathsCount(), 0);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        }
+
+    }
 }

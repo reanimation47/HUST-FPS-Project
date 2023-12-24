@@ -8,7 +8,7 @@ public class PlayerWeapons : MonoBehaviour
 {
     public static PlayerWeapons Instance;
 
-    [SerializeField] private BaseGunController gunController;
+    [SerializeField] public BaseGunController gunController;
     [SerializeField] private TextMeshProUGUI AmmoText;
     [SerializeField] private GameObject weaponsHolder;
 

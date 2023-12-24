@@ -68,7 +68,7 @@ public class PlayerSpawner : MonoBehaviour
 
         // SpawnPlayer();
 
-        //MatchManager.instance.UpdateStatsSend(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
+        MatchManager.instance.UpdateStatsSend(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
 
        if (player != null)
         {
