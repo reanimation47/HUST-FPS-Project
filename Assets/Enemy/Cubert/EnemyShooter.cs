@@ -53,7 +53,6 @@ public class EnemyShooter : MonoBehaviour, ICombat
         if (Physics.Raycast(shootPoint.position, direction, out RaycastHit hit, float.MaxValue, layerMask)) {
             Debug.DrawLine(shootPoint.position, shootPoint.position + direction * 10f, Color.red, 1f);
 
-            //TODO: Bad Performance. Replace with Object Pooling
             TrailRenderer trail = Instantiate(bulletTrail, gunPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, hit));
             currentAmmo -= 1;

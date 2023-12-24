@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class EnemyReferences : MonoBehaviour
 {
     [HideInInspector] public NavMeshAgent navMeshAgent;
+    [HideInInspector] public NavMeshAgent Agent { get => navMeshAgent; }
     [HideInInspector] public Animator animator;
     [HideInInspector] public EnemyShooter shooter;
     [HideInInspector] public Smart_Brain brain;
@@ -15,6 +16,7 @@ public class EnemyReferences : MonoBehaviour
     [Header("Stats")]
 
     public float pathUpdateDelay = 0.2f;
+    public float detectPlayerRange = 10f;
 
 
     private void Awake() {
