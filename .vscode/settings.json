@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "FPS PROJECT.sln"
+    "dotnet.defaultSolution": "HUST-FPS-Project.sln"
 }
