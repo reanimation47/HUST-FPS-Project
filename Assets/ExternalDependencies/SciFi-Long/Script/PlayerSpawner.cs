@@ -101,7 +101,6 @@ public class PlayerSpawner : MonoBehaviour
     private void CheckForDiedPlayers()
     {
         GameObject[] AllPlayers = GameObject.FindGameObjectsWithTag("Player");
-        Debug.LogWarning(AllPlayers.Length);
         foreach(var p in AllPlayers)
         {
             if(!p.GetComponent<PhotonView>().IsMine)
@@ -109,8 +108,8 @@ public class PlayerSpawner : MonoBehaviour
                 string playerName = p.GetComponent<PhotonView>().Owner.NickName;
                 //Debug.LogWarning(playerName);
                 float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[playerName];
-                Debug.LogWarning(playerName + ": " + targetHP);
-                Debug.LogWarning(p.GetComponent<PhotonView>().IsMine);
+                //Debug.LogWarning(playerName + ": " + targetHP);
+                //Debug.LogWarning(p.GetComponent<PhotonView>().IsMine);
                 if(targetHP <= 0)
                 {
                     StartCoroutine(RespawnDeadEnemy(p));
