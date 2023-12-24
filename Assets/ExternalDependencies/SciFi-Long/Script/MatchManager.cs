@@ -197,9 +197,30 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
             }
         }
 
-       // ScoreCheck();
+        ScoreCheck();
     }
+    void ScoreCheck()
+    {
+        bool winnerFound = false;
 
+        foreach (PlayerInfo player in allPlayers)
+        {
+            if (player.kills >= TargetKills && TargetKills > 0)
+            {
+                winnerFound = true;
+                break;
+            }
+        }
+
+        if (winnerFound)
+        {
+            if (PhotonNetwork.IsMasterClient && state != GameState.Ending)
+            {
+                state = GameState.Ending;
+                ListPlayersSend();
+            }
+        }
+    }
 
     public void ListPlayersSend()
     {
@@ -382,6 +403,9 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private IEnumerator EndCo()
     {
         yield return new WaitForSeconds(waitAfterEnding);
+
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.LeaveRoom();
     }
         #region PlayerInfo
 
