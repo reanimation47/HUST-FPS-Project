@@ -78,6 +78,8 @@ public class GunSelectionController : MonoBehaviour
         }
         GameObject newGunObject = Instantiate(gun.gunObject);
         newGunObject.transform.SetParent(gunHolder, false);
+        // Set the scale of newGunObject to 420
+        newGunObject.transform.localScale = new Vector3(420f, 420f, 420f);
 
         // Update Gun Skins
         for (int i = 0; i < skinHolder.Length; i++)
@@ -93,6 +95,8 @@ public class GunSelectionController : MonoBehaviour
             {
                 GameObject newGunSkinObject = Instantiate(gun.gunSkin[i]);
                 newGunSkinObject.transform.SetParent(currentSkinHolder, false);
+                // Set the scale of newGunSkinObject to 420
+                newGunSkinObject.transform.localScale = new Vector3(420f, 420f, 420f);
             }
             else
             {
@@ -102,6 +106,7 @@ public class GunSelectionController : MonoBehaviour
         }
 
         // Update UI Text
+        skinLocked.text = "SELECT";
         gunName.text = gun.gunName;
         dame.text = gun.damage.ToString();
         fireRate.text = gun.fireRate.ToString();
@@ -137,9 +142,6 @@ public class GunSelectionController : MonoBehaviour
             if (!skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].ToString()))
             {
                 skinLocked.text = "NOT OWNED";
-            } else
-            {
-                skinLocked.text = "SELECT";
             }
         }
         else
