@@ -40,14 +40,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.LogWarning("MISSION COMPLETE");
         ICommon.UpdatePlayerCoinsBalance(+1000);
-        //TODO: switch to Extraction Complete screen ()
-<<<<<<< HEAD
-        missioncomplete.SetActive(true);
-=======
+    
         MainMenu.Instance.MissionSuccess.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
 
->>>>>>> dev/main/20231225
+
     }
 
     private void NextWave()
