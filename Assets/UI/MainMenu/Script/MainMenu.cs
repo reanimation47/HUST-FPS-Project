@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject PVPScene;
     [SerializeField] private GameObject PVEScene;
     [SerializeField] private GameObject Map1Scene;
+    [SerializeField] private GameObject ShopScene;
     private void Start()
     {
         ActivateMainMenuPVP(true);
@@ -33,4 +34,9 @@ public class MainMenu : MonoBehaviour
         Map1Scene.SetActive(!state);
     }
 
+    public void ActivateShop(bool state)
+    {
+        mainMenu.SetActive(state);
+        ShopScene.SetActive(!state);
+    }
 }
