@@ -282,7 +282,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
     }
 
-    void ShowLeaderboard()
+    public void ShowLeaderboard()
     {
         UIdeath.instance.leaderboard.SetActive(true);
 

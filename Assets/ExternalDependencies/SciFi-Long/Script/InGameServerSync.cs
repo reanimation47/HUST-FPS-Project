@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
+using System.Text.RegularExpressions;
 
 public class InGameServerSync : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class InGameServerSync : MonoBehaviour
             DeathCam.SetActive(true);
             EndGameMsg.SetActive(true);
             EngGameMsg_Text.text = $"GAME OVER! THE WINNER IS: {view.Owner.NickName}";
-            LeaderBoard.SetActive(true);
+            MatchManager.instance.ShowLeaderboard();
         }
 
     }
