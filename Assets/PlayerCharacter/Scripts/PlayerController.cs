@@ -183,7 +183,7 @@ namespace Player
         #endregion
 
         #region GamePlay
-        public void Spawn()
+        private void Spawn()
         {
             if (gameMode == GameMode.Multiplayer){return;}
             PlayerHealth.RestoreFullHealth();
@@ -254,7 +254,7 @@ namespace Player
 
         public void TakeDamage(float dmg)
         {
-            PlayerHealth.TakeDamage(dmg);
+            ((ICombat)Instance).TakeDamage(dmg);
         }
 
         #endregion

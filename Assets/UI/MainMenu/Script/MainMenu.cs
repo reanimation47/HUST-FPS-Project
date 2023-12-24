@@ -12,21 +12,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject Map2Scene;
     [SerializeField] private GameObject ShopScene;
     [SerializeField] private GameObject SettingScene;
-    [SerializeField] public GameObject MissionSuccess;
 
-    public static MainMenu Instance;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) 
-        { 
-            Destroy(this); 
-        } 
-        else 
-        { 
-            Instance = this; 
-        } 
-    }
     private void Start()
     {
         ActivateMainMenuPVP(true);
@@ -67,11 +53,5 @@ public class MainMenu : MonoBehaviour
     {
         mainMenu.SetActive(state);
         SettingScene.SetActive(!state);
-    }
-
-    public void ActivateMissionSuccess(GameObject toDeactive, bool toggle = true)
-    {
-        toDeactive.SetActive(!toggle);
-        MissionSuccess.SetActive(toggle);
     }
 }

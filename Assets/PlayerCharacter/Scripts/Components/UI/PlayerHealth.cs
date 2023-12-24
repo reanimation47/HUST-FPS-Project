@@ -121,9 +121,6 @@ public class PlayerHealth : MonoBehaviour
                 //this.gameObject.SetActive(false);
             }else
             {
-                Debug.LogWarning("Died");
-                ICommon.GetPlayerController().Spawn();
-
                 //TO DO: for singleplayer mode, switch to Extraction Unsuccessful screen
             }
         }
@@ -162,7 +159,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void InitPlayerStatsForServer()
     {
-        if(ICommon.GetPlayerController().gameMode == GameMode.SinglePlayer) {return;}
         //TODO: this should moved into PlayerController
         {
             Hashtable hash = new Hashtable();

@@ -22,8 +22,6 @@ public class UIdeath : MonoBehaviour
 
     public GameObject optionsScreen;
 
-    public GameObject endScreen;
-
     // Start is called before the first frame update
     void Start()
     {

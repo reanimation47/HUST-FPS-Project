@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class PausedMenuManager : MonoBehaviour
 {
     private bool isPaused = false;
 
     [SerializeField] private GameObject pausedMenu;
-    [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject Map1Scene;
     
     private void Start()
     {
@@ -19,9 +17,9 @@ public class PausedMenuManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P) && !isPaused)
+        if(Input.GetKeyDown(KeyCode.Escape) && !isPaused)
              ActivatePausedMenu(true);
-        else if(Input.GetKeyDown(KeyCode.P) && isPaused)
+        else if(Input.GetKeyDown(KeyCode.Escape) && isPaused)
              ActivatePausedMenu(false);    
     }
 
@@ -33,19 +31,22 @@ public class PausedMenuManager : MonoBehaviour
         isPaused = state;
     }
     
-    public void ActivateResume(bool state)
-    {
-        pausedMenu.SetActive(state);
-        Map1Scene.SetActive(!state);
-    }
+//    public void Restart()
+//    {
+//        SceneManagement.LoadScene("SampleScene");
+//    }
+    
+//      public void Option()
+//      {
+//        SceneManagement.LoadScene("Option");
+//      }
 
-    public void ActivateBackToMenu(bool state)
-    {
-        pausedMenu.SetActive(state);
-        mainMenu.SetActive(!state);
-    }
+//    public void BackToMenu()
+//    {
+//        SceneManagement.LoadScene("MainMenu");
+//    }
 
-    public void ActivateQuit(bool state)
+    public void Quit()
     {
         Application.Quit();
     }

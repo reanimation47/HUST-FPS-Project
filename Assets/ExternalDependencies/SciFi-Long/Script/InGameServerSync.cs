@@ -12,7 +12,6 @@ public class InGameServerSync : MonoBehaviour
     public GameObject LeaderBoard;
     public GameObject EndGameMsg;
     public TextMeshProUGUI EngGameMsg_Text;
-   
 
     // Update is called once per frame
     void FixedUpdate()
@@ -50,7 +49,6 @@ public class InGameServerSync : MonoBehaviour
         if (KillsCount >= MatchManager.instance.TargetKills)
         {
             ICommon.GetPlayerController().EnableCamera(false);
-            MatchManager.instance.state = MatchManager.GameState.Ending;
             DeathCam.SetActive(true);
             EndGameMsg.SetActive(true);
             EngGameMsg_Text.text = $"GAME OVER! THE WINNER IS: {view.Owner.NickName}";

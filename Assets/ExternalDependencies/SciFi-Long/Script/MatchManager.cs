@@ -20,7 +20,6 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public List<PlayerInfo> allPlayers = new List<PlayerInfo>();
     private int index;
     public GameState state = GameState.Waiting;
-    public float waitAfterEnding = 5f;
 
     private List<LeaderBoard> lboardPlayers = new List<LeaderBoard>();
     public enum EventCodes : byte
@@ -267,10 +266,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     void StateCheck()
     {
-        if (state == GameState.Ending)
-        {
-            EndGame();
-        }
+
     }
     public void UpdateStatsDisplay()
     {
@@ -327,8 +323,6 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
             lboardPlayers.Add(newPlayerDisplay);
         }
     }
-
-    
     private List<PlayerInfo> SortPlayers(List<PlayerInfo> players)
     {
         List<PlayerInfo> sorted = new List<PlayerInfo>();
@@ -356,36 +350,9 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         return sorted;
     }
 
-    public override void OnLeftRoom()
-    {
-        base.OnLeftRoom();
+    #region PlayerInfo
 
-        SceneManager.LoadScene(0);
-    }
-
-    void EndGame()
-    {
-        state = GameState.Ending;
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.DestroyAll();
-        }
-
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-
-        StartCoroutine(EndCo());
-    }
-    private IEnumerator EndCo()
-    {
-        yield return new WaitForSeconds(waitAfterEnding);
-    }
-        #region PlayerInfo
-
-        [System.Serializable]
+    [System.Serializable]
     public class PlayerInfo
     {
         public string name;
