@@ -34,6 +34,8 @@ public class InGameServerSync : MonoBehaviour
     
     private void RenderFullPlayerObject(GameObject p)
     {
+        if(p.layer == 0){return;}
+        Debug.LogWarning("LayerUpdated!!");
         ICommon.SetLayerAllChildren(p.transform,0);
 
     }

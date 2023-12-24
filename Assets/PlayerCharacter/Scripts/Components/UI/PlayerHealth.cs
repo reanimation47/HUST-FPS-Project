@@ -167,12 +167,12 @@ public class PlayerHealth : MonoBehaviour
         }
         {
             Hashtable hash = new Hashtable();
-            hash.Add(this.gameObject.name+ ICommon.CustomProperties_Key_KillsCount(), 2);
+            hash.Add(this.gameObject.name+ ICommon.CustomProperties_Key_KillsCount(), 0);
             PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
         }
         {
             Hashtable hash = new Hashtable();
-            hash.Add(this.gameObject.name+ ICommon.CustomProperties_Key_DeathsCount(), 3);
+            hash.Add(this.gameObject.name+ ICommon.CustomProperties_Key_DeathsCount(), 0);
             PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
         }
 
