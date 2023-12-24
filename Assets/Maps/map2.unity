@@ -4980,6 +4980,7 @@ MonoBehaviour:
   TargetKills: 5
   allPlayers: []
   state: 0
+  waitAfterEnding: 5
 --- !u!4 &2115775016
 Transform:
   m_ObjectHideFlags: 0

@@ -267,7 +267,10 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     void StateCheck()
     {
-
+        if (state == GameState.Ending)
+        {
+            EndGame();
+        }
     }
     public void UpdateStatsDisplay()
     {
@@ -324,6 +327,8 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
             lboardPlayers.Add(newPlayerDisplay);
         }
     }
+
+    
     private List<PlayerInfo> SortPlayers(List<PlayerInfo> players)
     {
         List<PlayerInfo> sorted = new List<PlayerInfo>();
@@ -358,9 +363,29 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         SceneManager.LoadScene(0);
     }
 
-    #region PlayerInfo
+    void EndGame()
+    {
+        state = GameState.Ending;
 
-    [System.Serializable]
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.DestroyAll();
+        }
+
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+
+        StartCoroutine(EndCo());
+    }
+    private IEnumerator EndCo()
+    {
+        yield return new WaitForSeconds(waitAfterEnding);
+    }
+        #region PlayerInfo
+
+        [System.Serializable]
     public class PlayerInfo
     {
         public string name;
