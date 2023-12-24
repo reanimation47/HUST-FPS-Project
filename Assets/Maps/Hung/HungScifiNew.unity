@@ -835,7 +835,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 89513380, guid: a9bad9c1661084b7da6534eb520ad789, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 89513381, guid: a9bad9c1661084b7da6534eb520ad789, type: 3}
       propertyPath: m_RootOrder
@@ -933,10 +933,26 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3403461278201724208, guid: a9bad9c1661084b7da6534eb520ad789, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4034818122881486192, guid: a9bad9c1661084b7da6534eb520ad789, type: 3}
       propertyPath: path
       value: 
       objectReference: {fileID: 146625320}
+    - target: {fileID: 4228021215306439705, guid: a9bad9c1661084b7da6534eb520ad789, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684635691832312931, guid: a9bad9c1661084b7da6534eb520ad789, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8262707284113904470, guid: a9bad9c1661084b7da6534eb520ad789, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8974607252903398338, guid: a9bad9c1661084b7da6534eb520ad789, type: 3}
       propertyPath: m_Name
       value: GameManager
