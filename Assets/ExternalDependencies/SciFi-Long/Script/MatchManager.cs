@@ -20,6 +20,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private int index;
     public GameState state = GameState.Waiting;
 
+    private List<LeaderBoard> lboardPlayers = new List<LeaderBoard>();
     public enum EventCodes : byte
     {
         NewPlayer,
@@ -60,7 +61,17 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Tab) && state != GameState.Ending)
+        {
+            if (UIdeath.instance.leaderboard.activeInHierarchy)
+            {
+                UIdeath.instance.leaderboard.SetActive(false);
+            }
+            else
+            {
+                ShowLeaderboard();
+            }
+        }
 
     }
     public void OnEvent(EventData photonEvent)
@@ -170,16 +181,16 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                         break;
                 }
 
-           /*     if (i == index)
+               if (i == index)
                 {
                     UpdateStatsDisplay();
                 }
 
-                if (UIController.instance.leaderboard.activeInHierarchy)
+                if (UIdeath.instance.leaderboard.activeInHierarchy)
                 {
                     ShowLeaderboard();
                 }
-*/
+
                 break;
             }
         }
@@ -256,6 +267,88 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
 
     }
+    public void UpdateStatsDisplay()
+    {
+        if (allPlayers.Count > index)
+        {
+
+            LeaderBoard.instance.killsText.text = "Kills: " + allPlayers[index].kills;
+            
+        }
+        else
+        {
+            LeaderBoard.instance.killsText.text = "Kills: 0";
+        }
+    }
+
+    void ShowLeaderboard()
+    {
+        UIdeath.instance.leaderboard.SetActive(true);
+
+        foreach (LeaderBoard lp in lboardPlayers)
+        {
+            Destroy(lp.gameObject);
+        }
+        lboardPlayers.Clear();
+
+        UIdeath.instance.leaderboardPlayerDisplay.gameObject.SetActive(false);
+
+        foreach (var player in allPlayers)
+        {
+            player.kills = (int)PhotonNetwork.CurrentRoom.CustomProperties[player.name+ICommon.CustomProperties_Key_KillsCount()];
+            player.deaths = (int)PhotonNetwork.CurrentRoom.CustomProperties[player.name+ICommon.CustomProperties_Key_DeathsCount()];
+
+        }
+
+        List<PlayerInfo> sorted = SortPlayers(allPlayers);
+
+        foreach (PlayerInfo player in sorted)
+        {
+            LeaderBoard newPlayerDisplay = Instantiate(UIdeath.instance.leaderboardPlayerDisplay, UIdeath.instance.leaderboardPlayerDisplay.transform.parent);
+
+            // int KillsCount = (int)PhotonNetwork.CurrentRoom.CustomProperties[player.name+ICommon.CustomProperties_Key_KillsCount()];
+            // int DeathsCount = (int)PhotonNetwork.CurrentRoom.CustomProperties[player.name+ICommon.CustomProperties_Key_DeathsCount()];
+
+            string ExtraInfo = "";
+            if (player.name == PhotonNetwork.LocalPlayer.NickName)// Indicate which one is player's
+            {
+                ExtraInfo = "(Me)";
+            }
+
+            newPlayerDisplay.SetDetails(player.name, $"{player.kills}/{player.deaths} {ExtraInfo}");
+
+            newPlayerDisplay.gameObject.SetActive(true);
+
+            lboardPlayers.Add(newPlayerDisplay);
+        }
+    }
+    private List<PlayerInfo> SortPlayers(List<PlayerInfo> players)
+    {
+        List<PlayerInfo> sorted = new List<PlayerInfo>();
+
+        while (sorted.Count < players.Count)
+        {
+            int highest = -1;
+            PlayerInfo selectedPlayer = players[0];
+
+            foreach (PlayerInfo player in players)
+            {
+                if (!sorted.Contains(player))
+                {
+                    if (player.kills > highest)
+                    {
+                        selectedPlayer = player;
+                        highest = player.kills;
+                    }
+                }
+            }
+
+            sorted.Add(selectedPlayer);
+        }
+
+        return sorted;
+    }
+
     #region PlayerInfo
 
     [System.Serializable]
