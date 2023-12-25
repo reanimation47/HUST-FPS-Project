@@ -1121,6 +1121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnPoints:
+  - {fileID: 978608856177604890}
+  - {fileID: 860967372}
   - {fileID: 1103817470}
 --- !u!1 &451537399
 GameObject:
