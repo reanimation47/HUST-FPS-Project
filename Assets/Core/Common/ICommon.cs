@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
+using Photon.Realtime;
 using Player;
 using Player.WeaponHandler;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 
 public class ICommon : MonoBehaviour
 {
@@ -38,7 +42,49 @@ public class ICommon : MonoBehaviour
     {
         if (_hit.transform.gameObject.TryGetComponent(out ICombat combatable)) // If target has combat system
         {
-            combatable.TakeDamage(baseDamage);
+            // PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
+            // _hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
+            if(_player.GetComponent<PlayerController>().gameMode == GameMode.Multiplayer)
+            {
+                PhotonView hitview = _hit.transform.gameObject.GetComponent<PhotonView>();
+
+                float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[hitview.Owner.NickName];
+                /*if (_hit.collider.gameObject.tag == "Player")
+                {
+                    Debug.Log("Hit " + _hit.collider.gameObject.GetPhotonView().Owner.NickName);
+
+                    PhotonNetwork.Instantiate(_player.name, _hit.point, Quaternion.identity);
+
+                    _hit.collider.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, hitview.Owner.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
+                }*/
+                targetHP -= baseDamage;
+                if(targetHP <= 0)
+                {
+                    {//Update Kills count for current player
+                        string ownerName = PhotonNetwork.LocalPlayer.NickName;
+                        int KillsCount = (int)PhotonNetwork.CurrentRoom.CustomProperties[ownerName+ICommon.CustomProperties_Key_KillsCount()];
+                        Hashtable _hash = new Hashtable();
+                        _hash.Add(ownerName+ ICommon.CustomProperties_Key_KillsCount(), KillsCount+1);
+                        PhotonNetwork.CurrentRoom.SetCustomProperties(_hash);
+                    }
+                    {//Update deaths count for target
+                        string targetName = hitview.Owner.NickName;
+                        int DeathsCount = (int)PhotonNetwork.CurrentRoom.CustomProperties[targetName+ICommon.CustomProperties_Key_DeathsCount()];
+                        Hashtable _hash = new Hashtable();
+                        _hash.Add(targetName+ ICommon.CustomProperties_Key_DeathsCount(), DeathsCount+1);
+                        PhotonNetwork.CurrentRoom.SetCustomProperties(_hash);
+                    }
+                    Debug.LogWarning("Killed " +hitview.Owner.NickName);
+                }
+                Hashtable hash = new Hashtable();
+                hash.Add(hitview.Owner.NickName, targetHP);
+                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+                //_hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", hitview.Controller, baseDamage);
+                //CheckForTargetHP(hitview.Owner.NickName);
+            }else
+            {
+                combatable.TakeDamage(baseDamage);
+            }
         }else 
         {
             Debug.LogError(_hit.transform.gameObject.name);
@@ -51,6 +97,22 @@ public class ICommon : MonoBehaviour
             
             rb.AddForce(-_hit.normal*7000); //TODO: Maybe the hit force could scale with the weapon's dmg?
         }
+
+    }
+    
+    private static void CheckForTargetHP(string targetName)
+    {
+        Debug.LogWarning(targetName);
+        float targetHP = (float)PhotonNetwork.CurrentRoom.CustomProperties[targetName];
+        Debug.LogWarning(targetHP);
+
+    }
+
+    IEnumerator DeactiveObjec(GameObject o, float duration)
+    {
+        o.SetActive(false);
+        yield return new WaitForSeconds(duration);
+        o.SetActive(true);
 
     }
     #endregion
@@ -156,7 +218,15 @@ public class ICommon : MonoBehaviour
     }
     #endregion
 
-    #region 
+    #region Others
+
+    public static void UpdatePlayerCoinsBalance(int amount)
+    {
+        int _ = PlayerPrefs.GetInt("CoinOwned", 0);
+
+        _ += amount;
+        PlayerPrefs.SetInt("CoinOwned", _);
+    }
     public static void RemoveObjectFromAnimator(GameObject gameObject, Animator animator)
     {
         Transform parentTransform = gameObject.transform.parent;
@@ -171,9 +241,27 @@ public class ICommon : MonoBehaviour
 
         gameObject.transform.parent = parentTransform;
     }
+
+    public static void SetLayerAllChildren(Transform root, int layer)
+    {
+        var children = root.GetComponentsInChildren<Transform>(includeInactive: true);
+        foreach (var child in children)
+        {
+            child.gameObject.layer = layer;
+        }
+    }
     #endregion
 
-
+    #region Photon's CustomProperties Keys
+    public static string CustomProperties_Key_KillsCount()
+    {
+        return "KillsCount";
+    }
+    public static string CustomProperties_Key_DeathsCount()
+    {
+        return "DeathsCount";
+    }
+    #endregion
 
 
 }

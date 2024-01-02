@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyState_Shoot : IState
 {
@@ -26,13 +27,13 @@ public class EnemyState_Shoot : IState
         if (target != null) {
             // Aim at the target
             Vector3 lookPos = target.position - enemyReferences.transform.position;
-            lookPos.y = 0;
+            // lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             enemyReferences.transform.rotation = Quaternion.Slerp(enemyReferences.transform.rotation, rotation, 0.2f);
-        }
-
-        // Decide to shoot or hide. For now, shoot first.
-        enemyReferences.animator.SetBool("shooting", true);
+            // Decide to shoot or hide. For now, shoot first.
+            enemyReferences.animator.SetBool("shooting", true);
+        } else 
+            enemyReferences.animator.SetBool("shooting", false);
     }
 
     public Color GizmoColor() {

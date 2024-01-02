@@ -11,6 +11,8 @@ public class UserController : MonoBehaviour
 
     [Header("User Infor")]
     public TextMeshProUGUI coinOwned;
+    public GameObject EarnCoinPanel;
+    public GameObject GetCoinPopup;
 
     // Start is called before the first frame update
     void Start()
@@ -39,15 +41,20 @@ public class UserController : MonoBehaviour
 
     }
 
-    public void UpdateCoinAfterBuying()
+    public void EarnCoin (int coin)
     {
         int currentCoin = PlayerPrefs.GetInt("CoinOwned");
-        PlayerPrefs.SetInt("CoinOwned", currentCoin - 2500);
+        PlayerPrefs.SetInt("CoinOwned", currentCoin + coin);
+        EarnCoinPanel.SetActive(false);
     }
 
-    public void EarnCoin ()
+    public void showEarnCoinPanel ()
     {
-        int currentCoin = PlayerPrefs.GetInt("CoinOwned");
-        PlayerPrefs.SetInt("CoinOwned", currentCoin + 2500);
+        EarnCoinPanel.SetActive(true);
+    }
+
+    public void closeEarnCoinPanel()
+    {
+        EarnCoinPanel.SetActive(false);
     }
 }
