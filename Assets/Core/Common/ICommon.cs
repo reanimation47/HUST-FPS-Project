@@ -88,7 +88,14 @@ public class ICommon : MonoBehaviour
         }else 
         {
             Debug.LogError(_hit.transform.gameObject.name);
-            Instantiate(bulletHole, _hit.point + new Vector3(_hit.normal.x * 0.01f, _hit.normal.y * 0.01f, _hit.normal.z * 0.01f), Quaternion.LookRotation(-_hit.normal));
+            if(_player.GetComponent<PlayerController>().gameMode == GameMode.Multiplayer)
+            {
+                PhotonNetwork.Instantiate(bulletHole.name, _hit.point + new Vector3(_hit.normal.x * 0.01f, _hit.normal.y * 0.01f, _hit.normal.z * 0.01f), Quaternion.LookRotation(-_hit.normal));
+
+            }else
+            {
+                Instantiate(bulletHole, _hit.point + new Vector3(_hit.normal.x * 0.01f, _hit.normal.y * 0.01f, _hit.normal.z * 0.01f), Quaternion.LookRotation(-_hit.normal));
+            }
         }
         if (_hit.transform.gameObject.TryGetComponent(out Rigidbody rb)) // if target has rigidbody
         {
