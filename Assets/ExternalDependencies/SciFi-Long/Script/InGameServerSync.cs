@@ -55,6 +55,7 @@ public class InGameServerSync : MonoBehaviour
             EndGameMsg.SetActive(true);
             EngGameMsg_Text.text = $"GAME OVER! THE WINNER IS: {view.Owner.NickName}";
             MatchManager.instance.ShowLeaderboard();
+            MatchManager.instance.EndGame();
         }
 
     }
