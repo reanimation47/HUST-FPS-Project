@@ -50,8 +50,9 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
             NewPlayerSend(PhotonNetwork.NickName);
 
             state = GameState.Playing;
+            Debug.Log(state);
 
-           // SetupTimer();
+            // SetupTimer();
 
             if (!PhotonNetwork.IsMasterClient)
             {
@@ -384,9 +385,10 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         SceneManager.LoadScene(0);
     }
 
-    void EndGame()
+    public void EndGame()
     {
         state = GameState.Ending;
+        Debug.Log("EndGame called" + state);
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -402,9 +404,12 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     }
     private IEnumerator EndCo()
     {
+        Debug.Log("Coroutine started, waiting for " + waitAfterEnding + " seconds");
+
         yield return new WaitForSeconds(waitAfterEnding);
 
         PhotonNetwork.AutomaticallySyncScene = false;
+        Debug.Log("Leaving room now");
         PhotonNetwork.LeaveRoom();
     }
         #region PlayerInfo
