@@ -25,7 +25,9 @@ MonoBehaviour:
     ammoCapacity: 30
     bulletSpeed: 23
     recoil: 2
-    reloadTime: 3
+    reloadTime: 2
+    reloadSFX: {fileID: 8300000, guid: 6bb927a6dfb744ba9b7ccea25485591f, type: 3}
+    shootingSFX: {fileID: 8300000, guid: e25000083e08f46f883caec2b257d736, type: 3}
   - gunObject: {fileID: 3727380808872219282, guid: 797b9157c805e5d439856811a2782ca1, type: 3}
     gunSkin:
     - {fileID: 8610551493926425070, guid: 459653790a13d1544ad07e3f5759d7d6, type: 3}
@@ -38,7 +40,9 @@ MonoBehaviour:
     ammoCapacity: 35
     bulletSpeed: 34
     recoil: 0.5
-    reloadTime: 1.5
+    reloadTime: 1
+    reloadSFX: {fileID: 8300000, guid: 6bb927a6dfb744ba9b7ccea25485591f, type: 3}
+    shootingSFX: {fileID: 8300000, guid: 293956da3f3b6493b86c972024ca6424, type: 3}
   - gunObject: {fileID: 7574649909914082485, guid: 64110137bace1c4419a37dcbcbccf1e6, type: 3}
     gunSkin:
     - {fileID: 8874312632363478839, guid: cebef2be811d7b946b3ff0b5e67b3289, type: 3}
@@ -52,3 +56,5 @@ MonoBehaviour:
     bulletSpeed: 34
     recoil: 10
     reloadTime: 2
+    reloadSFX: {fileID: 8300000, guid: 64aa6a6f235e2465598568e5e79b506e, type: 3}
+    shootingSFX: {fileID: 8300000, guid: 0b77b89eb2c4747ecbc0dd2ab7943bfa, type: 3}
