@@ -15,4 +15,7 @@ public class GunAttribute
     public float bulletSpeed;//Not gonna use this in game// consider remove & replace with recoil in gun shop
     public float recoil;
     public float reloadTime;
+
+    public AudioClip reloadSFX;
+    public AudioClip shootingSFX;
 }
