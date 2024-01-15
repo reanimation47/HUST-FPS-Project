@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject missioncomplete;
     public static GameManager Instance;
     public Transform Goal;
     public Transform Spawn;
@@ -39,9 +40,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.LogWarning("MISSION COMPLETE");
         ICommon.UpdatePlayerCoinsBalance(+1000);
-        //TODO: switch to Extraction Complete screen ()
+    
         MainMenu.Instance.MissionSuccess.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+
 
     }
 
