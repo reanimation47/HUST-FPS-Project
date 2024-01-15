@@ -19,7 +19,9 @@ public class GunScript : MonoBehaviour
     public float recoil = 1f;
     public Vector2 randomRecoilConstraints = new Vector2(2,5);
     public Image muzzleFlash;
-
+    public AudioClip shootingSFX;
+    public AudioClip reloadingSFX;
+    public AudioSource audioSource; 
     public GunAttribute gunStats;
     
     [HideInInspector] public int _currentAmmoInClip;
@@ -67,11 +69,24 @@ public class GunScript : MonoBehaviour
         reloadTime = stats.reloadTime;
         randomRecoilConstraints = new Vector2(stats.recoil, stats.recoil);
         clipSize = stats.ammoCapacity;
+
+        shootingSFX = stats.shootingSFX;
+        reloadingSFX = stats.reloadSFX;
+
         reservedAmmo = clipSize * 7;
 
         _currentAmmoInClip = clipSize;
         _ammoInReserve = reservedAmmo;
 
+    }
+
+    public void PlayShootingSFX()
+    {
+        audioSource.PlayOneShot(shootingSFX);
+    }
+    public void PlayReloadingSFX()
+    {
+        audioSource.PlayOneShot(reloadingSFX);
     }
 
     public void ResetGun()
