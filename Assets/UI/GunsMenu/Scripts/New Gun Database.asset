@@ -15,9 +15,15 @@ MonoBehaviour:
   gunsList:
   - gunObject: {fileID: 2641351572177420201, guid: 70beeaeaec2b98d4aadce0c3a9baf04d, type: 3}
     gunSkin:
-    - {fileID: 1769861114648495817, guid: 7afb58f9df3800741a1621f3f5f7e8bb, type: 3}
-    - {fileID: 10951614823897998, guid: 6174898040a966042bd60d0ca29db44b, type: 3}
-    - {fileID: 4699488514998923214, guid: 0dbbbbbb7e9eac646bf99eb68e3ae439, type: 3}
+    - skinName: AK-47
+      skinObject: {fileID: 1769861114648495817, guid: 7afb58f9df3800741a1621f3f5f7e8bb, type: 3}
+      price: 2000
+    - skinName: AK-47
+      skinObject: {fileID: 10951614823897998, guid: 6174898040a966042bd60d0ca29db44b, type: 3}
+      price: 5000
+    - skinName: AK-47
+      skinObject: {fileID: 6079996328368282420, guid: 1cff2dac2f4e9b9449391b802009efc1, type: 3}
+      price: 10000
     gunName: AK-47
     gunType: 2
     damage: 35
@@ -28,9 +34,15 @@ MonoBehaviour:
     reloadTime: 3
   - gunObject: {fileID: 3727380808872219282, guid: 797b9157c805e5d439856811a2782ca1, type: 3}
     gunSkin:
-    - {fileID: 8610551493926425070, guid: 459653790a13d1544ad07e3f5759d7d6, type: 3}
-    - {fileID: 6159262183059356311, guid: 858c6fc4c0a0fe84596b5199f10d42c4, type: 3}
-    - {fileID: 1374469572329755822, guid: 7f4cbd28ca8cce743997fdfac6b9ea2f, type: 3}
+    - skinName: UZI
+      skinObject: {fileID: 3161473890758430728, guid: 9167cf5c80e2a254c8dbf51f00d87e40, type: 3}
+      price: 2000
+    - skinName: UZI
+      skinObject: {fileID: 204302883495540136, guid: ac299ff50bb2b28408f48f37126dfb20, type: 3}
+      price: 5500
+    - skinName: UZI
+      skinObject: {fileID: 1374469572329755822, guid: 7f4cbd28ca8cce743997fdfac6b9ea2f, type: 3}
+      price: 9500
     gunName: UZI
     gunType: 1
     damage: 25
@@ -41,9 +53,15 @@ MonoBehaviour:
     reloadTime: 1.5
   - gunObject: {fileID: 7574649909914082485, guid: 64110137bace1c4419a37dcbcbccf1e6, type: 3}
     gunSkin:
-    - {fileID: 8874312632363478839, guid: cebef2be811d7b946b3ff0b5e67b3289, type: 3}
-    - {fileID: 4046822412925005702, guid: 3d98702d89d277048828c853f9487f5b, type: 3}
-    - {fileID: 8060455996274869034, guid: 406e4e2d474d82c47a9eb608ed8eba97, type: 3}
+    - skinName: M3
+      skinObject: {fileID: 8874312632363478839, guid: cebef2be811d7b946b3ff0b5e67b3289, type: 3}
+      price: 1500
+    - skinName: M3
+      skinObject: {fileID: 4046822412925005702, guid: 3d98702d89d277048828c853f9487f5b, type: 3}
+      price: 3000
+    - skinName: M3
+      skinObject: {fileID: 3103306929720814213, guid: ce50f1c7bec17e248a423d86f01a5da9, type: 3}
+      price: 4500
     gunName: M3
     gunType: 3
     damage: 7
@@ -52,3 +70,60 @@ MonoBehaviour:
     bulletSpeed: 34
     recoil: 10
     reloadTime: 2
+  - gunObject: {fileID: 2583026070758056353, guid: 36682f6803732e540b9c302873ad000d, type: 3}
+    gunSkin:
+    - skinName: M4
+      skinObject: {fileID: 3263066216330540524, guid: d89e11c90312d804cb8aa4889c1105b8, type: 3}
+      price: 2500
+    - skinName: M4
+      skinObject: {fileID: 9061445575983052853, guid: bf3412fed0b3a374eb0e68a69f3be68e, type: 3}
+      price: 6000
+    - skinName: M4
+      skinObject: {fileID: 1449986611035843655, guid: 059c5a9adb99ea94cb464d58ff560378, type: 3}
+      price: 12000
+    gunName: M4A1
+    gunType: 2
+    damage: 30
+    fireRate: 0.08
+    ammoCapacity: 30
+    bulletSpeed: 37
+    recoil: 2
+    reloadTime: 3
+  - gunObject: {fileID: 8719406351809414261, guid: b1a44e2f0d327214786a2f87a2be0053, type: 3}
+    gunSkin:
+    - skinName: M764
+      skinObject: {fileID: 4471293436831371193, guid: 826b95c6eba556048a3445685f7ecdc5, type: 3}
+      price: 2000
+    - skinName: M764
+      skinObject: {fileID: 8432758837335024446, guid: cdf54c6d2b0f72f4e9e1d11924480336, type: 3}
+      price: 5000
+    - skinName: M764
+      skinObject: {fileID: 2676466980926102438, guid: ec116003435b390459fc6e02127a3bbd, type: 3}
+      price: 7500
+    gunName: M764
+    gunType: 2
+    damage: 30
+    fireRate: 1.1
+    ammoCapacity: 30
+    bulletSpeed: 34
+    recoil: 2
+    reloadTime: 3.2
+  - gunObject: {fileID: 2196473632635028886, guid: 5c436d370f7022945b10d687fc9adbc6, type: 3}
+    gunSkin:
+    - skinName: AWM
+      skinObject: {fileID: 2968909031457651578, guid: a0f7d6dea081c714fb1b13734fddefa0, type: 3}
+      price: 2000
+    - skinName: AWM
+      skinObject: {fileID: 725333639147183801, guid: 00ab0e48fd537b146ae555db2a854ba7, type: 3}
+      price: 6000
+    - skinName: AWM
+      skinObject: {fileID: 6152662271618498729, guid: a975b332616988847855a86498e1e22e, type: 3}
+      price: 16000
+    gunName: AWM
+    gunType: 4
+    damage: 100
+    fireRate: 3
+    ammoCapacity: 5
+    bulletSpeed: 40
+    recoil: 3
+    reloadTime: 8
