@@ -6,7 +6,7 @@ using UnityEngine;
 public class GunAttribute
 {
     public GameObject gunObject;
-    public GameObject [] gunSkin;
+    public GunSkin [] gunSkin;
     public string gunName;
     public GunType gunType;
     public int damage;

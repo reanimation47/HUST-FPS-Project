@@ -155,10 +155,6 @@ public class EnemyShooter : MonoBehaviour, ICombat
         }
     }
 
-    public void TakeDamage(float dmg, int actor)
-    {
-        throw new NotImplementedException();
-    }
     #endregion
 
 

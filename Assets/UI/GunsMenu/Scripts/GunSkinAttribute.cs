@@ -6,6 +6,6 @@ using UnityEngine;
 public class GunSkin
 {
     public string skinName;
+    public GameObject skinObject;
     public int price;
-    public int type;
 }
