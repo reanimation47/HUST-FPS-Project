@@ -74,10 +74,6 @@ MonoBehaviour:
     bulletSpeed: 34
     recoil: 10
     reloadTime: 2
-<<<<<<< HEAD
-    reloadSFX: {fileID: 8300000, guid: 64aa6a6f235e2465598568e5e79b506e, type: 3}
-    shootingSFX: {fileID: 8300000, guid: 0b77b89eb2c4747ecbc0dd2ab7943bfa, type: 3}
-=======
   - gunObject: {fileID: 2583026070758056353, guid: 36682f6803732e540b9c302873ad000d, type: 3}
     gunSkin:
     - skinName: M4
@@ -135,4 +131,3 @@ MonoBehaviour:
     bulletSpeed: 40
     recoil: 3
     reloadTime: 8
->>>>>>> dev/main/selected_skin_guns
