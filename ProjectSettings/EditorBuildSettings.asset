@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UI/MainMenu-Revamp/MainScenes/GunsShop.unity
     guid: c64586373b5a3344ea918f105d1e906a
+  - enabled: 1
+    path: Assets/UI/MainMenu-Revamp/PvE-Maps/HungAdventure.unity
+    guid: e73a21159b31a4bd1906b7c35e74dc96
   m_configObjects: {}

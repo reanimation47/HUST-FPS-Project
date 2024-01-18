@@ -13,6 +13,6 @@ public class SceneNames
 
 public class PvESceneNames
 {
-    public readonly string Map1 = "PvE-Map1";
-    public readonly string Map2 = "PvE-Map2";
+    public readonly string Map1 = "HungAdventure";
+    public readonly string Map2 = "PvE-Map1";
 }
