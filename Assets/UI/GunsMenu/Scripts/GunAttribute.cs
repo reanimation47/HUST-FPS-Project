@@ -6,7 +6,7 @@ using UnityEngine;
 public class GunAttribute
 {
     public GameObject gunObject;
-    public GameObject [] gunSkin;
+    public GunSkin [] gunSkin;
     public string gunName;
     public GunType gunType;
     public int damage;
@@ -15,4 +15,7 @@ public class GunAttribute
     public float bulletSpeed;//Not gonna use this in game// consider remove & replace with recoil in gun shop
     public float recoil;
     public float reloadTime;
+
+    public AudioClip reloadSFX;
+    public AudioClip shootingSFX;
 }

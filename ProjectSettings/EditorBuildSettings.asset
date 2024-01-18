@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Maps/Demo/Demo.unity
     guid: 6d634c7a2701a4bd19972963c4d91588
   - enabled: 1
+    path: Assets/UI/MainMenu-Revamp/MainMenu.unity
+    guid: f6465694d3a7448b19edba448b6af7a5
+  - enabled: 1
     path: Assets/Maps/menu demo.unity
     guid: de4dc5403ebb3684c80a95f768888d8e
   - enabled: 1
@@ -20,4 +23,25 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UI/MainMenu/MainMenu.unity
     guid: d863f54bda0298d4e846ede1542f393b
+  - enabled: 1
+    path: Assets/UI/MainMenu-Revamp/MainScenes/Multiplayer-PVP-Lobby.unity
+    guid: 2929311aa906d43c98172274ac568d79
+  - enabled: 1
+    path: Assets/UI/MainMenu-Revamp/MainScenes/PvEMapSelect.unity
+    guid: b665b80b194304fedba0427ba9253c7b
+  - enabled: 1
+    path: Assets/UI/MainMenu-Revamp/MainScenes/WeaponsShop.unity
+    guid: 6ed00ce4681ee41ef89485faa9c9647e
+  - enabled: 0
+    path: Assets/UI/MainMenu-Revamp/PvE-Maps/PvE-Map1_old.unity
+    guid: 24d630bddea8a45069677a60cb12e247
+  - enabled: 1
+    path: Assets/UI/MainMenu-Revamp/PvE-Maps/PvE-Map1.unity
+    guid: 84a407e8176284551b5217854d9b7ed0
+  - enabled: 1
+    path: Assets/UI/MainMenu-Revamp/MainScenes/GunsShop.unity
+    guid: c64586373b5a3344ea918f105d1e906a
+  - enabled: 1
+    path: Assets/UI/MainMenu-Revamp/PvE-Maps/HungAdventure.unity
+    guid: e73a21159b31a4bd1906b7c35e74dc96
   m_configObjects: {}

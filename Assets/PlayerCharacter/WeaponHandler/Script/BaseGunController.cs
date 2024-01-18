@@ -98,6 +98,7 @@ namespace Player.WeaponHandler
 
         IEnumerator FireBullets()
         {
+            activeGun.PlayShootingSFX();
             ShootRayCast();
             Recoil();
             StartCoroutine(MuzzleFlash());
@@ -247,6 +248,7 @@ namespace Player.WeaponHandler
         {
             animator.enabled = false;
             yield return new WaitForSeconds(0.02f);
+            activeGun.PlayReloadingSFX();
             animator.enabled = true;
             animator.SetBool("Reloading", true);
             yield return new WaitForSeconds(activeGun.reloadTime-0.25f);
