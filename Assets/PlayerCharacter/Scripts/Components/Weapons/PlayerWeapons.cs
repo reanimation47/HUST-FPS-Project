@@ -125,19 +125,38 @@ public class PlayerWeapons : MonoBehaviour
     private void GetEquippedGun()
     {
         int gunIndexInDB=-1;
+        int gunSkinIndexInDB=-1;
         GunDatabase gunDB = gunController.gunDB;
         string gunName = PlayerPrefs.GetString("GunSelected", "");
-        Debug.LogWarning(gunDB.gunCount);
+        string gunTypeSelectedKey = PlayerPrefs.GetString("TypeSelected", "");
         if(gunName != "")
-        {
-            for(int i =0; i< gunDB.gunCount; i++)
-            {
-                if (gunDB.GetGunAttribute(i).gunObject.ToString() == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
+        {   
+            if (gunTypeSelectedKey == "GunNoSkin"){
+                for(int i =0; i< gunDB.gunCount; i++)
                 {
-                    Debug.LogWarning(i);
-                    gunIndexInDB = i;    
+                    if (gunDB.GetGunAttribute(i).gunObject.ToString() == gunName) //Could have just used index but .. the Gun Menu guy decided to give us gun name
+                    {
+                        Debug.LogWarning(i);
+                        Debug.Log("Gun Name: " + gunName);
+                        gunIndexInDB = i;    
+                    }
+                }
+            } else {
+                for(int i =0; i< gunDB.gunCount; i++)
+                {
+                    for(int j = 0; j < gunDB.GetGunAttribute(i).gunSkin.Length; j++)
+                    {
+                        if (gunDB.GetGunAttribute(i).gunSkin[j].skinObject.ToString() == gunName)
+                        {
+                            Debug.LogWarning(i);
+                            Debug.Log("Gun Name: " + gunName);
+                            gunIndexInDB = i;
+                            gunSkinIndexInDB = j;
+                        }
+                    }
                 }
             }
+            
 
         }else
         {
@@ -147,13 +166,28 @@ public class PlayerWeapons : MonoBehaviour
         if(gunIndexInDB != -1)
         {
             List<GunScript> gunsHolder = ICommon.GetLoadedGunHolders();
-            for (int i = 0; i < gunsHolder.Count; i++)
+            if (gunSkinIndexInDB != -1)
             {
-                if(gunsHolder[i].GunType == gunDB.GetGunAttribute(gunIndexInDB).gunType)
+                for(int i = 0; i < gunsHolder.Count; i++)
                 {
-                    ICommon.ActiveGunHolder(gunsHolder[i]);
-                    gunsHolder[i].SpawnGun(gunDB.GetGunAttribute(gunIndexInDB).gunObject);
-                    gunsHolder[i].LoadGunStats(gunDB.GetGunAttribute(gunIndexInDB));
+                    if(gunsHolder[i].GunType == gunDB.GetGunAttribute(gunIndexInDB).gunType)
+                    {
+                        ICommon.ActiveGunHolder(gunsHolder[i]);
+                        gunsHolder[i].SpawnGun(gunDB.GetGunAttribute(gunIndexInDB).gunSkin[gunSkinIndexInDB].skinObject);
+                        gunsHolder[i].LoadGunStats(gunDB.GetGunAttribute(gunIndexInDB));
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < gunsHolder.Count; i++)
+                {
+                    if(gunsHolder[i].GunType == gunDB.GetGunAttribute(gunIndexInDB).gunType)
+                    {
+                        ICommon.ActiveGunHolder(gunsHolder[i]);
+                        gunsHolder[i].SpawnGun(gunDB.GetGunAttribute(gunIndexInDB).gunObject);
+                        gunsHolder[i].LoadGunStats(gunDB.GetGunAttribute(gunIndexInDB));
+                    }
                 }
             }
         }else

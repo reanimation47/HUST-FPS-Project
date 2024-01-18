@@ -10,7 +10,6 @@ using System.ComponentModel.Design;
 public class GunSelectionController : MonoBehaviour
 {
     public GunDatabase gunDB;
-    public GunSkinDatabase gunSkinDB;
     public CheckSkinOwned skinOwnedChecker;
     public BuyGunSkin skinGunController;
 
@@ -96,7 +95,7 @@ public class GunSelectionController : MonoBehaviour
 
             if (i < gun.gunSkin.Length)
             {
-                GameObject newGunSkinObject = Instantiate(gun.gunSkin[i]);
+                GameObject newGunSkinObject = Instantiate(gun.gunSkin[i].skinObject);
                 newGunSkinObject.transform.SetParent(currentSkinHolder, false);
                 // Set the scale of newGunSkinObject to 420
                 newGunSkinObject.transform.localScale = new Vector3(420f, 420f, 420f);
@@ -125,6 +124,7 @@ public class GunSelectionController : MonoBehaviour
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
         string gunSelectedKey = "GunSelected";
         string gunSelected = PlayerPrefs.GetString(gunSelectedKey);
+        price.text = gun.gunSkin[selectIndex].price.ToString();
 
         if (selectIndex >= 0 && selectIndex < gun.gunSkin.Length)
         {
@@ -134,10 +134,10 @@ public class GunSelectionController : MonoBehaviour
                 Destroy(gunHolder.GetChild(0).gameObject);
             }
 
-            GameObject newGunSkinObject = Instantiate(gun.gunSkin[selectIndex]);
+            GameObject newGunSkinObject = Instantiate(gun.gunSkin[selectIndex].skinObject);
             newGunSkinObject.transform.SetParent(gunHolder, false);
             newGunSkinObject.transform.localScale = new Vector3(420f, 420f, 420f);
-            if (gunSelected == gun.gunSkin[selectIndex].ToString())
+            if (gunSelected == gun.gunSkin[selectIndex].skinObject.ToString())
             {
                 gunSelectedText.text = "EQUIPPED";
             } else
@@ -145,9 +145,9 @@ public class GunSelectionController : MonoBehaviour
                 gunSelectedText.text = "NOT-EQUIPPED";
             }
 
-            UnityEngine.Debug.Log(skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].ToString()));
+            UnityEngine.Debug.Log(skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].skinObject.ToString()));
 
-            if (skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].ToString()) == false)
+            if (skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectIndex].skinObject.ToString()) == false)
             {
                 buyButton.SetActive(true);
                 skinLocked.text = "NOT OWNED";
@@ -175,9 +175,9 @@ public class GunSelectionController : MonoBehaviour
 
         if (selectedIndexSkin != -1 && selectedIndexSkin < gun.gunSkin.Length)
         {
-            string gunSkinSelected = gun.gunSkin[selectedIndexSkin].ToString();
+            string gunSkinSelected = gun.gunSkin[selectedIndexSkin].skinObject.ToString();
             
-            if (skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectedIndexSkin].ToString()))
+            if (skinOwnedChecker.isOwnedSkin(gun.gunSkin[selectedIndexSkin].skinObject.ToString()))
             {
                 PlayerPrefs.SetString(gunSelectedKey, gunSkinSelected);
                 PlayerPrefs.SetString(gunTypeSelectedKey, "GunSkin");
@@ -212,20 +212,22 @@ public class GunSelectionController : MonoBehaviour
         string listSkinOwned = PlayerPrefs.GetString("UserOwnedGunSkin");
         int currentCoin = PlayerPrefs.GetInt("CoinOwned");
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
+        int skinPrice = gun.gunSkin[selectedIndexSkin].price;
 
         if (gun != null && gun.gunSkin != null && selectedIndexSkin >= 0 && selectedIndexSkin < gun.gunSkin.Length)
         {
             
-            if (skinOwnedChecker != null && !listSkinOwned.Contains(gun.gunSkin[selectedIndexSkin].ToString()))
+            if (skinOwnedChecker != null && !listSkinOwned.Contains(gun.gunSkin[selectedIndexSkin].skinObject.ToString()))
             {
-                if (currentCoin >= 2500)
+                if (currentCoin >= skinPrice)
                 {
-                    skinOwnedChecker.SaveOwnedGunSkin(gun.gunSkin[selectedIndexSkin].ToString());
-                    skinGunController.BuySkin(2500);
+                    skinOwnedChecker.SaveOwnedGunSkin(gun.gunSkin[selectedIndexSkin].skinObject.ToString());
+                    skinGunController.BuySkin(skinPrice);
                     skinLocked.text = "SELECT";
                     buyButton.SetActive(false);
                 } else
                 {
+                    disableGunHolder();
                     showGetCoinPopup();
                     UnityEngine.Debug.Log("Khong du tien!");
                 }
@@ -246,7 +248,7 @@ public class GunSelectionController : MonoBehaviour
     {
         string listSkinOwned = PlayerPrefs.GetString("UserOwnedGunSkin");
         GunAttribute gun = gunDB.GetGunAttribute(selectedOption);
-        if (!listSkinOwned.Contains(gun.gunSkin[selectedIndexSkin].ToString()))
+        if (!listSkinOwned.Contains(gun.gunSkin[selectedIndexSkin].skinObject.ToString()))
         {
             popupBuyGunSkin.SetActive(true);
         }
@@ -265,5 +267,15 @@ public class GunSelectionController : MonoBehaviour
     public void closeGetCoinPopup()
     {
         GetCoinPopup.SetActive(false);
+    }
+
+    public void disableGunHolder()
+    {
+        gunHolder.gameObject.SetActive(false);
+    }
+
+    public void enableGunHolder()
+    {
+        gunHolder.gameObject.SetActive(true);
     }
 }
